@@ -2,6 +2,7 @@ import {
   IconCreditCard,
   IconHome,
   IconSchool,
+  IconSettings,
   IconUsers,
 } from "@tabler/icons-react";
 
@@ -30,13 +31,25 @@ const AdminNavUrlData = [
   },
   {
     name: "Student",
-    url: "/admin/student",
+    url: "/students",
     icon: <IconUsers size={"16px"} />,
     opened: true,
     sub: [
       {
         name: "Student",
         url: "/admin/student",
+      },
+    ],
+  },
+  {
+    name: "Settings",
+    url: "/settings",
+    icon: <IconSettings size={"16px"} />,
+    opened: true,
+    sub: [
+      {
+        name: "Accounts",
+        url: "/settings/accounts",
       },
     ],
   },

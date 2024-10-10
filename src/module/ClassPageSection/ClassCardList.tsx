@@ -14,7 +14,7 @@ const ClassCardList = () => {
       <Grid>
         {data.map((item: any) => {
           return (
-            <Grid.Col key={item.id} span={{ base: 12, md: 6, lg: 4 }}>
+            <Grid.Col key={item.id} span={{ base: 12, md: 6, lg: 4, xl: 3 }}>
               <ClassCard item={item} />
             </Grid.Col>
           );

@@ -9,8 +9,8 @@ import {
   IconMoon,
   IconPhoto,
   IconSearch,
-  IconSettings,
   IconSun,
+  IconUserCircle,
 } from "@tabler/icons-react";
 import {
   Group,
@@ -25,6 +25,7 @@ import {
   useMantineColorScheme,
 } from "@mantine/core";
 import { useFullscreen } from "@mantine/hooks";
+import { NavLink } from "react-router-dom";
 
 interface UserButtonProps extends React.ComponentPropsWithoutRef<"button"> {
   image: string;
@@ -106,13 +107,16 @@ function UserMenu() {
 
         <Menu.Dropdown w={"220px"}>
           <Menu.Label>Application</Menu.Label>
-          <Menu.Item
-            leftSection={
-              <IconSettings style={{ width: rem(14), height: rem(14) }} />
-            }
-          >
-            Settings
-          </Menu.Item>
+          <NavLink to={"/profil"}>
+            <Menu.Item
+              leftSection={
+                <IconUserCircle style={{ width: rem(14), height: rem(14) }} />
+              }
+            >
+              Profil
+            </Menu.Item>
+          </NavLink>
+
           <Menu.Item
             leftSection={
               <IconMessageCircle style={{ width: rem(14), height: rem(14) }} />
