@@ -484,17 +484,22 @@
     "@mantine/store" "7.12.2"
     react-transition-group "4.4.5"
 
-"@mantine/nprogress@^7.12.2":
-  version "7.12.2"
-  resolved "https://registry.npmjs.org/@mantine/nprogress/-/nprogress-7.12.2.tgz"
-  integrity sha512-wm20JxUBUw9V99JM6h14Pb7YLML3FVFN6CFNM4ycGINyQ9tDkNJOe3Db7xUfBX1Pmq+uOzKgN4pgmpmZNfOi6Q==
+"@mantine/nprogress@^7.13.2":
+  version "7.13.2"
+  resolved "https://registry.yarnpkg.com/@mantine/nprogress/-/nprogress-7.13.2.tgz#dfe8f23dd21eb13a21642b054935621ddad3ad26"
+  integrity sha512-GiseMDc1K42vZa2nHS19rvvtOZX+o2vmwhVhOFRZJ8NxIaR/pk2DcRjeq2cbRFgz9/KtUZNoehOwDqHY+ZYw/A==
   dependencies:
-    "@mantine/store" "7.12.2"
+    "@mantine/store" "7.13.2"
 
 "@mantine/store@7.12.2":
   version "7.12.2"
   resolved "https://registry.npmjs.org/@mantine/store/-/store-7.12.2.tgz"
   integrity sha512-NqL31sO/KcAETEWP/CiXrQOQNoE4168vZsxyXacQHGBueVMJa64WIDQtKLHrCnFRMws3vsXF02/OO4bH4XGcMQ==
+
+"@mantine/store@7.13.2":
+  version "7.13.2"
+  resolved "https://registry.yarnpkg.com/@mantine/store/-/store-7.13.2.tgz#aba23573bff42eda28716f422275929afde086c9"
+  integrity sha512-JcBGOqRynYiRWzw1rYdmViB/lfeYSec2EXVdSt4eJv+RPICsjjuqrIc3sNzfqJEGxcN4hGSlaeBriSh05K+vNQ==
 
 "@nodelib/fs.scandir@2.1.5":
   version "2.1.5"

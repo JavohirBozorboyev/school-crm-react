@@ -9,6 +9,7 @@ import ClassPage from "../pages/ClassPage/ClassPage";
 import ClassSlugPage from "../pages/ClassPage/ClassSlugPage/ClassSlugPage";
 import AccountsPage from "../pages/SettingsPage/AccountsPage";
 import ProfilPage from "../pages/ProfilPage/ProfilPage";
+import TeachersPage from "../pages/TeachersPage/TeachersPage";
 
 const Router = () => {
   return (
@@ -26,6 +27,8 @@ const Router = () => {
           <Route path="/finance" element={<FinancePage />} />
           <Route path="/class" element={<ClassPage />} />
           <Route path="/class/:slug" element={<ClassSlugPage />} />
+          <Route path="/teachers" element={<TeachersPage />} />
+          {/* <Route path="/teacher/:slug" element={<ClassSlugPage />} /> */}
           <Route path="/settings/accounts" element={<AccountsPage />} />
           <Route path="/profil" element={<ProfilPage />} />
         </Route>

@@ -3,6 +3,7 @@ import {
   IconHome,
   IconSchool,
   IconSettings,
+  IconUserHexagon,
   IconUsers,
 } from "@tabler/icons-react";
 
@@ -38,6 +39,18 @@ const AdminNavUrlData = [
       {
         name: "Student",
         url: "/admin/student",
+      },
+    ],
+  },
+  {
+    name: "Teachers",
+    url: "/teachers",
+    icon: <IconUserHexagon size={"16px"} />,
+    opened: true,
+    sub: [
+      {
+        name: "Teachers",
+        url: "/teachers",
       },
     ],
   },
