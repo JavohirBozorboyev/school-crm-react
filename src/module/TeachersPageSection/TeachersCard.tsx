@@ -20,7 +20,6 @@ import {
   IconTrash,
 } from "@tabler/icons-react";
 const TeachersCard = ({ item }: any) => {
-
   return (
     <>
       <Card padding="md" py={"lg"} radius="sm" withBorder>
@@ -87,7 +86,7 @@ const TeachersCard = ({ item }: any) => {
             </Menu.Dropdown>
           </Menu>
 
-          <NavLink to={`/class/${item.id}`} style={{ width: "100%" }}>
+          <NavLink to={`/teachers/${item.id}`} style={{ width: "100%" }}>
             <Button
               color="blue"
               size="xs"

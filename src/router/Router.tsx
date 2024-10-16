@@ -10,6 +10,7 @@ import ClassSlugPage from "../pages/ClassPage/ClassSlugPage/ClassSlugPage";
 import AccountsPage from "../pages/SettingsPage/AccountsPage";
 import ProfilPage from "../pages/ProfilPage/ProfilPage";
 import TeachersPage from "../pages/TeachersPage/TeachersPage";
+import TeacherSlugPage from "../pages/TeachersPage/TeacherSlugPage/TeacherSlugPage";
 
 const Router = () => {
   return (
@@ -28,7 +29,7 @@ const Router = () => {
           <Route path="/class" element={<ClassPage />} />
           <Route path="/class/:slug" element={<ClassSlugPage />} />
           <Route path="/teachers" element={<TeachersPage />} />
-          {/* <Route path="/teacher/:slug" element={<ClassSlugPage />} /> */}
+          <Route path="/teachers/:slug" element={<TeacherSlugPage />} />
           <Route path="/settings/accounts" element={<AccountsPage />} />
           <Route path="/profil" element={<ProfilPage />} />
         </Route>
