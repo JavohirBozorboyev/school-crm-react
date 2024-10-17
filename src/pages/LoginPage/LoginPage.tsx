@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [token] = useState("");
+  const [token] = useState("token");
   const form = useForm({
     mode: "uncontrolled",
     initialValues: { name: "", email: "" },
