@@ -38,7 +38,7 @@ const AdminNavUrlData = [
     sub: [
       {
         name: "Student",
-        url: "/admin/student",
+        url: "/students",
       },
     ],
   },
