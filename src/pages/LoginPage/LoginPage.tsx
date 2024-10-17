@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { useForm } from "@mantine/form";
 import {
   TextInput,
@@ -18,7 +18,7 @@ import { useNavigate } from "react-router-dom";
 const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [token, setToken] = useState("tokensaksaks");
+  const [token] = useState("");
   const form = useForm({
     mode: "uncontrolled",
     initialValues: { name: "", email: "" },
@@ -31,7 +31,7 @@ const LoginPage = () => {
     },
   });
 
-  function Login(e: any) {
+  function Login() {
     dispatch(login({ token, user: { username: "joha", email: "assas" } }));
     navigate("/");
   }
