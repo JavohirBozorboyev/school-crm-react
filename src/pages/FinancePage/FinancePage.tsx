@@ -1,5 +1,11 @@
+import FinancePageHead from "../../module/FinancePageSection/FinancePageHead";
+
 const FinancePage = () => {
-  return <div>FinancePage</div>;
+  return (
+    <div>
+      <FinancePageHead />
+    </div>
+  );
 };
 
 export default FinancePage;

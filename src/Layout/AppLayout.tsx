@@ -15,6 +15,11 @@ const AppLayout = () => {
           breakpoint: "sm",
           collapsed: { mobile: !opened },
         }}
+        // aside={{
+        //   width: { base: 220, md: 360 },
+        //   breakpoint: "sm",
+        //   collapsed: { mobile: !opened },
+        // }}
         padding="md"
       >
         <AppShell.Header>
@@ -23,6 +28,7 @@ const AppLayout = () => {
         <AppShell.Navbar p="sm">
           <AppShellNavbar />
         </AppShell.Navbar>
+        {/* <AppShell.Aside p="md">Aside</AppShell.Aside> */}
         <AppShell.Main>
           <Outlet />
         </AppShell.Main>

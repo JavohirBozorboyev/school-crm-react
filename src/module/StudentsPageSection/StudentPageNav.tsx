@@ -28,6 +28,7 @@ const StudentPageNav = () => {
         </Grid.Col>
         <Grid.Col span={{ base: 12, xs: 7, sm: 8 }}>
           <Group justify="end" gap={"xs"}>
+            <Button variant="filled" disabled color="yellow" >Xabar Yuborish</Button>
             <SegmentedControl
               data={[
                 { label: "Active", value: "active" },

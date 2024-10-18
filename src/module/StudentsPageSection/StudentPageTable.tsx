@@ -1,12 +1,15 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   ActionIcon,
+  Avatar,
   Badge,
   Button,
+  Group,
   Menu,
   Pagination,
   rem,
   Table,
+  Text,
 } from "@mantine/core";
 import {
   IconArrowRight,
@@ -35,11 +38,14 @@ const StudentPageTable = () => {
             <Table.Tr>
               <Table.Th ta={"center"}>N</Table.Th>
               <Table.Th w={250}>Ism Familiya</Table.Th>
-              <Table.Th>Sinf</Table.Th>
+              <Table.Th w={100}>Sinf</Table.Th>
               <Table.Th>Passport</Table.Th>
               <Table.Th>Kantaktlar</Table.Th>
-              <Table.Th>Ota-Ona ismi</Table.Th>
-              <Table.Th align="center">Ota-Ona Kantaktlari</Table.Th>
+              <Table.Th>Manzil</Table.Th>
+              <Table.Th w={250}>Ota-Ona ismi</Table.Th>
+              <Table.Th align="center" miw={150}>
+                Ota-Ona Kantaktlari
+              </Table.Th>
 
               <Table.Th ta={"center"}>Tahrirlash</Table.Th>
               <Table.Th ta={"center"} w={150}></Table.Th>
@@ -51,10 +57,16 @@ const StudentPageTable = () => {
                 <Table.Td w={50} ta={"center"}>
                   {i + 1}
                 </Table.Td>
-                <Table.Td>{element.name}</Table.Td>
+                <Table.Td>
+                  <Group gap={"xs"}>
+                    {" "}
+                    <Avatar color="blue" size={"sm"} radius={"sm"} />
+                    <Text size="sm">{element.name}</Text>
+                  </Group>
+                </Table.Td>
                 <Table.Td>
                   <Badge size="md" variant="light" color="indigo">
-                    7-Class
+                    7-Green
                   </Badge>
                 </Table.Td>
                 <Table.Td>AA1234567</Table.Td>
@@ -66,7 +78,16 @@ const StudentPageTable = () => {
                     <IconBrandTelegram size={16} />
                   </ActionIcon>
                 </Table.Td>
-                <Table.Td>{element.name}</Table.Td>
+                <Table.Td>
+                  <Text size="sm">{element.address.city}</Text>
+                </Table.Td>
+                <Table.Td>
+                  <Group gap={"xs"}>
+                    {" "}
+                    <Avatar color="cyan" size={"sm"} radius={"sm"} />
+                    <Text size="sm">{element.name}</Text>
+                  </Group>
+                </Table.Td>
                 <Table.Td>
                   <ActionIcon variant="light" radius={"xl"}>
                     <IconPhone size={16} />
