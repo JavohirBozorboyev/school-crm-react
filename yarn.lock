@@ -434,10 +434,10 @@
     "@jridgewell/resolve-uri" "^3.1.0"
     "@jridgewell/sourcemap-codec" "^1.4.14"
 
-"@mantine/charts@^7.12.2":
-  version "7.12.2"
-  resolved "https://registry.npmjs.org/@mantine/charts/-/charts-7.12.2.tgz"
-  integrity sha512-xKzpnqIRMbBdvykt73eaLBmYlbmPPWTW0UaRVeDVKLBI4rPlPXMlkmviH8Xg6sLY5CgOGQGUzqZ7XGdfPN66Dg==
+"@mantine/charts@^7.13.3":
+  version "7.13.3"
+  resolved "https://registry.yarnpkg.com/@mantine/charts/-/charts-7.13.3.tgz#e3ac48770d4b81f653460d4dbbbc95a453607bef"
+  integrity sha512-m/5VuIxLykIozJe1Zi8+c4+I9ls94EOC+5w4Mg0tL0mIev6vZA+cPKUyZBQskA2xs2D8fnWgq/7B/ETCB1/EjA==
 
 "@mantine/core@^7.12.2":
   version "7.12.2"
