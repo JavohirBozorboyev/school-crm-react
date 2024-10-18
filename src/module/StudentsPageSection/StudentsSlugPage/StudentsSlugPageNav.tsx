@@ -11,6 +11,7 @@ import {
 } from "@mantine/core";
 import { IconPhone, IconMail, IconId } from "@tabler/icons-react";
 import { NavLink } from "react-router-dom";
+import StudentsSlugPaymentTable from "./StudentsSlugPaymetTable";
 
 const StundetsSlugPageNav = () => {
   return (
@@ -79,6 +80,7 @@ const StundetsSlugPageNav = () => {
           </Grid.Col>
         </Grid>
       </Paper>
+      <StudentsSlugPaymentTable />
     </>
   );
 };
