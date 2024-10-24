@@ -9,56 +9,45 @@ import {
 
 const AdminNavUrlData = [
   {
-    name: "Dashboard",
+    name: "Asosiy Sahifa",
     url: "/",
     icon: <IconHome size={"16px"} />,
   },
   {
-    name: "Finance",
+    name: "Moliya",
     url: "/finance",
     icon: <IconCreditCard size={"16px"} />,
+    sub: [
+      {
+        name: "To'lov Malumotlari",
+        url: "/finance",
+      },
+      {
+        name: "To'lov Qilish",
+        url: "/finance/payment",
+      },
+    ],
   },
   {
-    name: "Class",
+    name: "Sinflar",
     url: "/class",
     icon: <IconSchool size={"16px"} />,
-    opened: true,
-    sub: [
-      {
-        name: "Class",
-        url: "/class",
-      },
-    ],
   },
   {
-    name: "Student",
+    name: "O'quvchilar",
     url: "/students",
     icon: <IconUsers size={"16px"} />,
-    opened: true,
-    sub: [
-      {
-        name: "Student",
-        url: "/students",
-      },
-    ],
   },
   {
-    name: "Teachers",
+    name: "O'qtuvchilar",
     url: "/teachers",
     icon: <IconUserHexagon size={"16px"} />,
-    opened: true,
-    sub: [
-      {
-        name: "Teachers",
-        url: "/teachers",
-      },
-    ],
   },
   {
-    name: "Settings",
+    name: "Sozlamalar",
     url: "/settings",
     icon: <IconSettings size={"16px"} />,
-    opened: true,
+
     sub: [
       {
         name: "Accounts",

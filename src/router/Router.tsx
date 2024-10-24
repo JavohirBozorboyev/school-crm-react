@@ -13,6 +13,7 @@ import TeachersPage from "../pages/TeachersPage/TeachersPage";
 import TeacherSlugPage from "../pages/TeachersPage/TeacherSlugPage/TeacherSlugPage";
 import StudentsPage from "../pages/StudentsPage/StudentsPage";
 import StudentsSlugPage from "../pages/StudentsPage/StudentsSlugPage/StudentsSlugPage";
+import PaymentPage from "../pages/FinancePage/PaymentPage/PaymentPage";
 
 const Router = () => {
   return (
@@ -28,6 +29,7 @@ const Router = () => {
         >
           <Route index element={<HomePage />} />
           <Route path="/finance" element={<FinancePage />} />
+          <Route path="/finance/payment" element={<PaymentPage />} />
           <Route path="/class" element={<ClassPage />} />
           <Route path="/class/:slug" element={<ClassSlugPage />} />
           <Route path="/students" element={<StudentsPage />} />
