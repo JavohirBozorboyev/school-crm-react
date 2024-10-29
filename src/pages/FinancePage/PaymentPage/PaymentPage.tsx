@@ -1,7 +1,12 @@
-import { Divider, Grid, Paper, Select, Title } from "@mantine/core";
+import { Button, Divider, Grid, Paper, Select, Title } from "@mantine/core";
 import { MonthPickerInput } from "@mantine/dates";
+import ChekPdf from "../../../utils/ChekPdf";
 
 const PaymentPage = () => {
+
+  const Payment = ()=>{
+    ChekPdf()
+  }
   return (
     <div>
       <Title order={4}>To'lov Qilish</Title>
@@ -53,6 +58,8 @@ const PaymentPage = () => {
           </Grid.Col>
         </Grid>
       </Paper>
+
+      <Button onClick={Payment}>Cheks</Button>
     </div>
   );
 };

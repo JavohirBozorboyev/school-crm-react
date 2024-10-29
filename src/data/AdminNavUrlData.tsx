@@ -3,6 +3,7 @@ import {
   IconHome,
   IconSchool,
   IconSettings,
+  IconTextCaption,
   IconUserHexagon,
   IconUsers,
 } from "@tabler/icons-react";
@@ -42,6 +43,17 @@ const AdminNavUrlData = [
     name: "O'qtuvchilar",
     url: "/teachers",
     icon: <IconUserHexagon size={"16px"} />,
+  },
+  {
+    name: "Imtixonlar",
+    url: "/exam",
+    icon: <IconTextCaption size={"16px"} />,
+    sub: [
+      {
+        name: "Imtixon Natijalari",
+        url: "/exam",
+      },
+    ],
   },
   {
     name: "Sozlamalar",
