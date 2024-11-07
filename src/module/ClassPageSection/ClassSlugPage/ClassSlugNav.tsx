@@ -90,7 +90,7 @@ const ClassSlugNav = () => {
                   radius={"sm"}
                   size={"sm"}
                 />
-                <Text size="sm">Ulugbek Hatamjanov</Text>
+                <Text size="sm" >Ulugbek H</Text>
               </Group>
               <Group mt={"sm"} gap={"xs"}>
                 <Avatar
@@ -99,7 +99,7 @@ const ClassSlugNav = () => {
                   radius={"sm"}
                   size={"sm"}
                 />
-                <Text size="sm">Ulugbek Hatamjanov</Text>
+                <Text size="sm">Ulugbek H</Text>
               </Group>
               <Group mt={"sm"} gap={"xs"}>
                 <Avatar
@@ -108,7 +108,7 @@ const ClassSlugNav = () => {
                   radius={"sm"}
                   size={"sm"}
                 />
-                <Text size="sm">Ulugbek Hatamjanov</Text>
+                <Text size="sm">Ulugbek H</Text>
               </Group>
               <Group mt={"sm"} gap={"xs"}>
                 <Avatar
@@ -117,7 +117,7 @@ const ClassSlugNav = () => {
                   radius={"sm"}
                   size={"sm"}
                 />
-                <Text size="sm">Ulugbek Hatamjanov</Text>
+                <Text size="sm">Ulugbek H</Text>
               </Group>
             </SimpleGrid>
           </Grid.Col>

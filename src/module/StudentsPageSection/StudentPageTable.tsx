@@ -32,7 +32,7 @@ const StudentPageTable = () => {
 
   return (
     <>
-      <Table.ScrollContainer minWidth={1200}>
+      <Table.ScrollContainer minWidth={1400}>
         <Table verticalSpacing={"sm"} striped withTableBorder mt={"md"}>
           <Table.Thead>
             <Table.Tr>
