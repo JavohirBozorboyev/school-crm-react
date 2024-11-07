@@ -11,6 +11,10 @@ import AccountsPage from "../pages/SettingsPage/AccountsPage";
 import ProfilPage from "../pages/ProfilPage/ProfilPage";
 import TeachersPage from "../pages/TeachersPage/TeachersPage";
 import AdminsPage from "../pages/SettingsPage/AdminsPage/AdminsPage";
+import TeacherSlugPage from "../pages/TeachersPage/TeacherSlugPage/TeacherSlugPage";
+import StudentsPage from "../pages/StudentsPage/StudentsPage";
+import StudentsSlugPage from "../pages/StudentsPage/StudentsSlugPage/StudentsSlugPage";
+import PaymentPage from "../pages/FinancePage/PaymentPage/PaymentPage";
 
 const Router = () => {
   return (
@@ -26,10 +30,13 @@ const Router = () => {
         >
           <Route index element={<HomePage />} />
           <Route path="/finance" element={<FinancePage />} />
+          <Route path="/finance/payment" element={<PaymentPage />} />
           <Route path="/class" element={<ClassPage />} />
           <Route path="/class/:slug" element={<ClassSlugPage />} />
+          <Route path="/students" element={<StudentsPage />} />
+          <Route path="/students/:slug" element={<StudentsSlugPage />} />
           <Route path="/teachers" element={<TeachersPage />} />
-          {/* <Route path="/teacher/:slug" element={<ClassSlugPage />} /> */}
+          <Route path="/teachers/:slug" element={<TeacherSlugPage />} />
           <Route path="/settings/accounts" element={<AccountsPage />} />
           <Route path="/settings/admins" element={<AdminsPage />} />
           <Route path="/profil" element={<ProfilPage />} />
