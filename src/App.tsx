@@ -6,6 +6,7 @@ import axios from "axios";
 import { SWRConfig } from "swr";
 // import { useSelector } from "react-redux";
 // import { RootState } from "./store";
+axios.defaults.baseURL = "https://schools-crm-backend.onrender.com";
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 function App() {
