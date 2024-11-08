@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useForm } from "@mantine/form";
 import {
   TextInput,
@@ -14,26 +13,42 @@ import {
 import { login } from "../../features/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [token] = useState("token");
   const form = useForm({
     mode: "uncontrolled",
-    initialValues: { name: "", email: "" },
+    initialValues: { email: "", password: "" },
 
     // functions will be used to validate values at corresponding key
     validate: {
-      name: (value) =>
+      password: (value) =>
         value.length < 2 ? "Name must have at least 2 letters" : null,
       email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
     },
   });
 
-  function Login() {
-    dispatch(login({ token, user: { username: "joha", email: "assas" } }));
-    navigate("/");
+  async function Login(e: { email: string; password: string }) {
+    try {
+      const res = await axios.post(`http://localhost:3000/api/admin/login`, {
+        email: e.email,
+        password: e.password,
+      });
+
+      if (res.status == 200) {
+        dispatch(
+          login({
+            token: res?.data?.token,
+            user: res?.data?.user,
+          })
+        );
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
     <div
@@ -58,7 +73,7 @@ const LoginPage = () => {
               placeholder="Your password"
               required
               mt="md"
-              {...form.getInputProps("name")}
+              {...form.getInputProps("password")}
             />
             <Group justify="space-between" mt="lg">
               <Checkbox label="Remember me" />
