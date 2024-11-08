@@ -26,7 +26,8 @@ import {
 } from "@mantine/core";
 import { useFullscreen } from "@mantine/hooks";
 import { NavLink } from "react-router-dom";
-
+import { logout } from "../../features/auth/authSlice";
+import { useDispatch } from "react-redux";
 interface UserButtonProps extends React.ComponentPropsWithoutRef<"button"> {
   image: string;
   name: string;
@@ -69,7 +70,11 @@ function UserMenu() {
   const computedColorScheme = useComputedColorScheme("light", {
     getInitialValueInEffect: true,
   });
+  const dispatch = useDispatch();
 
+  const LogOut = () => {
+    dispatch(logout());
+  };
   return (
     <Group gap={"xs"}>
       <ActionIcon
@@ -157,6 +162,7 @@ function UserMenu() {
             Transfer my data
           </Menu.Item>
           <Menu.Item
+            onClick={LogOut}
             color="red"
             leftSection={
               <IconLogout style={{ width: rem(14), height: rem(14) }} />
