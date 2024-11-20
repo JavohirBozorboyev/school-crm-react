@@ -32,10 +32,11 @@ const LoginPage = () => {
 
   async function Login(e: { email: string; password: string }) {
     try {
-      const res = await axios.post(`/api/admin/login`, {
+      const res = await axios.post(`/api/auth/login`, {
         email: e.email,
         password: e.password,
       });
+      console.log(res);
 
       if (res.status == 200) {
         dispatch(

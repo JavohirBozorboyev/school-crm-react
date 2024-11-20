@@ -1,6 +1,7 @@
 import { Button, Grid, Group, Paper } from "@mantine/core";
 import { useState } from "react";
 import { SegmentedControl } from "@mantine/core";
+import AccessControl from "../../../security/AccessControl";
 
 const AccountsPageNav = () => {
   const [active, setActive] = useState("active");
@@ -18,7 +19,17 @@ const AccountsPageNav = () => {
               onChange={setActive}
               fullWidth
             />
-            <Button>Add new Employee</Button>
+            <AccessControl
+              requiredPermissions={["read", "write", "delete", "update"]}
+              requiredPrivileges={[
+                "manage_users",
+                "view_reports",
+                "manage_roles",
+                "manage_permissions",
+              ]}
+            >
+              <Button>Add new Employee</Button>
+            </AccessControl>
           </Group>
         </Grid.Col>
       </Grid>

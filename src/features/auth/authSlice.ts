@@ -22,7 +22,7 @@ const user = sessionStorage.getItem("user")
 const initialState: AuthState = {
   token: token || null,
   user: user,
-  isAuthenticated: !!token,
+  isAuthenticated: !!token && !!user,
 };
 
 const authSlice = createSlice({
