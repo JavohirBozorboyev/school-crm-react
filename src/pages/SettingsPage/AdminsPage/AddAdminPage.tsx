@@ -60,8 +60,6 @@ const AddAdminPage = () => {
           Authorization: `Bearer ${sessionStorage.getItem("token")}`,
         },
       });
-      console.log(res.status);
-
       if (res.status == 201) {
         notifications.show({
           title: "Yangi Admin Qo'shildi",

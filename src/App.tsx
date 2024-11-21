@@ -4,8 +4,6 @@ import { Provider } from "react-redux";
 import { store } from "./store";
 import axios from "axios";
 import { SWRConfig } from "swr";
-// import { useSelector } from "react-redux";
-// import { RootState } from "./store";
 axios.defaults.baseURL = "https://schools-crm-backend.onrender.com";
 // axios.defaults.baseURL = "http://localhost:3000";
 axios.defaults.headers.common[
@@ -14,15 +12,13 @@ axios.defaults.headers.common[
 
 const fetcher = (url: string) => axios.get(url).then((res) => res.data);
 function App() {
-  // const { isAuthenticated, user } = useSelector(
-  //   (state: RootState) => state.auth
-  // );
-
   return (
     <>
       <SWRConfig
         value={{
           fetcher: fetcher,
+          errorRetryCount: 5,
+          errorRetryInterval: 1000,
         }}
       >
         <Provider store={store}>
