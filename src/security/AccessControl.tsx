@@ -1,3 +1,6 @@
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
+
 const AccessControl = ({
   requiredPermissions = [],
   requiredPrivileges = [],
@@ -7,7 +10,7 @@ const AccessControl = ({
   requiredPermissions: string[];
   requiredPrivileges: string[];
 }) => {
-  const user = JSON.parse(sessionStorage.getItem("user") || "null") || [];
+  const user = useSelector((state: RootState) => state.auth.user);
   const hasPermission = requiredPermissions.every((perm) =>
     user?.permissions?.includes(perm)
   );

@@ -15,6 +15,8 @@ import TeacherSlugPage from "../pages/TeachersPage/TeacherSlugPage/TeacherSlugPa
 import StudentsPage from "../pages/StudentsPage/StudentsPage";
 import StudentsSlugPage from "../pages/StudentsPage/StudentsSlugPage/StudentsSlugPage";
 import PaymentPage from "../pages/FinancePage/PaymentPage/PaymentPage";
+import AddAdminPage from "../pages/SettingsPage/AdminsPage/AddAdminPage";
+import ProtectedPage from "../security/ProtectedPage";
 
 const Router = () => {
   return (
@@ -39,6 +41,23 @@ const Router = () => {
           <Route path="/teachers/:slug" element={<TeacherSlugPage />} />
           <Route path="/settings/accounts" element={<AccountsPage />} />
           <Route path="/settings/admins" element={<AdminsPage />} />
+          <Route
+            path="/settings/admins/add"
+            element={
+              <ProtectedPage
+                requiredPermissions={["read", "write", "delete", "update"]}
+                requiredPrivileges={[
+                  "manage_users",
+                  "view_reports",
+                  "manage_roles",
+                  "manage_permissions",
+                ]}
+                fallbackPath="/404"
+              >
+                <AddAdminPage />
+              </ProtectedPage>
+            }
+          />
           <Route path="/profil" element={<ProfilPage />} />
         </Route>
         <Route path="/login" element={<LoginPage />}></Route>

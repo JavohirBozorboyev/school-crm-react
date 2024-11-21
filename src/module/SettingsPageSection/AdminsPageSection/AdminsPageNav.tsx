@@ -2,7 +2,7 @@ import { Button, Grid, Group, Paper } from "@mantine/core";
 import { useState } from "react";
 import { SegmentedControl } from "@mantine/core";
 import AccessControl from "../../../security/AccessControl";
-
+import { Link } from "react-router-dom";
 const AdminsPageNav = () => {
   const [active, setActive] = useState("active");
   return (
@@ -28,7 +28,10 @@ const AdminsPageNav = () => {
                 "manage_permissions",
               ]}
             >
-              <Button>Add new Admin</Button>
+              <Link to={"/settings/admins/add"}>
+                {" "}
+                <Button>Add new Admin</Button>
+              </Link>
             </AccessControl>
           </Group>
         </Grid.Col>

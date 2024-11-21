@@ -9,7 +9,7 @@ interface User {
 // Auth uchun dastlabki holat
 interface AuthState {
   token: string | null;
-  user: User | null;
+  user: User | null | any;
   isAuthenticated: boolean;
 }
 
