@@ -2,8 +2,15 @@ import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 // Foydalanuvchi interfeysi
 interface User {
-  username: string;
+  _id: string;
+  firstname: string;
+  lastname: string;
+  phone: string;
+  passport: string;
   email: string;
+  role: string;
+  privileges: string[];
+  permissions: string[];
 }
 
 // Auth uchun dastlabki holat
