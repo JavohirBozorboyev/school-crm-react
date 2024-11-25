@@ -36,7 +36,6 @@ const LoginPage = () => {
         email: e.email,
         password: e.password,
       });
-      console.log(res);
 
       if (res.status == 200) {
         dispatch(

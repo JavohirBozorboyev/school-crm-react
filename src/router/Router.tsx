@@ -17,8 +17,16 @@ import StudentsSlugPage from "../pages/StudentsPage/StudentsSlugPage/StudentsSlu
 import PaymentPage from "../pages/FinancePage/PaymentPage/PaymentPage";
 import AddAdminPage from "../pages/SettingsPage/AdminsPage/AddAdminPage";
 import ProtectedPage from "../security/ProtectedPage";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
+import axios from "axios";
 
+axios.defaults.baseURL = "https://schools-crm-backend.onrender.com";
+// axios.defaults.baseURL = "http://localhost:3000";
 const Router = () => {
+  const token = useSelector((state: RootState) => state.auth.token);
+  axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
+
   return (
     <>
       <Routes>

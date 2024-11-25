@@ -11,6 +11,8 @@ import {
   Flex,
   Button,
   TextInput,
+  MultiSelect,
+  Select,
 } from "@mantine/core";
 import { IconPencil, IconTrash } from "@tabler/icons-react";
 import AccessControl from "../../../security/AccessControl";
@@ -19,18 +21,20 @@ import { notifications } from "@mantine/notifications";
 import { useDisclosure } from "@mantine/hooks";
 import { useState } from "react";
 import { mutate } from "swr";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
 
 const AdminsPageTable = ({ data }: any) => {
   const [opened, { open, close }] = useDisclosure(false);
-  const [user, setUser] = useState<any>(null);
+  const [EditModalOpened, EditHandlers] = useDisclosure(false);
+  const [deleteUser, setDeleteUser] = useState<any>(null);
+  const [editUser, setEditUser] = useState<any>(null);
   const [deleteText, setDeleteText] = useState<any>(null);
+  const user = useSelector((state: RootState) => state.auth.user);
+
   const DeleteAdmin = async (id: string) => {
     try {
-      const res = await axios.delete(`/api/admins/${id}`, {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-        },
-      });
+      const res = await axios.delete(`/api/admins/${id}`);
       if (res.status == 200) {
         mutate("/api/admins");
         close();
@@ -45,6 +49,30 @@ const AdminsPageTable = ({ data }: any) => {
       console.log(error);
     }
   };
+  const EditAdmin = async (e: any) => {
+    e.preventDefault();
+    const form = e.target;
+    const data = {
+      role: form.role.value,
+      permissions: form.permissions.value.split(","),
+      privileges: form.privileges.value.split(","),
+    };
+    try {
+      const res = await axios.put(`/api/admins/${editUser?._id}`, data);
+      if (res.status == 200) {
+        notifications.show({
+          title: "Admin Role O'zgartirildi",
+          message: "",
+          withBorder: true,
+        });
+        mutate("/api/admins");
+        EditHandlers.close();
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const rows = data.map((item: any) => (
     <Table.Tr key={item._id}>
       <Table.Td>
@@ -57,7 +85,7 @@ const AdminsPageTable = ({ data }: any) => {
       </Table.Td>
 
       <Table.Td>
-        <Badge variant="light" color="dark">
+        <Badge variant="light" color="dark" radius={"sm"}>
           {item?.role}
         </Badge>
       </Table.Td>
@@ -73,36 +101,59 @@ const AdminsPageTable = ({ data }: any) => {
         <Badge variant="light">{item?.status}</Badge>
       </Table.Td>
       <Table.Td>
-        <Group gap={0} justify="flex-end">
-          <AccessControl
-            requiredPermissions={["write"]}
-            requiredPrivileges={["manage_users"]}
-          >
-            <ActionIcon variant="subtle" color="gray">
-              <IconPencil
-                style={{ width: rem(16), height: rem(16) }}
-                stroke={1.5}
-              />
-            </ActionIcon>
-          </AccessControl>
-          <AccessControl
-            requiredPermissions={["write"]}
-            requiredPrivileges={["manage_users"]}
-          >
-            <ActionIcon
-              variant="subtle"
-              color="red"
-              onClick={() => {
-                open();
-                setUser(item);
-              }}
+        <Group gap={5} justify="flex-end">
+          {user?.role != "admin" && (
+            <AccessControl
+              requiredPermissions={["read", "write", "delete", "update"]}
+              requiredPrivileges={[
+                "view_reports",
+                "manage_users",
+                "manage_permissions",
+                "manage_roles",
+              ]}
             >
-              <IconTrash
-                style={{ width: rem(16), height: rem(16) }}
-                stroke={1.5}
-              />
-            </ActionIcon>
-          </AccessControl>
+              <ActionIcon
+                variant="subtle"
+                color="gray"
+                onClick={() => {
+                  EditHandlers.open();
+                  setEditUser(item);
+                }}
+                disabled={item._id == user?._id}
+              >
+                <IconPencil
+                  style={{ width: rem(16), height: rem(16) }}
+                  stroke={1.5}
+                />
+              </ActionIcon>
+            </AccessControl>
+          )}
+          {user?.role != "admin" && (
+            <AccessControl
+              requiredPermissions={["read", "write", "delete", "update"]}
+              requiredPrivileges={[
+                "view_reports",
+                "manage_users",
+                "manage_permissions",
+                "manage_roles",
+              ]}
+            >
+              <ActionIcon
+                variant="subtle"
+                color="red"
+                onClick={() => {
+                  open();
+                  setDeleteUser(item);
+                }}
+                disabled={item._id == user?._id}
+              >
+                <IconTrash
+                  style={{ width: rem(16), height: rem(16) }}
+                  stroke={1.5}
+                />
+              </ActionIcon>
+            </AccessControl>
+          )}
         </Group>
       </Table.Td>
     </Table.Tr>
@@ -132,14 +183,14 @@ const AdminsPageTable = ({ data }: any) => {
           justify={"center"}
           align={"center"}
         >
-          <Avatar size={"lg"} src={user?.avatar} radius={"sm"} />
-          <Text fz="sm" fw={500}>
-            {user?.firstname} {user?.lastname}
+          <Avatar size={"lg"} src={deleteUser?.avatar} radius={"sm"} />
+          <Text fz="lg" fw={500}>
+            {deleteUser?.firstname} {deleteUser?.lastname}
           </Text>
         </Flex>
         <TextInput
           mt={"md"}
-          description="Adminni o'chirish uchun ' delete ' so'zini yozing."
+          label="Adminni o'chirish uchun ' delete ' so'zini yozing."
           placeholder="delete"
           onChange={(e) => setDeleteText(e.target.value)}
         />
@@ -151,11 +202,62 @@ const AdminsPageTable = ({ data }: any) => {
             disabled={deleteText != "delete"}
             color="red"
             rightSection={<IconTrash size={17} />}
-            onClick={() => DeleteAdmin(user?._id)}
+            onClick={() => DeleteAdmin(deleteUser?._id)}
           >
             O'chirish
           </Button>
         </Group>
+      </Modal>
+      {/* Edit Admin Role */}
+      <Modal
+        opened={EditModalOpened}
+        onClose={EditHandlers.close}
+        title="Edit Admin Role"
+      >
+        <Text>
+          {editUser?.firstname} {editUser?.lastname}
+        </Text>
+        <form onSubmit={EditAdmin}>
+          <Select
+            label="Role"
+            placeholder="Admin Or SupperAdmin"
+            data={[
+              { value: "admin", label: "Admin" },
+              { value: "supperadmin", label: "SupperAdmin" },
+            ]}
+            withAsterisk
+            defaultValue={editUser?.role}
+            name="role"
+            mt={"lg"}
+          />
+
+          <MultiSelect
+            label="Permissions"
+            data={["read", "write", "delete", "update"]}
+            withAsterisk
+            defaultValue={editUser?.permissions}
+            name="permissions"
+            my={"lg"}
+          />
+
+          <MultiSelect
+            label="Privileges"
+            data={[
+              "view_reports",
+              "manage_users",
+              "manage_roles",
+              "manage_permissions",
+            ]}
+            withAsterisk
+            defaultValue={editUser?.privileges}
+            name="privileges"
+          />
+
+          <Group mt={"xl"} grow>
+            <Button color="gray">Bekor Qilish</Button>
+            <Button type="submit">Saqlash</Button>
+          </Group>
+        </form>
       </Modal>
     </>
   );
