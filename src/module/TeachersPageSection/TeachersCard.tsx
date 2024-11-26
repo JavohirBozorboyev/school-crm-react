@@ -34,14 +34,14 @@ const TeachersCard = ({ item }: any) => {
           <Avatar size={"xl"} variant="light" color="blue" />
         </Flex>
 
-        <Title order={4} ta={"center"} mt={"sm"}>
+        <Title order={5} ta={"center"} mt={"sm"}>
           {item?.firstname} {item?.lastname}
         </Title>
-        <Text ta={"center"} mt={"xs"} c={"gray"}>
+        <Text ta={"center"} mt={"xs"} c={"gray"} size="sm">
           {item?.subject}
         </Text>
 
-        <Flex align="center" justify={"center"} mt={"md"} gap={"xs"}>
+        {/* <Flex align="center" justify={"center"} mt={"md"} gap={"xs"}>
           <NavLink to={`tel:${item?.phone}`}>
             <ActionIcon variant="light" size={"lg"} radius={"xl"}>
               <IconPhone size={18} />
@@ -52,7 +52,7 @@ const TeachersCard = ({ item }: any) => {
               <IconMail size={18} />
             </ActionIcon>
           </NavLink>
-        </Flex>
+        </Flex> */}
         <Flex align="center" mt={"md"} gap={"xs"}>
           <Menu shadow="md" width={200} withArrow>
             {" "}
