@@ -20,9 +20,10 @@ import ProtectedPage from "../security/ProtectedPage";
 import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import axios from "axios";
+import AddNewTeacherPage from "../pages/TeachersPage/AddNewTeacher/AddNewTeacherPage";
 
-axios.defaults.baseURL = "https://schools-crm-backend.onrender.com";
-// axios.defaults.baseURL = "http://localhost:3000";
+// axios.defaults.baseURL = "https://schools-crm-backend.onrender.com";
+axios.defaults.baseURL = "http://localhost:3000";
 const Router = () => {
   const token = useSelector((state: RootState) => state.auth.token);
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -46,6 +47,18 @@ const Router = () => {
           <Route path="/students" element={<StudentsPage />} />
           <Route path="/students/:slug" element={<StudentsSlugPage />} />
           <Route path="/teachers" element={<TeachersPage />} />
+          <Route
+            path="/teachers/add"
+            element={
+              <ProtectedPage
+                requiredPermissions={["write"]}
+                requiredPrivileges={["manage_users"]}
+                fallbackPath="/404"
+              >
+                <AddNewTeacherPage />
+              </ProtectedPage>
+            }
+          />
           <Route path="/teachers/:slug" element={<TeacherSlugPage />} />
           <Route path="/settings/accounts" element={<AccountsPage />} />
           <Route path="/settings/admins" element={<AdminsPage />} />

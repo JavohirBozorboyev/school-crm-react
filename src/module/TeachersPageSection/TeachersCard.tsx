@@ -8,6 +8,7 @@ import {
   rem,
   Avatar,
   Title,
+  Badge,
 } from "@mantine/core";
 import { NavLink } from "react-router-dom";
 import { ActionIcon } from "@mantine/core";
@@ -19,28 +20,34 @@ import {
   IconPhone,
   IconTrash,
 } from "@tabler/icons-react";
+import AccessControl from "../../security/AccessControl";
 const TeachersCard = ({ item }: any) => {
   return (
     <>
       <Card padding="md" py={"lg"} radius="sm" withBorder>
+        <Flex pos={"absolute"} justify={"flex-end"} right={10} top={10}>
+          <Badge radius={"sm"} variant="light" color="cyan">
+            {item?.status}
+          </Badge>
+        </Flex>
         <Flex justify={"center"}>
           <Avatar size={"xl"} variant="light" color="blue" />
         </Flex>
 
         <Title order={4} ta={"center"} mt={"sm"}>
-          {item?.name}
+          {item?.firstname} {item?.lastname}
         </Title>
         <Text ta={"center"} mt={"xs"} c={"gray"}>
-          Informatika
+          {item?.subject}
         </Text>
 
         <Flex align="center" justify={"center"} mt={"md"} gap={"xs"}>
-          <NavLink to={`tel:+998993912505`}>
+          <NavLink to={`tel:${item?.phone}`}>
             <ActionIcon variant="light" size={"lg"} radius={"xl"}>
               <IconPhone size={18} />
             </ActionIcon>
           </NavLink>
-          <NavLink to={`sms:+998993912505`}>
+          <NavLink to={`sms:${item?.phone}`}>
             <ActionIcon variant="light" size={"lg"} radius={"xl"}>
               <IconMail size={18} />
             </ActionIcon>
@@ -48,45 +55,67 @@ const TeachersCard = ({ item }: any) => {
         </Flex>
         <Flex align="center" mt={"md"} gap={"xs"}>
           <Menu shadow="md" width={200} withArrow>
-            <Menu.Target>
-              <ActionIcon variant="light">
-                <IconDotsVertical size={16} />
-              </ActionIcon>
-            </Menu.Target>
-
+            {" "}
+            <AccessControl
+              requiredPermissions={["read"]}
+              requiredPrivileges={["view_reports"]}
+            >
+              <Menu.Target>
+                <ActionIcon variant="light">
+                  <IconDotsVertical size={16} />
+                </ActionIcon>
+              </Menu.Target>{" "}
+            </AccessControl>
             <Menu.Dropdown>
-              <Menu.Label>Active and Deactive</Menu.Label>
-              <Menu.Item
-                color="yellow"
-                leftSection={
-                  <IconHandClick style={{ width: rem(14), height: rem(14) }} />
-                }
+              <AccessControl
+                requiredPermissions={["update"]}
+                requiredPrivileges={["manage_users"]}
               >
-                Deactive
-              </Menu.Item>
+                <Menu.Label>Active and Deactive</Menu.Label>
+                <Menu.Item
+                  color="yellow"
+                  leftSection={
+                    <IconHandClick
+                      style={{ width: rem(14), height: rem(14) }}
+                    />
+                  }
+                >
+                  Deactive
+                </Menu.Item>
+              </AccessControl>
 
               <Menu.Divider />
               <Menu.Label>Edit Class</Menu.Label>
-              <Menu.Item
-                leftSection={
-                  <IconPencil style={{ width: rem(14), height: rem(14) }} />
-                }
+              <AccessControl
+                requiredPermissions={["update"]}
+                requiredPrivileges={["manage_users"]}
               >
-                Edit Class
-              </Menu.Item>
+                <Menu.Item
+                  leftSection={
+                    <IconPencil style={{ width: rem(14), height: rem(14) }} />
+                  }
+                >
+                  Edit Class
+                </Menu.Item>
+              </AccessControl>
 
-              <Menu.Item
-                color="red"
-                leftSection={
-                  <IconTrash style={{ width: rem(14), height: rem(14) }} />
-                }
+              <AccessControl
+                requiredPermissions={["delete"]}
+                requiredPrivileges={["manage_users"]}
               >
-                Delete Class
-              </Menu.Item>
+                <Menu.Item
+                  color="red"
+                  leftSection={
+                    <IconTrash style={{ width: rem(14), height: rem(14) }} />
+                  }
+                >
+                  Delete Teacher
+                </Menu.Item>
+              </AccessControl>
             </Menu.Dropdown>
           </Menu>
 
-          <NavLink to={`/teachers/${item.id}`} style={{ width: "100%" }}>
+          <NavLink to={`/teachers/${item?._id}`} style={{ width: "100%" }}>
             <Button
               color="blue"
               size="xs"

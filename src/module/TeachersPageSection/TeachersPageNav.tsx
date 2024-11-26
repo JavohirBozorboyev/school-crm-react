@@ -1,11 +1,18 @@
 import { Button, Grid, Group, Paper } from "@mantine/core";
 import { useState } from "react";
 import { Input, CloseButton } from "@mantine/core";
-import { IconSearch } from "@tabler/icons-react";
+import { IconPlus, IconSearch } from "@tabler/icons-react";
 import { SegmentedControl } from "@mantine/core";
+import AccessControl from "../../security/AccessControl";
+import { NavLink } from "react-router-dom";
 
-const TeachersPageNav = () => {
-  const [search, setSearch] = useState("");
+const TeachersPageNav = ({
+  search,
+  setSearch,
+}: {
+  search: string;
+  setSearch: (value: string) => void;
+}) => {
   const [active, setActive] = useState("active");
   return (
     <Paper mb="sm">
@@ -13,8 +20,8 @@ const TeachersPageNav = () => {
         <Grid.Col span={{ base: 12, xs: 5, sm: 4 }}>
           <Input
             placeholder="Search"
+            onChange={(event) => setSearch(event.target.value)}
             value={search}
-            onChange={(event) => setSearch(event.currentTarget.value)}
             rightSectionPointerEvents="all"
             leftSection={<IconSearch size={18} />}
             rightSection={
@@ -28,16 +35,31 @@ const TeachersPageNav = () => {
         </Grid.Col>
         <Grid.Col span={{ base: 12, xs: 7, sm: 8 }}>
           <Group justify="end" gap={"xs"}>
-            <SegmentedControl
-              data={[
-                { label: "Active", value: "active" },
-                { label: "Deactive", value: "deactive" },
-              ]}
-              value={active}
-              onChange={setActive}
-              fullWidth
-            />
-            <Button>Add new Teacher</Button>
+            <AccessControl
+              requiredPermissions={["read"]}
+              requiredPrivileges={["view_reports"]}
+            >
+              <SegmentedControl
+                data={[
+                  { label: "Active", value: "active" },
+                  { label: "Deactive", value: "deactive" },
+                ]}
+                value={active}
+                onChange={setActive}
+                fullWidth
+              />
+            </AccessControl>
+
+            <AccessControl
+              requiredPermissions={["write"]}
+              requiredPrivileges={["manage_users"]}
+            >
+              <NavLink to={"/teachers/add"}>
+                <Button leftSection={<IconPlus size={17} />}>
+                  O'qtuvchi Qo'shish
+                </Button>
+              </NavLink>
+            </AccessControl>
           </Group>
         </Grid.Col>
       </Grid>
