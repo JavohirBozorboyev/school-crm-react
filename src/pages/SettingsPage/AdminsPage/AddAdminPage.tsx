@@ -55,11 +55,7 @@ const AddAdminPage = () => {
   const AddNewAdmin = async (data: any) => {
     setLoading(true);
     try {
-      const res = await axios.post("/api/admins", data, {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-        },
-      });
+      const res = await axios.post("/api/admins", data);
       if (res.status == 201) {
         notifications.show({
           title: "Yangi Admin Qo'shildi",

@@ -31,46 +31,46 @@ const LoginPage = () => {
   });
 
   async function Login(e: { email: string; password: string }) {
-    dispatch(
-      login({
-        token: "token",
-        user: {
-          _id: "673f5b6f7e8cb972bb4e38de",
-          firstname: "John",
-          lastname: "Doe",
-          phone: "+998901234567",
-          passport: "AB1234567",
-          email: "joha@gmail.com",
-          role: "supperadmin",
-          privileges: [
-            "manage_users",
-            "view_reports",
-            "manage_roles",
-            "manage_permissions",
-          ],
-          permissions: ["read", "write", "delete", "update"],
-        },
-      })
-    );
-    navigate("/");
-    // try {
-    //   const res = await axios.post(`/api/auth/login`, {
-    //     email: e.email,
-    //     password: e.password,
-    //   });
+    // dispatch(
+    //   login({
+    //     token: "token",
+    //     user: {
+    //       _id: "673f5b6f7e8cb972bb4e38de",
+    //       firstname: "John",
+    //       lastname: "Doe",
+    //       phone: "+998901234567",
+    //       passport: "AB1234567",
+    //       email: "joha@gmail.com",
+    //       role: "supperadmin",
+    //       privileges: [
+    //         "manage_users",
+    //         "view_reports",
+    //         "manage_roles",
+    //         "manage_permissions",
+    //       ],
+    //       permissions: ["read", "write", "delete", "update"],
+    //     },
+    //   })
+    // );
+    // navigate("/");
+    try {
+      const res = await axios.post(`/api/auth/login`, {
+        email: e.email,
+        password: e.password,
+      });
 
-    //   if (res.status == 200) {
-    //     dispatch(
-    //       login({
-    //         token: res?.data?.token,
-    //         user: res?.data?.user,
-    //       })
-    //     );
-    //     navigate("/");
-    //   }
-    // } catch (error) {
-    //   console.log(error);
-    // }
+      if (res.status == 200) {
+        dispatch(
+          login({
+            token: res?.data?.token,
+            user: res?.data?.user,
+          })
+        );
+        navigate("/");
+      }
+    } catch (error) {
+      console.log(error);
+    }
   }
   return (
     <div

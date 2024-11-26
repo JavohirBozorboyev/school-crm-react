@@ -7,7 +7,6 @@ import {
   Divider,
   PasswordInput,
   Select,
-  MultiSelect,
   Flex,
   Button,
   Text,
@@ -15,7 +14,7 @@ import {
 } from "@mantine/core";
 import { useForm } from "@mantine/form";
 import { notifications } from "@mantine/notifications";
-import { IconUserStar } from "@tabler/icons-react";
+import { IconUserHexagon } from "@tabler/icons-react";
 import axios from "axios";
 import { useState } from "react";
 import { IMaskInput } from "react-imask";
@@ -33,9 +32,9 @@ const AddNewTeacherPage = () => {
       passport: "",
       email: "",
       password: "",
-      role: "admin",
-      privileges: ["view_reports"],
-      permissions: ["read"],
+      subject: "",
+      experience: null,
+      role: "teacher",
     },
 
     validate: {
@@ -44,31 +43,30 @@ const AddNewTeacherPage = () => {
       phone: (value) => (value.length < 2 ? "Malumot yetarli emas" : null),
       passport: (value) => (value.length < 2 ? "Malumot yetarli emas" : null),
       role: (value) => (value.length < 2 ? "Malumot yetarli emas" : null),
-      privileges: (value) =>
-        value.length == 0 ? "Malumot yetarli emas" : null,
-      permissions: (value) =>
-        value.length == 0 ? "Malumot yetarli emas" : null,
-      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Invalid email"),
+      subject: (value) => (value.length < 2 ? "Malumot yetarli emas" : null),
+      experience: (value) => (value == null ? "Malumot yetarli emas" : null),
+
+      email: (value) => (/^\S+@\S+$/.test(value) ? null : "Email xato"),
       password: (value) => (value.length == 0 ? "Malumot yetarli emas" : null),
     },
   });
 
-  const AddNewAdmin = async (data: any) => {
+  const AddNewTeacher = async (data: any) => {
     setLoading(true);
+
     try {
-      const res = await axios.post("/api/admins", data, {
-        headers: {
-          Authorization: `Bearer ${sessionStorage.getItem("token")}`,
-        },
+      const res = await axios.post("/api/teachers", {
+        ...data,
+        role: "teacher",
       });
       if (res.status == 201) {
         notifications.show({
-          title: "Yangi Admin Qo'shildi",
+          title: "Yangi O'qtuvchi Qo'shildi",
           message: "",
           withBorder: true,
         });
         setLoading(false);
-        navigate("/settings/admins");
+        navigate("/teachers");
       }
     } catch (error: any) {
       if (error.response?.status === 409) {
@@ -88,13 +86,13 @@ const AddNewTeacherPage = () => {
       <Title order={3} tt={"uppercase"}>
         Yangi O'qtuvchi Qo'shish
       </Title>
-      <form onSubmit={form.onSubmit((e) => AddNewAdmin(e))}>
+      <form onSubmit={form.onSubmit((e) => AddNewTeacher(e))}>
         <Paper withBorder p={"md"} mt={"md"}>
-          <Text mb={"sm"}>Admin Malumotlari</Text>
+          <Text mb={"sm"}>O'qtuvchi Malumotlari</Text>
           <Grid>
             <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
               <TextInput
-                placeholder="Admin Ismi"
+                placeholder="Ism"
                 label="Ism"
                 withAsterisk
                 {...form.getInputProps("firstname")}
@@ -102,7 +100,7 @@ const AddNewTeacherPage = () => {
             </Grid.Col>
             <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
               <TextInput
-                placeholder="Admin Familiyasi"
+                placeholder="Familiyas"
                 label="Familiya"
                 withAsterisk
                 {...form.getInputProps("lastname")}
@@ -112,6 +110,7 @@ const AddNewTeacherPage = () => {
               <TextInput
                 placeholder="Passport"
                 label="Passport"
+                maxLength={9}
                 withAsterisk
                 {...form.getInputProps("passport")}
               />
@@ -140,16 +139,17 @@ const AddNewTeacherPage = () => {
                 placeholder="Experience"
                 label="Experience"
                 withAsterisk
+                maxLength={2}
                 {...form.getInputProps("experience")}
               />
             </Grid.Col>
           </Grid>
           <Divider my={"md"} />
-          <Text mb={"sm"}>Tizimga Kirish Malumotlari</Text>
+          <Text mb={"sm"}>Tizimga kirish malumotlari.</Text>
           <Grid>
             <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
               <TextInput
-                placeholder="Admin Email"
+                placeholder="Email"
                 label="Email"
                 withAsterisk
                 autoComplete="off"
@@ -159,7 +159,7 @@ const AddNewTeacherPage = () => {
             </Grid.Col>
             <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
               <PasswordInput
-                placeholder="Admin Paroli"
+                placeholder="Paroli"
                 label="Parol"
                 withAsterisk
                 autoComplete="off"
@@ -174,10 +174,10 @@ const AddNewTeacherPage = () => {
             <Button
               type="submit"
               variant="filled"
-              leftSection={<IconUserStar size={17} />}
+              leftSection={<IconUserHexagon size={17} />}
               loading={loading}
             >
-              Yangi Admin Qo'shish
+              Yangi O'qtuvchi Qo'shish
             </Button>
           </Flex>
         </Paper>
