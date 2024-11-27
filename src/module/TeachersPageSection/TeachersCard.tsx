@@ -15,9 +15,7 @@ import { ActionIcon } from "@mantine/core";
 import {
   IconDotsVertical,
   IconHandClick,
-  IconMail,
   IconPencil,
-  IconPhone,
   IconTrash,
 } from "@tabler/icons-react";
 import AccessControl from "../../security/AccessControl";

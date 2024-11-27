@@ -13,7 +13,7 @@ import {
 import { login } from "../../features/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import axios from "axios";
+// import axios from "axios";
 
 const LoginPage = () => {
   const dispatch = useDispatch();
@@ -40,7 +40,7 @@ const LoginPage = () => {
           lastname: "Doe",
           phone: "+998901234567",
           passport: "AB1234567",
-          email: "joha@gmail.com",
+          email: e.email,
           role: "supperadmin",
           privileges: [
             "manage_users",
