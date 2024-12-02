@@ -27,7 +27,8 @@ import {
 import { useFullscreen } from "@mantine/hooks";
 import { NavLink } from "react-router-dom";
 import { logout } from "../../features/auth/authSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
 interface UserButtonProps extends React.ComponentPropsWithoutRef<"button"> {
   image: string;
   name: string;
@@ -70,7 +71,9 @@ function UserMenu() {
   const computedColorScheme = useComputedColorScheme("light", {
     getInitialValueInEffect: true,
   });
+
   const dispatch = useDispatch();
+  const admin = useSelector((state: RootState) => state.auth.user);
 
   const LogOut = () => {
     dispatch(logout());
@@ -105,8 +108,8 @@ function UserMenu() {
         <Menu.Target>
           <UserButton
             image="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png"
-            name="Harriette Spoonlicker"
-            email="hspoonlicker@outlook.com"
+            name={`${admin?.firstname} ${admin?.lastname}`}
+            email={admin?.email}
           />
         </Menu.Target>
 
