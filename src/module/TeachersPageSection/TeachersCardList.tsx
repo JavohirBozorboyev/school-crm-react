@@ -14,7 +14,7 @@ const TeachersCardList = ({ data, search }: { data: any; search: string }) => {
           )
           .map((item: any) => {
             return (
-              <Grid.Col key={item._id} span={{ base: 12, md: 6, lg: 4, xl: 3 }}>
+              <Grid.Col key={item._id} span={{ base: 12, xs: 6, lg: 4, xl: 3 }}>
                 <TeacherCard item={item} />
               </Grid.Col>
             );

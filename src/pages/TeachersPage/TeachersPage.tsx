@@ -5,7 +5,7 @@ import { useState } from "react";
 
 const TeachersPage = () => {
   const { data, error, isLoading } = useSWR("/api/teachers");
-  const [search, setSearch] = useState("");
+  const [search, setSearch] = useState<string>("");
   if (error) return <div>failed to load</div>;
   if (isLoading) return <div>loading...</div>;
 

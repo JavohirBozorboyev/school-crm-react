@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Title,
   Paper,
@@ -19,6 +20,17 @@ import axios from "axios";
 import { useState } from "react";
 import { IMaskInput } from "react-imask";
 import { useNavigate } from "react-router-dom";
+
+interface TeacherFormData {
+  firstname: string;
+  lastname: string;
+  phone: string;
+  passport: string;
+  email: string;
+  password: string;
+  subject: string;
+  experience: number | null;
+}
 
 const AddNewTeacherPage = () => {
   const navigate = useNavigate();
@@ -51,9 +63,8 @@ const AddNewTeacherPage = () => {
     },
   });
 
-  const AddNewTeacher = async (data: any) => {
+  const AddNewTeacher = async (data: TeacherFormData) => {
     setLoading(true);
-
     try {
       const res = await axios.post("/api/teachers", {
         ...data,
@@ -69,7 +80,7 @@ const AddNewTeacherPage = () => {
         navigate("/teachers");
       }
     } catch (error: any) {
-      if (error.response?.status === 409) {
+      if (error?.response?.status === 409) {
         notifications.show({
           title: "Xatolik",
           message: "Bu email bilan admin allaqachon mavjud:",
@@ -86,7 +97,11 @@ const AddNewTeacherPage = () => {
       <Title order={3} tt={"uppercase"}>
         Yangi O'qtuvchi Qo'shish
       </Title>
-      <form onSubmit={form.onSubmit((e) => AddNewTeacher(e))}>
+      <form
+        onSubmit={form.onSubmit((values: TeacherFormData) =>
+          AddNewTeacher(values)
+        )}
+      >
         <Paper withBorder p={"md"} mt={"md"}>
           <Text mb={"sm"}>O'qtuvchi Malumotlari</Text>
           <Grid>
@@ -119,7 +134,7 @@ const AddNewTeacherPage = () => {
               <Input.Wrapper label="Telefon raqam" withAsterisk>
                 <Input
                   component={IMaskInput}
-                  mask="+\9\9\ 800 000 00 00"
+                  mask="+{99} 800 000 00 00"
                   placeholder="+99 890 123 45 67"
                   {...form.getInputProps("phone")}
                 />

@@ -19,7 +19,26 @@ import {
   IconTrash,
 } from "@tabler/icons-react";
 import AccessControl from "../../security/AccessControl";
+import { notifications } from "@mantine/notifications";
+import { mutate } from "swr";
+import axios from "axios";
 const TeachersCard = ({ item }: any) => {
+  const deleteTeacher = async (id: number) => {
+    try {
+      const res = await axios.delete(`/api/teachers/${id}`);
+      if (res.status == 200) {
+        mutate("/api/teachers");
+        close();
+        notifications.show({
+          title: "Teacher O'chirildi",
+          message: "",
+          withBorder: true,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
   return (
     <>
       <Card padding="md" py={"lg"} radius="sm" withBorder>
@@ -106,6 +125,7 @@ const TeachersCard = ({ item }: any) => {
                   leftSection={
                     <IconTrash style={{ width: rem(14), height: rem(14) }} />
                   }
+                  onClick={() => deleteTeacher(item?._id)}
                 >
                   Delete Teacher
                 </Menu.Item>
