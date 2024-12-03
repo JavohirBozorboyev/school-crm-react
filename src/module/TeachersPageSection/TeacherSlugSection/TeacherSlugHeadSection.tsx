@@ -9,9 +9,18 @@ import {
   Text,
 } from "@mantine/core";
 import { IconPhone, IconMail, IconId } from "@tabler/icons-react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
+import useSWR from "swr";
 
 const TeacherSlugHeadSection = () => {
+  const { slug } = useParams();
+  const { data, error, isLoading } = useSWR(`/api/teachers/${slug}`);
+
+  if (error) return <div>ошибка загрузки</div>;
+  if (isLoading) return <div>загрузка...</div>;
+
+  console.log(data);
+
   return (
     <div>
       <Paper withBorder>
@@ -19,9 +28,9 @@ const TeacherSlugHeadSection = () => {
           <Avatar variant="filled" color={"blue"} size={"xl"} mt={"lg"} />
         </Paper>
         <Box mt={"50px"} p={"md"}>
-          <Title order={2}>John doe</Title>
+          <Title order={3}>{data?.firstname + " " + data?.lastname}</Title>
           <Text c={"dimmed"} mt={"xs"}>
-            Fan: Informatika
+            Fan: {data?.subject}
           </Text>
         </Box>
         <Grid p={"md"}>
@@ -31,11 +40,11 @@ const TeacherSlugHeadSection = () => {
                 Phone:
               </Text>
               <Flex mt={"sm"} align={"center"} gap={"sm"}>
-                <ActionIcon size={"lg"} radius={"xl"}>
-                  <IconPhone size={"18"} />
+                <ActionIcon size={"md"} radius={"xl"}>
+                  <IconPhone size={"16"} />
                 </ActionIcon>
-                <Text size="md" c={"blue"}>
-                  +998 99 391 25 05
+                <Text size="sm" c={"blue"}>
+                  {data?.phone}
                 </Text>
               </Flex>
             </NavLink>
@@ -46,11 +55,11 @@ const TeacherSlugHeadSection = () => {
                 Email:
               </Text>
               <Flex mt={"sm"} align={"center"} gap={"sm"}>
-                <ActionIcon size={"lg"} radius={"xl"}>
-                  <IconMail size={"18"} />
+                <ActionIcon size={"md"} radius={"xl"}>
+                  <IconMail size={"16"} />
                 </ActionIcon>
-                <Text size="md" c={"blue"}>
-                  bmmaktab@gmail.com
+                <Text size="sm" c={"blue"}>
+                  {data?.email}
                 </Text>
               </Flex>
             </NavLink>
@@ -60,11 +69,11 @@ const TeacherSlugHeadSection = () => {
               Passport:
             </Text>
             <Flex mt={"sm"} align={"center"} gap={"sm"}>
-              <ActionIcon size={"lg"} radius={"xl"}>
-                <IconId size={"18"} />
+              <ActionIcon size={"md"} radius={"xl"}>
+                <IconId size={"16"} />
               </ActionIcon>
-              <Text size="md" c={"blue"}>
-                AB 100 12 12
+              <Text size="sm" c={"blue"}>
+                {data?.passport}
               </Text>
             </Flex>
           </Grid.Col>
