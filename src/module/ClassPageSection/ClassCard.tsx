@@ -23,7 +23,7 @@ const ClassCard = ({ item }: any) => {
       <Card padding="md" radius="sm" withBorder>
         <Group justify="space-between" mb="xs" align="center">
           <Text fw={500} size="lg">
-            {item.id}-Blue
+            {item?.title}
           </Text>
           <Badge variant="light" color="blue">
             Active
