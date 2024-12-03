@@ -18,6 +18,8 @@ import {
   IconTrash,
 } from "@tabler/icons-react";
 const ClassCard = ({ item }: any) => {
+  console.log(item);
+
   return (
     <>
       <Card padding="md" radius="sm" withBorder>
@@ -25,8 +27,11 @@ const ClassCard = ({ item }: any) => {
           <Text fw={500} size="lg">
             {item?.title}
           </Text>
-          <Badge variant="light" color="blue">
-            Active
+          <Badge
+            variant="light"
+            color={item?.status === "active" ? "cyan" : "red"}
+          >
+            {item?.status}
           </Badge>
         </Group>
         <Group align="center">
@@ -34,7 +39,7 @@ const ClassCard = ({ item }: any) => {
             Student:
           </Text>
           <Text size="sm" fw={"600"}>
-            12
+            {item?.studentCount}
           </Text>
         </Group>
         <Group align="center">
@@ -42,7 +47,7 @@ const ClassCard = ({ item }: any) => {
             Teacher:
           </Text>
           <Text size="sm" fw={"600"}>
-            {item.name}
+            {item?.teacher}
           </Text>
         </Group>
 
@@ -86,7 +91,7 @@ const ClassCard = ({ item }: any) => {
             </Menu.Dropdown>
           </Menu>
 
-          <NavLink to={`/class/${item.id}`} style={{ width: "100%" }}>
+          <NavLink to={`/class/${item._id}`} style={{ width: "100%" }}>
             <Button
               color="blue"
               size="xs"

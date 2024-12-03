@@ -19,7 +19,6 @@ const TeacherSlugHeadSection = () => {
   if (error) return <div>ошибка загрузки</div>;
   if (isLoading) return <div>загрузка...</div>;
 
-  console.log(data);
 
   return (
     <div>

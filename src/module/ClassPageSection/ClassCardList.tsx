@@ -1,8 +1,13 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import useSWR from "swr";
 import ClassCard from "./ClassCard";
 import { Grid } from "@mantine/core";
 
-const ClassCardList = ({ data }: any) => {
+const ClassCardList = () => {
+  const { data, error, isLoading } = useSWR("/api/groups");
+
+  if (error) return <div>ошибка загрузки</div>;
+  if (isLoading) return <div>загрузка...</div>;
   return (
     <div>
       <Grid>
