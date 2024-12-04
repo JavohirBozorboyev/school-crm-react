@@ -8,14 +8,10 @@ import {
   IconPlus,
   IconTrash,
 } from "@tabler/icons-react";
-import useSWR from "swr";
+import { Link } from "react-router-dom";
 
-const ClassSlugTable = () => {
-  const { data, error, isLoading } = useSWR(
-    "https://jsonplaceholder.typicode.com/users"
-  );
-  if (error) return <div>ошибка загрузки</div>;
-  if (isLoading) return <div>загрузка...</div>;
+const ClassSlugTable = ({ data }: any) => {
+  console.log(data);
 
   return (
     <>
@@ -36,25 +32,29 @@ const ClassSlugTable = () => {
           </Table.Thead>
           <Table.Tbody>
             {data?.map((element: any, i: number) => (
-              <Table.Tr key={element.name}>
+              <Table.Tr key={element._id}>
                 <Table.Td w={50} ta={"center"}>
                   {i + 1}
                 </Table.Td>
-                <Table.Td>{element.name}</Table.Td>
-                <Table.Td>AA1234567</Table.Td>
+                <Table.Td>{element?.fullname}</Table.Td>
+                <Table.Td>{element?.passport}</Table.Td>
                 <Table.Td>
-                  <ActionIcon variant="light" radius={"xl"}>
-                    <IconPhone size={16} />
-                  </ActionIcon>
+                  <Link to={`tel:${element?.phone}`}>
+                    <ActionIcon variant="light" radius={"xl"}>
+                      <IconPhone size={16} />
+                    </ActionIcon>
+                  </Link>
                   <ActionIcon variant="light" radius={"xl"} disabled ml={"xs"}>
                     <IconBrandTelegram size={16} />
                   </ActionIcon>
                 </Table.Td>
-                <Table.Td>{element.name}</Table.Td>
+                <Table.Td>{element?.father}</Table.Td>
                 <Table.Td>
-                  <ActionIcon variant="light" radius={"xl"}>
-                    <IconPhone size={16} />
-                  </ActionIcon>
+                  <Link to={`tel:${element?.fatherPhone}`}>
+                    <ActionIcon variant="light" radius={"xl"}>
+                      <IconPhone size={16} />
+                    </ActionIcon>
+                  </Link>
                   <ActionIcon variant="light" radius={"xl"} disabled ml={"xs"}>
                     <IconBrandTelegram size={16} />
                   </ActionIcon>
@@ -121,13 +121,15 @@ const ClassSlugTable = () => {
                   </ActionIcon>
                 </Table.Td>
                 <Table.Td ta={"center"}>
-                  <Button
-                    variant="subtle"
-                    size="xs"
-                    rightSection={<IconArrowRight size={16} />}
-                  >
-                    Malumotlar
-                  </Button>
+                  <Link to={`/students/${element?._id}`}>
+                    <Button
+                      variant="subtle"
+                      size="xs"
+                      rightSection={<IconArrowRight size={16} />}
+                    >
+                      Malumotlar
+                    </Button>
+                  </Link>
                 </Table.Td>
               </Table.Tr>
             ))}

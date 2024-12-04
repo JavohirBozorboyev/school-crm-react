@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Breadcrumbs,
   Anchor,
@@ -11,17 +12,17 @@ import {
   ActionIcon,
 } from "@mantine/core";
 import { IconBook2 } from "@tabler/icons-react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
-const ClassSlugNav = () => {
+const ClassSlugNav = ({ data }: any) => {
   const navigate = useNavigate();
 
-  const { slug } = useParams();
+  console.log(data);
 
   const links = [
     { title: "Dashboard", href: "/" },
     { title: "Class", href: "/class" },
-    { title: slug, href: "#" },
+    { title: data?.title, href: "#" },
   ].map((item, index) => (
     <Anchor key={index} onClick={() => navigate(item?.href)}>
       {item.title}
@@ -38,7 +39,7 @@ const ClassSlugNav = () => {
             <Divider my={"xs"} />
             <Group>
               <Avatar size={"xl"} radius={"sm"} />
-              <Text size="xl">John Doe</Text>
+              <Text size="xl">{data?.teacher}</Text>
             </Group>
           </Grid.Col>
           <Grid.Col span={{ base: 12, md: 6, lg: 4 }}>
@@ -90,7 +91,7 @@ const ClassSlugNav = () => {
                   radius={"sm"}
                   size={"sm"}
                 />
-                <Text size="sm" >Ulugbek H</Text>
+                <Text size="sm">Ulugbek H</Text>
               </Group>
               <Group mt={"sm"} gap={"xs"}>
                 <Avatar
