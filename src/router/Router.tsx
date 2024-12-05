@@ -21,6 +21,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../store";
 import axios from "axios";
 import AddNewTeacherPage from "../pages/TeachersPage/AddNewTeacher/AddNewTeacherPage";
+import AddNewClassPage from "../pages/ClassPage/AddNewClassPage/AddNewClassPage";
 
 // axios.defaults.baseURL = "https://schools-crm-backend.onrender.com";
 axios.defaults.baseURL = "http://localhost:3000";
@@ -44,6 +45,18 @@ const Router = () => {
           <Route path="/finance/payment" element={<PaymentPage />} />
           <Route path="/class" element={<ClassPage />} />
           <Route path="/class/:slug" element={<ClassSlugPage />} />
+          <Route
+            path="/class/add"
+            element={
+              <ProtectedPage
+                requiredPermissions={["write"]}
+                requiredPrivileges={["manage_users"]}
+                fallbackPath="/404"
+              >
+                <AddNewClassPage />
+              </ProtectedPage>
+            }
+          />
           <Route path="/students" element={<StudentsPage />} />
           <Route path="/students/:slug" element={<StudentsSlugPage />} />
           <Route path="/teachers" element={<TeachersPage />} />

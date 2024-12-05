@@ -17,7 +17,6 @@ import { useNavigate } from "react-router-dom";
 const ClassSlugNav = ({ data }: any) => {
   const navigate = useNavigate();
 
-  console.log(data);
 
   const links = [
     { title: "Dashboard", href: "/" },

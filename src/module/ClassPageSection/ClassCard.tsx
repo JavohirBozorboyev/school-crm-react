@@ -18,7 +18,6 @@ import {
   IconTrash,
 } from "@tabler/icons-react";
 const ClassCard = ({ item }: any) => {
-  console.log(item);
 
   return (
     <>

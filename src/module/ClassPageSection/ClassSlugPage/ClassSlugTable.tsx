@@ -11,7 +11,6 @@ import {
 import { Link } from "react-router-dom";
 
 const ClassSlugTable = ({ data }: any) => {
-  console.log(data);
 
   return (
     <>

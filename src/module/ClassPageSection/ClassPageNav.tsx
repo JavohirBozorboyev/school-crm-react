@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Input, CloseButton } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import { SegmentedControl } from "@mantine/core";
+import { Link } from "react-router-dom";
+import AccessControl from "../../security/AccessControl";
 
 const ClassPageNav = () => {
   const [search, setSearch] = useState("");
@@ -37,7 +39,14 @@ const ClassPageNav = () => {
               onChange={setActive}
               fullWidth
             />
-            <Button>Add new Class</Button>
+            <AccessControl
+              requiredPermissions={["write"]}
+              requiredPrivileges={["manage_users"]}
+            >
+              <Link to="/class/add">
+                <Button>Add new Class</Button>
+              </Link>
+            </AccessControl>
           </Group>
         </Grid.Col>
       </Grid>
