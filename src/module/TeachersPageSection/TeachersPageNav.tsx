@@ -1,5 +1,4 @@
 import { Button, Grid, Group, Paper } from "@mantine/core";
-import { useState } from "react";
 import { Input, CloseButton } from "@mantine/core";
 import { IconPlus, IconSearch } from "@tabler/icons-react";
 import { SegmentedControl } from "@mantine/core";
@@ -10,25 +9,31 @@ const TeachersPageNav = ({
   search,
   setSearch,
 }: {
-  search: string;
-  setSearch: (value: string) => void;
+  search: {
+    search: string;
+    status: string;
+  };
+  setSearch: React.Dispatch<
+    React.SetStateAction<{ search: string; status: string }>
+  >;
 }) => {
-  const [active, setActive] = useState("active");
   return (
     <Paper mb="sm">
       <Grid justify="center" align="center">
         <Grid.Col span={{ base: 12, xs: 5, sm: 4 }}>
           <Input
             placeholder="Search"
-            onChange={(event) => setSearch(event.target.value)}
-            value={search}
+            value={search.search}
+            onChange={(event) =>
+              setSearch({ ...search, search: event.target.value })
+            }
             rightSectionPointerEvents="all"
             leftSection={<IconSearch size={18} />}
             rightSection={
               <CloseButton
                 aria-label="Clear input"
-                onClick={() => setSearch("")}
-                style={{ display: search ? undefined : "none" }}
+                onClick={() => setSearch({ ...search, search: "" })}
+                style={{ display: search.search ? undefined : "none" }}
               />
             }
           />
@@ -44,8 +49,8 @@ const TeachersPageNav = ({
                   { label: "Active", value: "active" },
                   { label: "Deactive", value: "deactive" },
                 ]}
-                value={active}
-                onChange={setActive}
+                defaultValue={search.status}
+                onChange={(e) => setSearch({ ...search, status: e })}
                 fullWidth
               />
             </AccessControl>

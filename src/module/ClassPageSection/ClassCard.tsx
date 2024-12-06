@@ -31,7 +31,7 @@ const ClassCard = ({ item }: any) => {
     try {
       const res = await axios.delete(`/api/groups/${item._id}`);
       if (res.status == 200) {
-        mutate("/api/groups");
+        mutate(`/api/groups?status=${item.status}`);
         close();
         notifications.show({
           title: "Sinf o'chirildi",
@@ -44,35 +44,19 @@ const ClassCard = ({ item }: any) => {
     }
   };
 
-  const DeactiveClass = async () => {
+  const ActiveAndDeactive = async (status: string) => {
     try {
       const res = await axios.patch(`/api/groups/${item._id}`, {
-        status: "deactive",
+        status: status,
       });
-      if (res.status == 200) {
-        mutate("/api/groups");
-        handlers.close();
-        notifications.show({
-          title: "Sinf deactive",
-          message: "",
-          withBorder: true,
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
-  const ActiveClass = async () => {
-    try {
-      const res = await axios.patch(`/api/groups/${item._id}`, {
-        status: "active",
-      });
       if (res.status == 200) {
-        mutate("/api/groups");
+        mutate(
+          `/api/groups?status=${status == "active" ? "deactive" : "active"}`
+        );
         handlers.close();
         notifications.show({
-          title: "Sinf active",
+          title: `Sinf ${status}`,
           message: "",
           withBorder: true,
         });
@@ -232,11 +216,14 @@ const ClassCard = ({ item }: any) => {
             Bekor qilish
           </Button>
           {item.status == "deactive" ? (
-            <Button color="blue" onClick={ActiveClass}>
+            <Button color="blue" onClick={() => ActiveAndDeactive("active")}>
               Active Class
             </Button>
           ) : (
-            <Button color="yellow" onClick={DeactiveClass}>
+            <Button
+              color="yellow"
+              onClick={() => ActiveAndDeactive("deactive")}
+            >
               Deactive Class
             </Button>
           )}

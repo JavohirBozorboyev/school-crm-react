@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Button, Grid, Group, Paper } from "@mantine/core";
 import { Input, CloseButton } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
@@ -6,7 +5,18 @@ import { SegmentedControl } from "@mantine/core";
 import { Link } from "react-router-dom";
 import AccessControl from "../../security/AccessControl";
 
-const ClassPageNav = ({ search, setSearch }: any) => {
+const ClassPageNav = ({
+  search,
+  setSearch,
+}: {
+  search: {
+    search: string;
+    active: string;
+  };
+  setSearch: React.Dispatch<
+    React.SetStateAction<{ search: string; active: string }>
+  >;
+}) => {
   return (
     <Paper mb="sm">
       <Grid justify="center" align="center">
