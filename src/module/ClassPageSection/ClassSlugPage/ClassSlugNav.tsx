@@ -12,11 +12,10 @@ import {
   ActionIcon,
 } from "@mantine/core";
 import { IconBook2 } from "@tabler/icons-react";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 const ClassSlugNav = ({ data }: any) => {
   const navigate = useNavigate();
-
 
   const links = [
     { title: "Dashboard", href: "/" },
@@ -28,6 +27,7 @@ const ClassSlugNav = ({ data }: any) => {
     </Anchor>
   ));
 
+
   return (
     <div>
       <Breadcrumbs>{links}</Breadcrumbs>
@@ -38,7 +38,11 @@ const ClassSlugNav = ({ data }: any) => {
             <Divider my={"xs"} />
             <Group>
               <Avatar size={"xl"} radius={"sm"} />
-              <Text size="xl">{data?.teacher}</Text>
+              <Text size="xl">
+                {data?.teacher == null
+                  ? "Mavjud emas"
+                  : data?.teacher?.firstname + " " + data?.teacher?.lastname}
+              </Text>
             </Group>
           </Grid.Col>
           <Grid.Col span={{ base: 12, md: 6, lg: 4 }}>
@@ -49,30 +53,16 @@ const ClassSlugNav = ({ data }: any) => {
               spacing="xs"
               verticalSpacing="xs"
             >
-              <Group mt={"sm"} gap={"xs"}>
-                <ActionIcon variant="light">
-                  <IconBook2 size={16} />
-                </ActionIcon>
-                <Text size="sm">Informatika</Text>
-              </Group>
-              <Group mt={"sm"} gap={"xs"}>
-                <ActionIcon variant="light">
-                  <IconBook2 size={16} />
-                </ActionIcon>
-                <Text size="sm">Matematika</Text>
-              </Group>
-              <Group mt={"sm"} gap={"xs"}>
-                <ActionIcon variant="light">
-                  <IconBook2 size={16} />
-                </ActionIcon>
-                <Text size="sm">Ingliz-tili</Text>
-              </Group>
-              <Group mt={"sm"} gap={"xs"}>
-                <ActionIcon variant="light">
-                  <IconBook2 size={16} />
-                </ActionIcon>
-                <Text size="sm">Rus-tili</Text>
-              </Group>
+              {data?.subjectTeacher?.map((item: any) => {
+                return (
+                  <Group mt={"sm"} gap={"xs"} key={item?._id}>
+                    <ActionIcon variant="light">
+                      <IconBook2 size={16} />
+                    </ActionIcon>
+                    <Text size="sm">{item?.subject}</Text>
+                  </Group>
+                );
+              })}
             </SimpleGrid>
           </Grid.Col>
           <Grid.Col span={{ base: 12, md: 6, lg: 4 }}>
@@ -83,42 +73,23 @@ const ClassSlugNav = ({ data }: any) => {
               spacing="xs"
               verticalSpacing="xs"
             >
-              <Group mt={"sm"} gap={"xs"}>
-                <Avatar
-                  variant="light"
-                  color="blue"
-                  radius={"sm"}
-                  size={"sm"}
-                />
-                <Text size="sm">Ulugbek H</Text>
-              </Group>
-              <Group mt={"sm"} gap={"xs"}>
-                <Avatar
-                  variant="light"
-                  color="blue"
-                  radius={"sm"}
-                  size={"sm"}
-                />
-                <Text size="sm">Ulugbek H</Text>
-              </Group>
-              <Group mt={"sm"} gap={"xs"}>
-                <Avatar
-                  variant="light"
-                  color="blue"
-                  radius={"sm"}
-                  size={"sm"}
-                />
-                <Text size="sm">Ulugbek H</Text>
-              </Group>
-              <Group mt={"sm"} gap={"xs"}>
-                <Avatar
-                  variant="light"
-                  color="blue"
-                  radius={"sm"}
-                  size={"sm"}
-                />
-                <Text size="sm">Ulugbek H</Text>
-              </Group>
+              {data?.subjectTeacher?.map((item: any) => {
+                return (
+                  <Link to={`/teachers/${item?._id}`} key={item?._id}>
+                    <Group mt={"sm"} gap={"xs"}>
+                      <Avatar
+                        variant="light"
+                        color="blue"
+                        radius={"sm"}
+                        size={"sm"}
+                      />
+                      <Text size="sm" c={"blue"} td={"underline"}>
+                        {item?.firstname + " " + item?.lastname}
+                      </Text>
+                    </Group>
+                  </Link>
+                );
+              })}
             </SimpleGrid>
           </Grid.Col>
         </Grid>

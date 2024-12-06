@@ -18,7 +18,6 @@ import {
   IconTrash,
 } from "@tabler/icons-react";
 const ClassCard = ({ item }: any) => {
-
   return (
     <>
       <Card padding="md" radius="sm" withBorder>
@@ -46,7 +45,11 @@ const ClassCard = ({ item }: any) => {
             Teacher:
           </Text>
           <Text size="sm" fw={"600"}>
-            {item?.teacher}
+            {item?.teacherInfo == null
+              ? "Mavjud emas"
+              : item?.teacherInfo?.firstname +
+                " " +
+                item?.teacherInfo?.lastname}
           </Text>
         </Group>
 
