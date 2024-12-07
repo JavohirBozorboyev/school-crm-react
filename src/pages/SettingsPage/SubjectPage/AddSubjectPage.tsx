@@ -18,7 +18,7 @@ import { useState } from "react";
 import useSWR from "swr";
 
 const AddSubjectPage = () => {
-  const { data, error, isLoading } = useSWR(`/api/teachers`);
+  const { data, error, isLoading } = useSWR(`/api/teachers?status=active`);
 
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);

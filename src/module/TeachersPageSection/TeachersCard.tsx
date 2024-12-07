@@ -87,21 +87,9 @@ const TeachersCard = ({ item }: any) => {
           {item?.firstname} {item?.lastname}
         </Title>
         <Text ta={"center"} mt={"xs"} c={"gray"} size="sm">
-          {item?.subject}
+          {item?.subject?.title}
         </Text>
 
-        {/* <Flex align="center" justify={"center"} mt={"md"} gap={"xs"}>
-          <NavLink to={`tel:${item?.phone}`}>
-            <ActionIcon variant="light" size={"lg"} radius={"xl"}>
-              <IconPhone size={18} />
-            </ActionIcon>
-          </NavLink>
-          <NavLink to={`sms:${item?.phone}`}>
-            <ActionIcon variant="light" size={"lg"} radius={"xl"}>
-              <IconMail size={18} />
-            </ActionIcon>
-          </NavLink>
-        </Flex> */}
         <Flex align="center" mt={"md"} gap={"xs"}>
           <Menu shadow="md" width={200} withArrow>
             {" "}

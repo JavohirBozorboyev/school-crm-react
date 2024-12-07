@@ -19,7 +19,6 @@ const TeacherSlugHeadSection = () => {
   if (error) return <div>ошибка загрузки</div>;
   if (isLoading) return <div>загрузка...</div>;
 
-
   return (
     <div>
       <Paper withBorder>
@@ -29,7 +28,7 @@ const TeacherSlugHeadSection = () => {
         <Box mt={"50px"} p={"md"}>
           <Title order={3}>{data?.firstname + " " + data?.lastname}</Title>
           <Text c={"dimmed"} mt={"xs"}>
-            Fan: {data?.subject}
+            Fan: {data?.subject?.title}
           </Text>
         </Box>
         <Grid p={"md"}>

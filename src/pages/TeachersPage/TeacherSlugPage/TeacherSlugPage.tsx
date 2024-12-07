@@ -5,7 +5,6 @@ const TeacherSlugPage = () => {
   return (
     <div>
       <TeacherSlugHeadSection />
-
       <TeacherSlugSalaryList />
     </div>
   );

@@ -20,6 +20,7 @@ import axios from "axios";
 import { useState } from "react";
 import { IMaskInput } from "react-imask";
 import { useNavigate } from "react-router-dom";
+import useSWR from "swr";
 
 interface TeacherFormData {
   firstname: string;
@@ -33,6 +34,8 @@ interface TeacherFormData {
 }
 
 const AddNewTeacherPage = () => {
+  const { data } = useSWR(`/api/subjects`);
+
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const form = useForm({
@@ -92,6 +95,13 @@ const AddNewTeacherPage = () => {
       setLoading(false);
     }
   };
+  const SubjectSellect = data?.map((item: { _id: any; title: string }) => {
+    return {
+      value: item._id,
+      label: item?.title,
+    };
+  });
+
   return (
     <div>
       <Title order={3} tt={"uppercase"}>
@@ -134,7 +144,7 @@ const AddNewTeacherPage = () => {
               <Input.Wrapper label="Telefon raqam" withAsterisk>
                 <Input
                   component={IMaskInput}
-                  mask="+{99} 800 000 00 00"
+                  mask="+{998} 00 000 00 00"
                   placeholder="+99 890 123 45 67"
                   {...form.getInputProps("phone")}
                 />
@@ -142,9 +152,9 @@ const AddNewTeacherPage = () => {
             </Grid.Col>
             <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
               <Select
-                label="Subject"
-                placeholder="Subject"
-                data={["React", "Angular", "Vue", "Svelte"]}
+                label="Fan"
+                placeholder="Fan"
+                data={SubjectSellect}
                 withAsterisk
                 {...form.getInputProps("subject")}
               />
