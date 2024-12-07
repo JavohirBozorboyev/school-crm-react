@@ -107,7 +107,7 @@ function UserMenu() {
       <Menu withArrow>
         <Menu.Target>
           <UserButton
-            image="https://raw.githubusercontent.com/mantinedev/mantine/master/.demo/avatars/avatar-1.png"
+            image=""
             name={`${admin?.firstname} ${admin?.lastname}`}
             email={admin?.email}
           />

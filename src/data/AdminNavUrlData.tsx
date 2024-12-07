@@ -75,6 +75,10 @@ const AdminNavUrlData = [
         name: "Admins",
         url: "/settings/admins",
       },
+      {
+        name: "Subjects",
+        url: "/settings/subjects",
+      },
     ],
   },
 ];

@@ -1,3 +1,5 @@
+/* eslint-disable no-nonoctal-decimal-escape */
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Button,
   Divider,
@@ -115,8 +117,8 @@ const AddAdminPage = () => {
               <Input.Wrapper label="Telefon raqam" withAsterisk>
                 <Input
                   component={IMaskInput}
-                  mask="+\9\9\8 (00) 000-00-00"
-                  placeholder="+998 (90) 123-45-67"
+                  mask="+\9\9\8 90 000 00 00"
+                  placeholder="+998 90 000 00 00"
                   {...form.getInputProps("phone")}
                 />
               </Input.Wrapper>

@@ -22,6 +22,8 @@ import { RootState } from "../store";
 import axios from "axios";
 import AddNewTeacherPage from "../pages/TeachersPage/AddNewTeacher/AddNewTeacherPage";
 import AddNewClassPage from "../pages/ClassPage/AddNewClassPage/AddNewClassPage";
+import SubjectPage from "../pages/SettingsPage/SubjectPage/SubjectPage";
+import AddSubjectPage from "../pages/SettingsPage/SubjectPage/AddSubjectPage";
 
 // axios.defaults.baseURL = "https://schools-crm-backend.onrender.com";
 axios.defaults.baseURL = "http://localhost:3000";
@@ -75,6 +77,35 @@ const Router = () => {
           <Route path="/teachers/:slug" element={<TeacherSlugPage />} />
           <Route path="/settings/accounts" element={<AccountsPage />} />
           <Route path="/settings/admins" element={<AdminsPage />} />
+          <Route
+            path="/settings/subjects"
+            element={
+              <ProtectedPage
+                requiredPermissions={["read"]}
+                requiredPrivileges={["view_reports"]}
+                fallbackPath="/404"
+              >
+                <SubjectPage />
+              </ProtectedPage>
+            }
+          />
+          <Route
+            path="/settings/subjects/add"
+            element={
+              <ProtectedPage
+                requiredPermissions={["read", "write", "delete", "update"]}
+                requiredPrivileges={[
+                  "manage_users",
+                  "view_reports",
+                  "manage_roles",
+                  "manage_permissions",
+                ]}
+                fallbackPath="/404"
+              >
+                <AddSubjectPage />
+              </ProtectedPage>
+            }
+          />
           <Route
             path="/settings/admins/add"
             element={
