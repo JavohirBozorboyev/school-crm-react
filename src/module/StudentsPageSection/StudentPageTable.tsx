@@ -18,12 +18,28 @@ import {
 import { Link, NavLink } from "react-router-dom";
 import useSWR from "swr";
 import AccessControl from "../../security/AccessControl";
+import { useEffect, useState } from "react";
+const StudentPageTable = ({ filter }: any) => {
+  const [pagination, setPagination] = useState({
+    page: 1,
+    limt: 5,
+  });
+  const [debouncedFilter, setDebouncedFilter] = useState(filter);
 
-const StudentPageTable = () => {
-  const { data, error, isLoading } = useSWR("/api/students");
+  useEffect(() => {
+    const debounceTimeout = setTimeout(() => {
+      setDebouncedFilter(filter);
+    }, 1000);
+
+    return () => clearTimeout(debounceTimeout);
+  }, [filter]);
+  const { data, error, isLoading } = useSWR(
+    `/api/students?page=${pagination.page}&limit=${pagination.limt}&search=${
+      debouncedFilter?.search || ""
+    }`
+  );
   if (error) return <div>ошибка загрузки</div>;
   if (isLoading) return <div>загрузка...</div>;
-
 
   return (
     <>
@@ -55,7 +71,7 @@ const StudentPageTable = () => {
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
-            {data?.map((item: any, i: number) => (
+            {data?.students?.map((item: any, i: number) => (
               <Table.Tr key={i}>
                 <Table.Td w={50} ta={"center"}>
                   {i + 1}
@@ -142,7 +158,14 @@ const StudentPageTable = () => {
           </Table.Tbody>
         </Table>
       </Table.ScrollContainer>
-      <Pagination total={10} mt={"md"} />
+      <Pagination
+        total={data?.totalPages}
+        mt={"md"}
+        onChange={(e) => {
+          setPagination({ ...pagination, page: e });
+        }}
+        value={data?.currentPage}
+      />
     </>
   );
 };

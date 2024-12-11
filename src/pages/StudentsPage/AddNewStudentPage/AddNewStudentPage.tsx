@@ -26,7 +26,7 @@ const AddNewStudentPage = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState(false);
   const { data: subject, error: error1 } = useSWR("/api/subjects");
-  const { data: groups, error: error2 } = useSWR("/api/groups");
+  const { data: groups, error: error2 } = useSWR("/api/groups?status=active");
 
   const SubjectSellectData = subject?.map(
     (item: { _id: string; title: string }) => {
@@ -107,7 +107,7 @@ const AddNewStudentPage = () => {
                 label="Passport"
                 withAsterisk
                 {...form.getInputProps("passport")}
-                max={9}
+                maxLength={9}
               />
             </Grid.Col>
 

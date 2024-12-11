@@ -6,24 +6,37 @@ import { SegmentedControl } from "@mantine/core";
 import AccessControl from "../../security/AccessControl";
 import { NavLink } from "react-router-dom";
 
-const StudentPageNav = () => {
-  const [search, setSearch] = useState("");
+const StudentPageNav = ({
+  filter,
+  setFilter,
+}: {
+  filter: {
+    search: string;
+    status: string;
+  };
+  setFilter: React.Dispatch<
+    React.SetStateAction<{ search: string; status: string }>
+  >;
+}) => {
   const [active, setActive] = useState("active");
+
   return (
     <Paper mb="sm">
       <Grid justify="center" align="center">
         <Grid.Col span={{ base: 12, xs: 5, sm: 4 }}>
           <Input
             placeholder="Search"
-            value={search}
-            onChange={(event) => setSearch(event.currentTarget.value)}
+            value={filter?.search}
+            onChange={(event) =>
+              setFilter({ ...filter, search: event.target.value })
+            }
             rightSectionPointerEvents="all"
             leftSection={<IconSearch size={18} />}
             rightSection={
               <CloseButton
                 aria-label="Clear input"
-                onClick={() => setSearch("")}
-                style={{ display: search ? undefined : "none" }}
+                onClick={() => setFilter({ ...filter, search: "" })}
+                style={{ display: filter.search ? undefined : "none" }}
               />
             }
           />
