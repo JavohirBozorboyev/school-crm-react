@@ -3,6 +3,8 @@ import { useState } from "react";
 import { Input, CloseButton } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import { SegmentedControl } from "@mantine/core";
+import AccessControl from "../../security/AccessControl";
+import { NavLink } from "react-router-dom";
 
 const StudentPageNav = () => {
   const [search, setSearch] = useState("");
@@ -28,7 +30,9 @@ const StudentPageNav = () => {
         </Grid.Col>
         <Grid.Col span={{ base: 12, xs: 7, sm: 8 }}>
           <Group justify="end" gap={"xs"}>
-            <Button variant="filled" disabled color="yellow" >Xabar Yuborish</Button>
+            <Button variant="filled" disabled color="yellow">
+              Xabar Yuborish
+            </Button>
             <SegmentedControl
               data={[
                 { label: "Active", value: "active" },
@@ -38,7 +42,14 @@ const StudentPageNav = () => {
               onChange={setActive}
               fullWidth
             />
-            <Button>Add new Student</Button>
+            <AccessControl
+              requiredPermissions={["read", "write"]}
+              requiredPrivileges={["manage_users", "view_reports"]}
+            >
+              <NavLink to={"/students/add"}>
+                <Button>Add new Student</Button>
+              </NavLink>
+            </AccessControl>
           </Group>
         </Grid.Col>
       </Grid>
