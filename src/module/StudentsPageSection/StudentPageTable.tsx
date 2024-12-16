@@ -21,10 +21,11 @@ const StudentPageTable = ({ filter }: any) => {
   const { data, error, isLoading } = useSWR(
     `/api/students?page=${pagination.page}&limit=${pagination.limt}&search=${
       debouncedFilter?.search || ""
-    }`
+    }&status=${debouncedFilter?.status || ""}`
   );
   if (error) return <div>ошибка загрузки</div>;
   if (isLoading) return <div>загрузка...</div>;
+
 
   return (
     <>
@@ -84,13 +85,14 @@ const StudentPageTable = ({ filter }: any) => {
                   <NavLink to={`tel:${item?.fatherPhone}`}>
                     <Text c="blue.6">{item?.fatherPhone}</Text>
                   </NavLink>
-                  <NavLink to={`tel:${item?.motherPhone}`}>
-                    <Text c="teal.6">{item?.motherPhone}</Text>
-                  </NavLink>
                 </Table.Td>
 
                 <Table.Td>
-                  <Badge>{item?.status}</Badge>
+                  <Badge
+                    color={`${item?.status == "active" ? "blue" : "yellow"}`}
+                  >
+                    {item?.status}
+                  </Badge>
                 </Table.Td>
                 <Table.Td ta={"center"}>
                   <Link to={`/students/${item._id}`}>

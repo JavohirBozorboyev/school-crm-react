@@ -70,7 +70,11 @@ const ClassSlugTable = ({ data }: any) => {
                 </Table.Td>
 
                 <Table.Td>
-                  <Badge>{item?.status}</Badge>
+                  <Badge
+                    color={`${item?.status == "active" ? "blue" : "yellow"}`}
+                  >
+                    {item?.status}
+                  </Badge>
                 </Table.Td>
                 <Table.Td ta={"center"}>
                   <Link to={`/students/${item._id}`}>

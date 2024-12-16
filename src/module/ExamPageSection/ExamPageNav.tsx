@@ -2,19 +2,19 @@ import { Button, Grid, Group, Paper } from "@mantine/core";
 import { Input, CloseButton } from "@mantine/core";
 import { IconSearch } from "@tabler/icons-react";
 import { SegmentedControl } from "@mantine/core";
+import { Link } from "react-router-dom";
 import AccessControl from "../../security/AccessControl";
-import { NavLink } from "react-router-dom";
 
-const StudentPageNav = ({
-  filter,
-  setFilter,
+const ExamPageNav = ({
+  search,
+  setSearch,
 }: {
-  filter: {
+  search: {
     search: string;
-    status: string;
+    active: string;
   };
-  setFilter: React.Dispatch<
-    React.SetStateAction<{ search: string; status: string }>
+  setSearch: React.Dispatch<
+    React.SetStateAction<{ search: string; active: string }>
   >;
 }) => {
   return (
@@ -22,43 +22,42 @@ const StudentPageNav = ({
       <Grid justify="center" align="center">
         <Grid.Col span={{ base: 12, xs: 5, sm: 4 }}>
           <Input
-            placeholder="Search"
-            value={filter?.search}
+            placeholder="Qidirish"
+            value={search.search}
             onChange={(event) =>
-              setFilter({ ...filter, search: event.target.value })
+              setSearch({ ...search, search: event.target.value })
             }
             rightSectionPointerEvents="all"
             leftSection={<IconSearch size={18} />}
             rightSection={
               <CloseButton
                 aria-label="Clear input"
-                onClick={() => setFilter({ ...filter, search: "" })}
-                style={{ display: filter.search ? undefined : "none" }}
+                onClick={() => setSearch({ ...search, search: "" })}
+                style={{ display: search.search ? undefined : "none" }}
               />
             }
           />
         </Grid.Col>
         <Grid.Col span={{ base: 12, xs: 7, sm: 8 }}>
           <Group justify="end" gap={"xs"}>
-            <Button variant="filled" disabled color="yellow">
-              Xabar Yuborish
-            </Button>
             <SegmentedControl
               data={[
                 { label: "Active", value: "active" },
                 { label: "Deactive", value: "deactive" },
               ]}
-              value={filter.status}
-              onChange={(e) => setFilter({ ...filter, status: e })}
+              defaultValue={search.active}
+              onChange={(event) => {
+                setSearch({ ...search, active: event });
+              }}
               fullWidth
             />
             <AccessControl
-              requiredPermissions={["read", "write"]}
-              requiredPrivileges={["manage_users", "view_reports"]}
+              requiredPermissions={["write"]}
+              requiredPrivileges={["manage_users"]}
             >
-              <NavLink to={"/students/add"}>
-                <Button>Add new Student</Button>
-              </NavLink>
+              <Link to="/class/add">
+                <Button>Yangi Imtixon Qo'shish</Button>
+              </Link>
             </AccessControl>
           </Group>
         </Grid.Col>
@@ -67,4 +66,4 @@ const StudentPageNav = ({
   );
 };
 
-export default StudentPageNav;
+export default ExamPageNav;
