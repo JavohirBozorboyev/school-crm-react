@@ -9,9 +9,7 @@ import {
   Group,
   SimpleGrid,
   Divider,
-  ActionIcon,
 } from "@mantine/core";
-import { IconBook2 } from "@tabler/icons-react";
 import { Link, useNavigate } from "react-router-dom";
 
 const ClassSlugNav = ({ data }: any) => {
@@ -26,7 +24,6 @@ const ClassSlugNav = ({ data }: any) => {
       {item.title}
     </Anchor>
   ));
-
 
   return (
     <div>
@@ -46,7 +43,7 @@ const ClassSlugNav = ({ data }: any) => {
             </Group>
           </Grid.Col>
           <Grid.Col span={{ base: 12, md: 6, lg: 4 }}>
-            <Text size="lg">SPES Fanlar:</Text>
+            <Text size="lg">Fanlar:</Text>
             <Divider my={"xs"} />
             <SimpleGrid
               cols={{ base: 2, sm: 2 }}
@@ -56,10 +53,7 @@ const ClassSlugNav = ({ data }: any) => {
               {data?.subjectTeacher?.map((item: any) => {
                 return (
                   <Group mt={"sm"} gap={"xs"} key={item?._id}>
-                    <ActionIcon variant="light">
-                      <IconBook2 size={16} />
-                    </ActionIcon>
-                    <Text size="sm">{item?.subject}</Text>
+                    <Text size="sm">{item?.subject.title}</Text>
                   </Group>
                 );
               })}
@@ -77,12 +71,6 @@ const ClassSlugNav = ({ data }: any) => {
                 return (
                   <Link to={`/teachers/${item?._id}`} key={item?._id}>
                     <Group mt={"sm"} gap={"xs"}>
-                      <Avatar
-                        variant="light"
-                        color="blue"
-                        radius={"sm"}
-                        size={"sm"}
-                      />
                       <Text size="sm" c={"blue"} td={"underline"}>
                         {item?.firstname + " " + item?.lastname}
                       </Text>

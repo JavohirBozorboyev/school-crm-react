@@ -12,6 +12,7 @@ import {
   Menu,
   rem,
   Badge,
+  Modal,
 } from "@mantine/core";
 import {
   IconPhone,
@@ -21,29 +22,29 @@ import {
   IconHandClick,
   IconMap,
 } from "@tabler/icons-react";
-import { NavLink, useParams } from "react-router-dom";
+import { NavLink, useNavigate, useParams } from "react-router-dom";
 import AccessControl from "../../../security/AccessControl";
 import useSWR, { mutate } from "swr";
 import { notifications } from "@mantine/notifications";
 import axios from "axios";
+import { useDisclosure } from "@mantine/hooks";
 
 const StundetsSlugPageNav = () => {
   const { slug } = useParams();
+  const navigate = useNavigate();
   const { data, error, isLoading } = useSWR(`/api/students/${slug}`);
+  const [opened, { open, close }] = useDisclosure(false);
 
   if (error) return <div>ошибка загрузки</div>;
   if (isLoading) return <div>загрузка...</div>;
-
 
   const ActiveAndDeactive = async (status: string) => {
     try {
       const res = await axios.patch(`/api/students/${slug}`, {
         status: status,
       });
-
       if (res.status == 200) {
         mutate(`/api/students/${slug}`);
-
         notifications.show({
           title: `O'quvchi ${status}`,
           message: "",
@@ -54,6 +55,26 @@ const StundetsSlugPageNav = () => {
       console.log(error);
     }
   };
+
+  const DeleteStundet = async () => {
+    try {
+      const res = await axios.delete(`/api/students/${slug}`);
+
+      if (res.status == 200) {
+        mutate(`/api/students`);
+        navigate("/students");
+        close();
+        notifications.show({
+          title: `O'quvchi o'chirildi`,
+          message: "",
+          withBorder: true,
+        });
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <>
       <Paper withBorder>
@@ -81,31 +102,37 @@ const StundetsSlugPageNav = () => {
 
                 <Menu.Dropdown>
                   <Menu.Label>Application</Menu.Label>
-                  {data?.status == "active" ? (
-                    <Menu.Item
-                      leftSection={
-                        <IconHandClick
-                          style={{ width: rem(14), height: rem(14) }}
-                        />
-                      }
-                      color="blue"
-                      onClick={() => ActiveAndDeactive("deactive")}
-                    >
-                      Active
-                    </Menu.Item>
-                  ) : (
-                    <Menu.Item
-                      leftSection={
-                        <IconHandClick
-                          style={{ width: rem(14), height: rem(14) }}
-                        />
-                      }
-                      color="yellow"
-                      onClick={() => ActiveAndDeactive("active")}
-                    >
-                      Deactive
-                    </Menu.Item>
-                  )}
+                  <AccessControl
+                    requiredPermissions={["update"]}
+                    requiredPrivileges={["manage_users"]}
+                  >
+                    {data?.status == "active" ? (
+                      <Menu.Item
+                        leftSection={
+                          <IconHandClick
+                            style={{ width: rem(14), height: rem(14) }}
+                          />
+                        }
+                        color="blue"
+                        onClick={() => ActiveAndDeactive("deactive")}
+                      >
+                        Active
+                      </Menu.Item>
+                    ) : (
+                      <Menu.Item
+                        leftSection={
+                          <IconHandClick
+                            style={{ width: rem(14), height: rem(14) }}
+                          />
+                        }
+                        color="yellow"
+                        onClick={() => ActiveAndDeactive("active")}
+                      >
+                        Deactive
+                      </Menu.Item>
+                    )}
+                  </AccessControl>
+
                   <Menu.Divider />
 
                   <Menu.Item
@@ -115,14 +142,22 @@ const StundetsSlugPageNav = () => {
                   >
                     Taxrirlash
                   </Menu.Item>
-                  <Menu.Item
-                    color="red"
-                    leftSection={
-                      <IconTrash style={{ width: rem(14), height: rem(14) }} />
-                    }
+                  <AccessControl
+                    requiredPermissions={["delete"]}
+                    requiredPrivileges={["manage_users"]}
                   >
-                    O'quvchini O'chirish
-                  </Menu.Item>
+                    <Menu.Item
+                      color="red"
+                      leftSection={
+                        <IconTrash
+                          style={{ width: rem(14), height: rem(14) }}
+                        />
+                      }
+                      onClick={open}
+                    >
+                      O'quvchini O'chirish
+                    </Menu.Item>
+                  </AccessControl>
                 </Menu.Dropdown>
               </Menu>
             </AccessControl>
@@ -224,6 +259,21 @@ const StundetsSlugPageNav = () => {
             </Flex>
           </Grid.Col>
         </Grid>
+
+        <Modal opened={opened} onClose={close} withCloseButton={false}>
+          <Text size="xl">{data?.fullname}</Text>
+          <Text size="sm" c={"dimmed"}>
+            O'quvchini o'chirmoqchimisiz?
+          </Text>
+          <Group grow mt={"md"} align={"center"}>
+            <Button onClick={close} color="blue">
+              Bekorqilish
+            </Button>
+            <Button onClick={DeleteStundet} color="red">
+              O'chirish
+            </Button>
+          </Group>
+        </Modal>
       </Paper>
     </>
   );
