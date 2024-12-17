@@ -25,7 +25,7 @@ import AddNewClassPage from "../pages/ClassPage/AddNewClassPage/AddNewClassPage"
 import SubjectPage from "../pages/SettingsPage/SubjectPage/SubjectPage";
 import AddSubjectPage from "../pages/SettingsPage/SubjectPage/AddSubjectPage";
 import AddNewStudentPage from "../pages/StudentsPage/AddNewStudentPage/AddNewStudentPage";
-import ExamPage from "../pages/ExamPage/ExamPage";
+import ExamPage from "../pages/ExamPage/ExamResultPage";
 
 // axios.defaults.baseURL = "https://schools-crm-backend.onrender.com";
 axios.defaults.baseURL = "http://localhost:3000";
@@ -138,7 +138,7 @@ const Router = () => {
               </ProtectedPage>
             }
           />
-          <Route path="/exam" element={<ExamPage />} />
+          <Route path="/exam/exam-results" element={<ExamPage />} />
           <Route path="/profil" element={<ProfilPage />} />
         </Route>
         <Route path="/login" element={<LoginPage />}></Route>

@@ -52,12 +52,11 @@ const AdminNavUrlData = [
   },
   {
     name: "Imtixonlar",
-    url: "/exam",
     icon: <IconTextCaption size={"16px"} />,
     sub: [
       {
         name: "Imtixon Natijalari",
-        url: "/exam",
+        url: "/exam/exam-results",
       },
     ],
   },

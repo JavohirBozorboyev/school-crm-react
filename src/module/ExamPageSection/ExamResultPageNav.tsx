@@ -5,7 +5,7 @@ import { SegmentedControl } from "@mantine/core";
 import { Link } from "react-router-dom";
 import AccessControl from "../../security/AccessControl";
 
-const ExamPageNav = ({
+const ExamResultPageNav = ({
   search,
   setSearch,
 }: {
@@ -66,4 +66,4 @@ const ExamPageNav = ({
   );
 };
 
-export default ExamPageNav;
+export default ExamResultPageNav;

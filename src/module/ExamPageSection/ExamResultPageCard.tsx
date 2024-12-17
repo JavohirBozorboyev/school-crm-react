@@ -9,6 +9,7 @@ import {
   Menu,
   rem,
   Modal,
+  Divider,
 } from "@mantine/core";
 import { NavLink } from "react-router-dom";
 import { ActionIcon } from "@mantine/core";
@@ -23,7 +24,13 @@ import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import axios from "axios";
 import { mutate } from "swr";
-const ExamPageCard = ({ item }: any) => {
+const ExamReusltPageCard = ({
+  item,
+  search,
+}: {
+  item: any;
+  search: string;
+}) => {
   const [opened, { open, close }] = useDisclosure(false);
   const [deactive, handlers] = useDisclosure(false);
 
@@ -46,23 +53,26 @@ const ExamPageCard = ({ item }: any) => {
 
   const ActiveAndDeactive = async (status: string) => {
     try {
-      const res = await axios.patch(`/api/groups/${item._id}`, {
-        status: status,
+      const res = await axios.patch(`/api/exam-results/${item._id}`, {
+        status,
       });
 
       if (res.status == 200) {
         mutate(
-          `/api/groups?status=${status == "active" ? "deactive" : "active"}`
+          `/api/exam-results?status=${
+            status == "active" ? "deactive" : "active"
+          }&search=${search}`
         );
         handlers.close();
         notifications.show({
-          title: `Sinf ${status}`,
+          title: `Imtixon ${status}`,
           message: "",
           withBorder: true,
         });
       }
     } catch (error) {
       console.log(error);
+      handlers.close();
     }
   };
 
@@ -75,30 +85,82 @@ const ExamPageCard = ({ item }: any) => {
           </Text>
           <Badge
             variant="light"
-            color={item?.status === "active" ? "cyan" : "red"}
+            color={item?.status === "active" ? "cyan" : "yellow"}
           >
             {item?.status}
           </Badge>
         </Group>
-        <Group align="center">
+        <Divider my="xs" />
+        <Group align="center" gap={"xs"}>
           <Text size="xs" tt={"uppercase"} c="dimmed">
-            Student:
+            Fanlar:
           </Text>
-          <Text size="sm" fw={"600"}>
-            {item?.studentCount}
-          </Text>
+          {item?.subject?.map(
+            (
+              item: {
+                title: string;
+              },
+              i: number
+            ) => {
+              return (
+                <Badge
+                  size="sm"
+                  key={i}
+                  radius={"xs"}
+                  variant="light"
+                  color="teal"
+                >
+                  {item?.title}
+                </Badge>
+              );
+            }
+          )}
         </Group>
-        <Group align="center">
+        <Divider my="xs" />
+        <Group align="center" gap={"xs"}>
           <Text size="xs" tt={"uppercase"} c="dimmed">
-            Teacher:
+            Sinflar:
           </Text>
-          <Text size="sm" fw={"600"}>
-            {item?.teacherInfo == null
-              ? "Mavjud emas"
-              : item?.teacherInfo?.firstname +
-                " " +
-                item?.teacherInfo?.lastname}
+          {item?.group?.map(
+            (
+              item: {
+                title: string;
+              },
+              i: number
+            ) => {
+              return (
+                <Badge size="sm" key={i} radius={"xs"} variant="light">
+                  {item?.title}
+                </Badge>
+              );
+            }
+          )}
+        </Group>
+        <Divider my="xs" />
+        <Group align="center" gap={"xs"}>
+          <Text size="xs" tt={"uppercase"} c="dimmed">
+            Ustozlar:
           </Text>
+          {item?.teacher?.map(
+            (
+              item: {
+                firstname: string;
+              },
+              i: number
+            ) => {
+              return (
+                <Badge
+                  color="dark"
+                  radius={"xs"}
+                  size="sm"
+                  key={i}
+                  variant="light"
+                >
+                  {item?.firstname}
+                </Badge>
+              );
+            }
+          )}
         </Group>
 
         <Flex align="center" mt={"md"} gap={"xs"}>
@@ -169,7 +231,10 @@ const ExamPageCard = ({ item }: any) => {
             </Menu.Dropdown>
           </Menu>
 
-          <NavLink to={`/class/${item._id}`} style={{ width: "100%" }}>
+          <NavLink
+            to={`/exam/exam-results/${item._id}`}
+            style={{ width: "100%" }}
+          >
             <Button
               color="blue"
               size="xs"
@@ -177,7 +242,7 @@ const ExamPageCard = ({ item }: any) => {
               fullWidth
               radius="sm"
             >
-              View Class
+              Natijalarni ko'rish
             </Button>
           </NavLink>
         </Flex>
@@ -233,4 +298,4 @@ const ExamPageCard = ({ item }: any) => {
   );
 };
 
-export default ExamPageCard;
+export default ExamReusltPageCard;
