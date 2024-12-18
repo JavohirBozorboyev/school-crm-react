@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import AdminNavUrlData from "../../data/AdminNavUrlData";
 import { NavLink, Box, ActionIcon } from "@mantine/core";
 import { useLocation, useNavigate } from "react-router-dom";
@@ -8,7 +9,7 @@ const AppShellNavbar = () => {
   return (
     <>
       <Box>
-        {AdminNavUrlData.map((item, i) => {
+        {AdminNavUrlData.map((item: any, i) => {
           return (
             <NavLink
               key={i}
@@ -32,7 +33,7 @@ const AppShellNavbar = () => {
               my={"xs"}
             >
               {item.sub
-                ? item.sub.map((url, index) => {
+                ? item.sub.map((url: any, index: number) => {
                     return (
                       <NavLink
                         key={index}

@@ -1,6 +1,6 @@
 import { useState } from "react";
-import ExamResultPageNav from "../../module/ExamPageSection/ExamResultPageNav";
-import ExamResultPageList from "../../module/ExamPageSection/ExamResultPageList";
+import ExamResultPageList from "../../../module/ExamPageSection/ExamResultPageList";
+import ExamResultPageNav from "../../../module/ExamPageSection/ExamResultPageNav";
 
 const ExamResultPage = () => {
   const [search, setSearch] = useState({

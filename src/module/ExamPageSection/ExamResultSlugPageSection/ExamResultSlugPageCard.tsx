@@ -19,20 +19,14 @@ import {
   IconPencil,
   IconTrash,
 } from "@tabler/icons-react";
-import AccessControl from "../../security/AccessControl";
 import { useDisclosure } from "@mantine/hooks";
 import { notifications } from "@mantine/notifications";
 import axios from "axios";
 import { mutate } from "swr";
 import { useSelector } from "react-redux";
-import { RootState } from "../../store";
-const ExamReusltPageCard = ({
-  item,
-  search,
-}: {
-  item: any;
-  search: string;
-}) => {
+import AccessControl from "../../../security/AccessControl";
+import { RootState } from "../../../store";
+const ExamResultSlugPageCard = ({ item }: { item: any; search: string }) => {
   const [opened, { open, close }] = useDisclosure(false);
   const [deactive, handlers] = useDisclosure(false);
   const user = useSelector((state: RootState) => state.auth.user);
@@ -323,4 +317,4 @@ const ExamReusltPageCard = ({
   );
 };
 
-export default ExamReusltPageCard;
+export default ExamResultSlugPageCard;
