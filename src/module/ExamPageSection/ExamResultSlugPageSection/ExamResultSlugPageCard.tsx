@@ -26,7 +26,7 @@ import { mutate } from "swr";
 import { useSelector } from "react-redux";
 import AccessControl from "../../../security/AccessControl";
 import { RootState } from "../../../store";
-const ExamResultSlugPageCard = ({ item }: { item: any; search: string }) => {
+const ExamResultSlugPageCard = ({ item }: { item: any }) => {
   const [opened, { open, close }] = useDisclosure(false);
   const [deactive, handlers] = useDisclosure(false);
   const user = useSelector((state: RootState) => state.auth.user);
@@ -57,7 +57,7 @@ const ExamResultSlugPageCard = ({ item }: { item: any; search: string }) => {
         mutate(
           `/api/exam-results?status=${
             status == "active" ? "deactive" : "active"
-          }&search=${search}`
+          }`
         );
         handlers.close();
         notifications.show({
@@ -79,14 +79,8 @@ const ExamResultSlugPageCard = ({ item }: { item: any; search: string }) => {
           <Text fw={500} size="lg">
             {item?.title}
           </Text>
-          <Badge
-            variant="light"
-            color={item?.status === "active" ? "cyan" : "yellow"}
-          >
-            {item?.status}
-          </Badge>
         </Group>
-        <Divider my="xs" />
+        <Divider mb="xs" />
         <Group align="center" gap={"xs"}>
           <Text size="xs" tt={"uppercase"} c="dimmed">
             Fanlar:
@@ -112,26 +106,7 @@ const ExamResultSlugPageCard = ({ item }: { item: any; search: string }) => {
             }
           )}
         </Group>
-        <Divider my="xs" />
-        <Group align="center" gap={"xs"}>
-          <Text size="xs" tt={"uppercase"} c="dimmed">
-            Sinflar:
-          </Text>
-          {item?.group?.map(
-            (
-              item: {
-                title: string;
-              },
-              i: number
-            ) => {
-              return (
-                <Badge size="sm" key={i} radius={"xs"} variant="light">
-                  {item?.title}
-                </Badge>
-              );
-            }
-          )}
-        </Group>
+
         <Divider my="xs" />
         <Group align="center" gap={"xs"}>
           <Text size="xs" tt={"uppercase"} c="dimmed">

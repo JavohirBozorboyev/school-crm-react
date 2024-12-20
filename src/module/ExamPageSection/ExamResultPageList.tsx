@@ -5,9 +5,8 @@ import ExamReusltPageCard from "./ExamResultPageCard";
 
 const ExamResultPageList = ({ search, active }: any) => {
   const { data, error, isLoading } = useSWR(
-    `/api/exam-results?status=${active}&search=${search}`
+    `/api/exam/exam-results?status=${active}&search=${search}`
   );
-
   if (error) return <div>ошибка загрузки</div>;
   if (isLoading) return <div>загрузка...</div>;
   return (

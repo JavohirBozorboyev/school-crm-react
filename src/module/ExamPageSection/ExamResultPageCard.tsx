@@ -9,13 +9,15 @@ import {
   Menu,
   rem,
   Modal,
-  Divider,
+  Box,
 } from "@mantine/core";
 import { NavLink } from "react-router-dom";
 import { ActionIcon } from "@mantine/core";
 import {
   IconDotsVertical,
   IconHandClick,
+  IconLock,
+  IconLockOpen2,
   IconPencil,
   IconTrash,
 } from "@tabler/icons-react";
@@ -26,6 +28,7 @@ import axios from "axios";
 import { mutate } from "swr";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
+import FormatDate from "../../utils/FormatDate";
 const ExamReusltPageCard = ({
   item,
   search,
@@ -55,13 +58,14 @@ const ExamReusltPageCard = ({
 
   const ActiveAndDeactive = async (status: string) => {
     try {
-      const res = await axios.patch(`/api/exam-results/${item._id}`, {
+      const res = await axios.patch(`/api/exam/exam-results/${item._id}`, {
         status,
+        lock: "lock",
       });
 
       if (res.status == 200) {
         mutate(
-          `/api/exam-results?status=${
+          `/api/exam/exam-results?status=${
             status == "active" ? "deactive" : "active"
           }&search=${search}`
         );
@@ -75,6 +79,19 @@ const ExamReusltPageCard = ({
     } catch (error) {
       console.log(error);
       handlers.close();
+    }
+  };
+  const LockAndUnlock = async (status: string, lock: string) => {
+    try {
+      const res = await axios.patch(`/api/exam/exam-results/${item._id}`, {
+        lock,
+      });
+
+      if (res.status == 200) {
+        mutate(`/api/exam/exam-results?status=${status}&search=${search}`);
+      }
+    } catch (error) {
+      console.log(error);
     }
   };
 
@@ -92,79 +109,31 @@ const ExamReusltPageCard = ({
             {item?.status}
           </Badge>
         </Group>
-        <Divider my="xs" />
-        <Group align="center" gap={"xs"}>
-          <Text size="xs" tt={"uppercase"} c="dimmed">
-            Fanlar:
-          </Text>
-          {item?.subject?.map(
-            (
-              item: {
-                title: string;
-              },
-              i: number
-            ) => {
-              return (
-                <Badge
-                  size="sm"
-                  key={i}
-                  radius={"xs"}
-                  variant="light"
-                  color="teal"
-                >
-                  {item?.title}
-                </Badge>
-              );
-            }
-          )}
+
+        <Group justify="space-between" mb="xs" align="center">
+          <ActionIcon size={"xl"} color="dark" variant="light">
+            {item?.lock == "lock" ? <IconLock /> : <IconLockOpen2 />}
+          </ActionIcon>
+          <Box>
+            <Group>
+              <Text size="xs" c="dimmed">
+                Create:
+              </Text>
+              <Text fw={500} size="xs" c="dark">
+                {FormatDate(item?.createdAt)}
+              </Text>
+            </Group>
+            <Group>
+              <Text size="xs" c="dimmed">
+                Update:
+              </Text>
+              <Text fw={500} size="xs" c="dark">
+                {FormatDate(item?.updatedAt)}
+              </Text>
+            </Group>
+          </Box>
         </Group>
-        <Divider my="xs" />
-        <Group align="center" gap={"xs"}>
-          <Text size="xs" tt={"uppercase"} c="dimmed">
-            Sinflar:
-          </Text>
-          {item?.group?.map(
-            (
-              item: {
-                title: string;
-              },
-              i: number
-            ) => {
-              return (
-                <Badge size="sm" key={i} radius={"xs"} variant="light">
-                  {item?.title}
-                </Badge>
-              );
-            }
-          )}
-        </Group>
-        <Divider my="xs" />
-        <Group align="center" gap={"xs"}>
-          <Text size="xs" tt={"uppercase"} c="dimmed">
-            Ustozlar:
-          </Text>
-          {item?.teacher?.map(
-            (
-              item: {
-                firstname: string;
-              },
-              i: number
-            ) => {
-              return (
-                <Badge
-                  color="dark"
-                  radius={"xs"}
-                  size="sm"
-                  key={i}
-                  variant="light"
-                >
-                  {item?.firstname}
-                </Badge>
-              );
-            }
-          )}
-        </Group>
-        <Divider mt="xs" />
+
         {user?.role == "admin" || user?.role == "supperadmin" ? null : (
           <NavLink
             to={`/exam/exam-results/${item._id}`}
@@ -196,6 +165,33 @@ const ExamReusltPageCard = ({
               </Menu.Target>
 
               <Menu.Dropdown>
+                <Menu.Label>Lock or Unclok</Menu.Label>
+                <AccessControl
+                  requiredPermissions={["update"]}
+                  requiredPrivileges={["manage_users"]}
+                >
+                  {item?.lock == "lock" ? (
+                    <Menu.Item
+                      onClick={() => LockAndUnlock(item?.status, "unLock")}
+                      leftSection={
+                        <IconLockOpen2
+                          style={{ width: rem(14), height: rem(14) }}
+                        />
+                      }
+                    >
+                      Qulfdan chiqarish
+                    </Menu.Item>
+                  ) : (
+                    <Menu.Item
+                      onClick={() => LockAndUnlock(item?.status, "lock")}
+                      leftSection={
+                        <IconLock style={{ width: rem(14), height: rem(14) }} />
+                      }
+                    >
+                      Qulflash
+                    </Menu.Item>
+                  )}
+                </AccessControl>
                 <Menu.Label>Active and Deactive</Menu.Label>
                 <AccessControl
                   requiredPermissions={["update"]}
@@ -227,6 +223,7 @@ const ExamReusltPageCard = ({
                     </Menu.Item>
                   )}
                 </AccessControl>
+
                 <Menu.Divider />
                 <Menu.Label>Edit Class</Menu.Label>
                 <Menu.Item
