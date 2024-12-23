@@ -53,6 +53,7 @@ const AdminNavUrlData = [
   {
     name: "Imtixonlar",
     icon: <IconTextCaption size={"16px"} />,
+    url: "/exam",
     sub: [
       {
         name: "Imtixon Natijalari",

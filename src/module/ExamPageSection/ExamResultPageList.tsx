@@ -17,7 +17,7 @@ const ExamResultPageList = ({ search, active }: any) => {
     <div>
       <Grid>
         {data?.map((item: any) => {
-          return item?.lock == "unLock" ? (
+          return item?.lock == "unLock" && item?.status == "active" ? (
             <Grid.Col key={item._id} span={{ base: 12 }}>
               <ExamResultPageGroupCard item={item} search={search} />
               {user.role == "admin" || user.role == "supperadmin" ? (

@@ -1,29 +1,50 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import { Badge, Button, Card, Divider, Grid, Group, Text } from "@mantine/core";
+import { NavLink } from "react-router-dom";
 
-const ExamResultPageGroupCard = ({
-  item,
-  search,
-}: {
-  item: any;
-  search: string;
-}) => {
-  console.log(item, search);
+interface GroupInfo {
+  title: string;
+  status: string;
+  _id: string;
+}
 
+interface Subject {
+  title: string;
+}
+
+interface Teacher {
+  firstname: string;
+}
+
+interface Item {
+  _id: string;
+  group: {
+    groupInfo: GroupInfo;
+    subjects: Subject[];
+    teachers: Teacher[];
+  }[];
+}
+
+interface Element {
+  groupInfo: GroupInfo;
+  subjects: Subject[];
+  teachers: Teacher[];
+}
+
+const ExamResultPageGroupCard = ({ item }: { item: Item; search?: string }) => {
   return (
     <div>
-      <Grid>
-        {item?.group?.map((group: any, i: number) => {
+      <Grid >
+        {item?.group?.map((element: Element, i: number) => {
           return (
-            <Grid.Col key={i} span={{ base: 12, md: 6, lg: 4, xl: 3 }}>
-              <Card padding="sm" radius="md" withBorder>
+            <Grid.Col key={i} span={{ base: 12, sm: 6, lg: 4, xl: 3 }}>
+              <Card padding="sm" radius="sm" withBorder>
                 <Group justify="space-between">
                   <Text fw={500} size="lg">
                     {" "}
-                    {group?.groupInfo?.title}
+                    {element?.groupInfo?.title}
                   </Text>
                   <Badge color="blue" variant="light">
-                    {group?.groupInfo?.status}
+                    {element?.groupInfo?.status}
                   </Badge>
                 </Group>
 
@@ -32,7 +53,7 @@ const ExamResultPageGroupCard = ({
                   <Text fw={500} size="xs" c={"gray"}>
                     {"Fanlar:"}
                   </Text>
-                  {group?.subjects?.map(
+                  {element?.subjects?.map(
                     (
                       sub: {
                         title: string;
@@ -59,7 +80,7 @@ const ExamResultPageGroupCard = ({
                   <Text fw={500} size="xs" c={"gray"}>
                     {"Ustozlar:"}
                   </Text>
-                  {group?.teachers?.map(
+                  {element?.teachers?.map(
                     (
                       sub: {
                         firstname: string;
@@ -82,9 +103,18 @@ const ExamResultPageGroupCard = ({
                   )}
                 </Group>
 
-                <Button color="blue" fullWidth mt="md" size="xs">
-                  Baxolash
-                </Button>
+                <NavLink
+                  to={`/exam/exam-results/${item?._id}/${element?.groupInfo?._id}`}
+                >
+                  <Button
+                    fullWidth
+                    color="blue"
+                    mt="sm"
+                    size="xs"
+                  >
+                    {"Natijalarni ko'rish"}
+                  </Button>
+                </NavLink>
               </Card>
             </Grid.Col>
           );
