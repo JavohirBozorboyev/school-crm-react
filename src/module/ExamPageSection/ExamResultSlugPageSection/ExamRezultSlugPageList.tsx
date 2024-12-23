@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-explicit-any */
 import useSWR from "swr";
 import { useParams } from "react-router-dom";
 import ExamResultPageGroupCard from "../ExamResultPageGroupCard";
