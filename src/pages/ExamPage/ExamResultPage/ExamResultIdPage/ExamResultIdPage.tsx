@@ -1,6 +1,7 @@
 import { useParams } from "react-router-dom";
 import useSWR from "swr";
 import ExamResultIdPageTable from "../../../../module/ExamPageSection/ExamResultIdPageSection/ExamResultIdPageTable";
+import ExamResultIdPageNav from "../../../../module/ExamPageSection/ExamResultIdPageSection/ExamResultIdPageNav";
 
 const ExamResultIdPage = () => {
   const { slug, id } = useParams();
@@ -14,6 +15,7 @@ const ExamResultIdPage = () => {
 
   return (
     <div>
+      <ExamResultIdPageNav group={group} />
       <ExamResultIdPageTable group={group} />
     </div>
   );

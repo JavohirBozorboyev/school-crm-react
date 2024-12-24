@@ -1,4 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { Table, TextInput } from "@mantine/core";
+import { useState } from "react";
 import { useParams } from "react-router-dom";
 import useSWR from "swr";
 
@@ -23,30 +25,49 @@ interface Subject {
 const ExamResultIdPageTable = ({ group }: Props) => {
   const { id } = useParams<{ id: string }>();
   const { data, error, isLoading } = useSWR(`/api/groups/${id}`);
+  const [examResult, setExamResult] = useState<
+    { studentId: string; result: string }[]
+  >([]);
 
   if (error) return <div>ошибка загрузки</div>;
   if (isLoading) return <div>загрузка...</div>;
 
-  // console.log(group);
 
   const rows = (data as GroupData)?.students.map(
     (element: Student, i: number) => (
       <Table.Tr key={element._id}>
         <Table.Td ta={"center"}>{i + 1}</Table.Td>
         <Table.Td>{element.fullname}</Table.Td>
-        {group?.subjects?.map((el) => {
-          return (
-            <Table.Td ta={"center"} key={el._id}>
-              <TextInput size="xs" />
-            </Table.Td>
-          );
-        })}
+
+        <Table.Td ta={"center"}>
+          <TextInput
+            size="xs"
+            onChange={(e) => {
+              setExamResult((prev) => {
+                const existingIndex = prev.findIndex(
+                  (item) => item.studentId === element._id
+                );
+
+                if (existingIndex !== -1) {
+                  const updatedResults = [...prev];
+                  updatedResults[existingIndex].result = e.target.value;
+                  return updatedResults;
+                } else {
+                  return [
+                    ...prev,
+                    { studentId: element._id, result: e.target.value },
+                  ];
+                }
+              });
+            }}
+          />
+        </Table.Td>
       </Table.Tr>
     )
   );
   return (
     <div>
-      <Table.ScrollContainer minWidth={800}>
+      <Table.ScrollContainer minWidth={"auto"}>
         <Table
           highlightOnHover
           withTableBorder
@@ -59,11 +80,8 @@ const ExamResultIdPageTable = ({ group }: Props) => {
                 №
               </Table.Th>
               <Table.Th miw={220}>Ism Familiya</Table.Th>
-              {group?.subjects?.map((el) => (
-                <Table.Th ta={"center"} key={el._id}>
-                  {el.title}
-                </Table.Th>
-              ))}
+
+              <Table.Th ta={"center"}>Informatika</Table.Th>
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>{rows}</Table.Tbody>
