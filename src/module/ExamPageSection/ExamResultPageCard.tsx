@@ -111,7 +111,11 @@ const ExamReusltPageCard = ({
         </Group>
 
         <Group justify="space-between" mb="xs" align="center">
-          <ActionIcon size={"xl"} color="dark" variant="light">
+          <ActionIcon
+            size={"xl"}
+            color={item?.lock == "lock" ? "dark" : "blue"}
+            variant={item?.lock == "lock" ? "light" : "filled"}
+          >
             {item?.lock == "lock" ? <IconLock /> : <IconLockOpen2 />}
           </ActionIcon>
           <Box>

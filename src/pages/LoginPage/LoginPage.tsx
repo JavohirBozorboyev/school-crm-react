@@ -9,13 +9,16 @@ import {
   Container,
   Group,
   Button,
+  SegmentedControl,
 } from "@mantine/core";
 import { login } from "../../features/auth/authSlice";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import { useState } from "react";
 
 const LoginPage = () => {
+  const [url, setUrl] = useState("teacherLogin");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const form = useForm({
@@ -54,7 +57,7 @@ const LoginPage = () => {
     // );
     // navigate("/");
     try {
-      const res = await axios.post(`/api/auth/login`, {
+      const res = await axios.post(`/api/auth/${url}`, {
         email: e.email,
         password: e.password,
       });
@@ -81,9 +84,20 @@ const LoginPage = () => {
       }}
     >
       <Container size={420} my={40}>
-        <Title ta="center">Welcome back!</Title>
+        <Title ta="center">BM Maktab</Title>
+
         <form onSubmit={form.onSubmit(Login)}>
           <Paper withBorder shadow="md" p={30} mt={30} radius="md">
+            <SegmentedControl
+              value={url}
+              onChange={setUrl}
+              data={[
+                { label: "Ustoz", value: "teacherLogin" },
+                { label: "Admin", value: "login" },
+              ]}
+              fullWidth
+              mb={"lg"}
+            />
             <TextInput
               label="Email"
               placeholder="you@mantine.dev"

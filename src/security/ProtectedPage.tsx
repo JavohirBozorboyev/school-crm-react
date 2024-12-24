@@ -19,11 +19,11 @@ const ProtectedPage: React.FC<ProtectedPageProps> = ({
   const user = useSelector((state: RootState) => state.auth.user);
 
   const hasRequiredPermissions = requiredPermissions.every((perm) =>
-    user?.permissions.includes(perm)
+    user?.permissions?.includes(perm)
   );
 
   const hasRequiredPrivileges = requiredPrivileges.every((priv) =>
-    user?.privileges.includes(priv)
+    user?.privileges?.includes(priv)
   );
 
   if (!hasRequiredPermissions || !hasRequiredPrivileges) {

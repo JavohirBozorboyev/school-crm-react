@@ -111,6 +111,7 @@ const ExamResultPageGroupCard = ({ item }: { item: Item; search?: string }) => {
                     color="blue"
                     mt="sm"
                     size="xs"
+                    variant="light"
                   >
                     {"Natijalarni ko'rish"}
                   </Button>

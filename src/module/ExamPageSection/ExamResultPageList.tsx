@@ -17,14 +17,12 @@ const ExamResultPageList = ({ search, active }: any) => {
     <div>
       <Grid>
         {data?.map((item: any) => {
-          return item?.lock == "unLock" && item?.status == "active" ? (
+          return user?.role == "teacher" ? (
             <Grid.Col key={item._id} span={{ base: 12 }}>
               <ExamResultPageGroupCard item={item} search={search} />
-              {user.role == "admin" || user.role == "supperadmin" ? (
-                <Grid.Col key={item._id} span={{ base: 12 }}>
-                  <ExamReusltPageCard item={item} search={search} />
-                </Grid.Col>
-              ) : null}
+              <Grid.Col key={item._id} span={{ base: 12 }}>
+                <ExamReusltPageCard item={item} search={search} />
+              </Grid.Col>
             </Grid.Col>
           ) : (
             <Grid.Col key={item._id} span={{ base: 12, md: 6, xl: 4 }}>
