@@ -1,8 +1,10 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Table, TextInput } from "@mantine/core";
+import { Box, Button, Flex, Table, TextInput } from "@mantine/core";
 import { useState } from "react";
+import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
 import useSWR from "swr";
+import { RootState } from "../../../store";
 
 interface Props {
   group: GroupData;
@@ -29,9 +31,13 @@ const ExamResultIdPageTable = ({ group }: Props) => {
     { studentId: string; result: string }[]
   >([]);
 
+  const user = useSelector((state: RootState) => state.auth.user);
+  const subjectIndidual = group?.subjects?.filter(
+    (fil) => fil._id == user?.subject?._id
+  );
+
   if (error) return <div>ошибка загрузки</div>;
   if (isLoading) return <div>загрузка...</div>;
-
 
   const rows = (data as GroupData)?.students.map(
     (element: Student, i: number) => (
@@ -81,12 +87,19 @@ const ExamResultIdPageTable = ({ group }: Props) => {
               </Table.Th>
               <Table.Th miw={220}>Ism Familiya</Table.Th>
 
-              <Table.Th ta={"center"}>Informatika</Table.Th>
+              {subjectIndidual?.map((subject) => (
+                <Table.Th key={subject._id} ta={"center"}>
+                  {subject.title}
+                </Table.Th>
+              ))}
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>{rows}</Table.Tbody>
         </Table>
       </Table.ScrollContainer>
+      <Flex justify={"flex-end"} mt={20}>
+        <Button>Natijalarni Saqlash</Button>
+      </Flex>
     </div>
   );
 };
