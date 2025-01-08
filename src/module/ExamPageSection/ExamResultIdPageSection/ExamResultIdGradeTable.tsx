@@ -24,7 +24,7 @@ const ExamResultIdGradeTable = () => {
 
   console.log(data);
 
-  if (error) return <div>failed to load</div>;
+  if (error) return <div>failed to load merge</div>;
   if (isLoading) return <div>loading...</div>;
 
   return (
