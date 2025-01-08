@@ -1,5 +1,5 @@
 /* eslint-disable @typescript-eslint/no-unused-vars */
-import { Box, Button, Flex, Table, TextInput } from "@mantine/core";
+import { Button, Flex, Table, TextInput } from "@mantine/core";
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { useParams } from "react-router-dom";
@@ -30,12 +30,12 @@ const ExamResultIdPageTable = ({ group }: Props) => {
   const [examResult, setExamResult] = useState<
     { studentId: string; result: string }[]
   >([]);
+  console.log(examResult);
 
   const user = useSelector((state: RootState) => state.auth.user);
   const subjectIndidual = group?.subjects?.filter(
     (fil) => fil._id == user?.subject?._id
   );
-
 
   if (error) return <div>ошибка загрузки</div>;
   if (isLoading) return <div>загрузка...</div>;
@@ -75,12 +75,7 @@ const ExamResultIdPageTable = ({ group }: Props) => {
   return (
     <div>
       <Table.ScrollContainer minWidth={"auto"}>
-        <Table
-          highlightOnHover
-          withTableBorder
-          
-          verticalSpacing={"xs"}
-        >
+        <Table highlightOnHover withTableBorder verticalSpacing={"xs"}>
           <Table.Thead>
             <Table.Tr>
               <Table.Th w={50} ta={"center"}>
