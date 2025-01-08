@@ -36,6 +36,7 @@ const ExamResultIdPageTable = ({ group }: Props) => {
     (fil) => fil._id == user?.subject?._id
   );
 
+
   if (error) return <div>ошибка загрузки</div>;
   if (isLoading) return <div>загрузка...</div>;
 
@@ -77,7 +78,7 @@ const ExamResultIdPageTable = ({ group }: Props) => {
         <Table
           highlightOnHover
           withTableBorder
-          withColumnBorders
+          
           verticalSpacing={"xs"}
         >
           <Table.Thead>

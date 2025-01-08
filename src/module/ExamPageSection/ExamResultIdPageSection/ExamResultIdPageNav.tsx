@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Badge,
   Breadcrumbs,
@@ -14,6 +15,8 @@ import { NavLink, useParams } from "react-router-dom";
 
 interface Props {
   group: GroupData;
+  segment: string;
+  setSegment: any;
 }
 
 interface GroupData {
@@ -25,7 +28,7 @@ interface GroupData {
   teachers: { firstname: string; _id: string }[];
 }
 
-const ExamResultIdPageNav = ({ group }: Props) => {
+const ExamResultIdPageNav = ({ group, segment, setSegment }: Props) => {
   const user = useSelector((state: RootState) => state.auth.user);
 
   const { slug } = useParams();
@@ -49,9 +52,11 @@ const ExamResultIdPageNav = ({ group }: Props) => {
           <Grid.Col span={{ base: 12, xs: 7, sm: 8 }}>
             <Group justify="end" gap={"xs"}>
               <SegmentedControl
+                value={segment}
+                onChange={setSegment}
                 data={[
-                  { label: "Baxolash", value: "exam" },
-                  { label: "Natijalarni Ko'rish", value: "grade" },
+                  { label: "Baxolash", value: "/exam" },
+                  { label: "Natijalarni Ko'rish", value: "/grade" },
                 ]}
                 fullWidth
               />
