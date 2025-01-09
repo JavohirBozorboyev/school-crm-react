@@ -8,13 +8,14 @@ import {
   SegmentedControl,
   Title,
   Text,
+  Divider,
 } from "@mantine/core";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import { NavLink, useParams } from "react-router-dom";
 
 interface Props {
-  group: GroupData;
+  groupId: GroupData;
   segment: string;
   setSegment: any;
 }
@@ -28,7 +29,7 @@ interface GroupData {
   teachers: { firstname: string; _id: string }[];
 }
 
-const ExamResultIdPageNav = ({ group, segment, setSegment }: Props) => {
+const ExamResultIdPageNav = ({ groupId, segment, setSegment }: Props) => {
   const user = useSelector((state: RootState) => state.auth.user);
 
   const { slug } = useParams();
@@ -36,15 +37,17 @@ const ExamResultIdPageNav = ({ group, segment, setSegment }: Props) => {
   const items = [
     { title: "Imtixon Natijalari", href: "/exam/exam-results" },
     { title: "Slug", href: `/exam/exam-results/${slug}` },
-    { title: group?.groupInfo?.title, href: "" },
+    { title: groupId?.groupInfo?.title, href: "" },
   ].map((item, index) => (
     <NavLink to={item.href} key={index}>
       <Text c={"blue"}>{item.title}</Text>
     </NavLink>
   ));
+
+
   return (
     <>
-      <Paper mb="sm">
+      <Paper>
         <Grid justify="center" align="center">
           <Grid.Col span={{ base: 12, xs: 5, sm: 4 }}>
             <Breadcrumbs>{items}</Breadcrumbs>
@@ -63,28 +66,26 @@ const ExamResultIdPageNav = ({ group, segment, setSegment }: Props) => {
             </Group>
           </Grid.Col>
           <Grid.Col span={12}>
-            <Paper p={"sm"} withBorder>
+            <Paper p={"sm"}>
               <Group justify="space-between">
-                <Title order={3}>{group?.groupInfo?.title}</Title>
+                <Title order={3}>{groupId?.groupInfo?.title}</Title>
                 <Group gap="xs">
-                  {group?.teachers?.map((teacher) => (
+                  {groupId?.teachers?.map((teacher, i) => (
                     <Badge
                       color={user?._id == teacher._id ? "blue" : "gray"}
                       variant="light"
-                      key={teacher._id}
+                      key={i}
                     >
-                      {teacher.firstname}
+                      {teacher?.firstname}
                     </Badge>
                   ))}
                 </Group>
-                <Badge color="teal" variant="filled">
-                  {group?.groupInfo?.status}
-                </Badge>
               </Group>
             </Paper>
           </Grid.Col>
         </Grid>
       </Paper>
+      <Divider />
     </>
   );
 };

@@ -26,30 +26,37 @@ const StudentPageTable = ({ filter }: any) => {
   if (error) return <div>ошибка загрузки</div>;
   if (isLoading) return <div>загрузка...</div>;
 
-
   return (
     <>
       <Table.ScrollContainer minWidth={1600}>
-        <Table
-          verticalSpacing={"sm"}
-          withTableBorder
-          mt={"md"}
-          withColumnBorders
-          highlightOnHover
-        >
+        <Table verticalSpacing={"md"} mt={"md"} highlightOnHover>
           <Table.Thead>
             <Table.Tr>
-              <Table.Th w={250}>Ism Familiya</Table.Th>
-              <Table.Th w={150}>Sinf</Table.Th>
-              <Table.Th w={150}>Passport</Table.Th>
-              <Table.Th w={200}>Kantaktlar</Table.Th>
-              <Table.Th w={350}>Manzil</Table.Th>
-              <Table.Th w={300}>Ota-Ona ismi</Table.Th>
-              <Table.Th align="center" miw={200}>
+              <Table.Th w={250} tt={"uppercase"}>
+                Ism Familiya
+              </Table.Th>
+              <Table.Th w={150} tt={"uppercase"}>
+                Sinf
+              </Table.Th>
+              <Table.Th w={150} tt={"uppercase"}>
+                Passport
+              </Table.Th>
+              <Table.Th w={220} tt={"uppercase"}>
+                Kantaktlar
+              </Table.Th>
+              {/* <Table.Th w={350} tt={"uppercase"}>
+                Manzil
+              </Table.Th> */}
+              <Table.Th w={300} tt={"uppercase"}>
+                Ota-Ona ismi
+              </Table.Th>
+              <Table.Th align="center" miw={200} tt={"uppercase"}>
                 Ota-Ona Kantaktlari
               </Table.Th>
-              <Table.Th w={150}>Status</Table.Th>
-              <Table.Th ta={"center"} w={120}></Table.Th>
+              <Table.Th w={150} tt={"uppercase"}>
+                Status
+              </Table.Th>
+              <Table.Th ta={"center"} w={120} tt={"uppercase"}></Table.Th>
             </Table.Tr>
           </Table.Thead>
           <Table.Tbody>
@@ -72,9 +79,9 @@ const StudentPageTable = ({ filter }: any) => {
                     <Text c="blue.6">{item?.phone}</Text>
                   </NavLink>
                 </Table.Td>
-                <Table.Td>
+                {/* <Table.Td>
                   <Text size="sm">{item?.address}</Text>
-                </Table.Td>
+                </Table.Td> */}
                 <Table.Td>
                   <Group gap={"xs"}>
                     {" "}
