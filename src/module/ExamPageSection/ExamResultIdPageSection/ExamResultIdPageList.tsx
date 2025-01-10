@@ -4,25 +4,24 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import ExamResultIdPageCard from "./ExamResultIdPageCard";
 interface Props {
-  groupId: GroupData;
-  group: GroupData;
-}
-interface Student {
-  _id: string;
-  fullname: string;
+  groupData?: {
+    students?: { _id: string; fullname: string }[];
+    group: { _id: string; title: string };
+  };
+  groupId: {
+    _id: string;
+    subjects: { _id: string; title: string }[];
+    teachers?:
+      | { firstname: string; lastname: string; _id: string }[]
+      | undefined
+      | null;
+  };
 }
 
-interface GroupData {
-  students: Student[];
-  subjects: Subject[];
-}
-
-interface Subject {
-  _id: string;
-  title: string;
-}
-const ExamResultIdPageList = ({ groupId, group }: Props) => {
+const ExamResultIdPageList = ({ groupId, groupData }: Props) => {
   const user = useSelector((state: RootState) => state.auth.user);
+
+  const teacher = groupId?.teachers?.find((item) => item._id === user?._id);
 
 
   return (
@@ -34,7 +33,11 @@ const ExamResultIdPageList = ({ groupId, group }: Props) => {
             .map((item) => {
               return (
                 <Grid.Col key={item?._id} span={{ base: 12, md: 6, xl: 4 }}>
-                  <ExamResultIdPageCard item={item} group={group} />
+                  <ExamResultIdPageCard
+                    item={item}
+                    groupData={groupData}
+                    teacher={teacher === undefined ? null : teacher}
+                  />
                 </Grid.Col>
               );
             })}
@@ -45,7 +48,11 @@ const ExamResultIdPageList = ({ groupId, group }: Props) => {
           {groupId.subjects?.map((item) => {
             return (
               <Grid.Col key={item?._id} span={{ base: 12, md: 6, xl: 4 }}>
-                <ExamResultIdPageCard item={item} group={group} />
+                <ExamResultIdPageCard
+                  item={item}
+                  groupData={groupData}
+                  teacher={teacher === undefined ? null : teacher}
+                />
               </Grid.Col>
             );
           })}

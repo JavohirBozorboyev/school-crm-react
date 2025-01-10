@@ -8,49 +8,83 @@ import {
   TextInput,
   Text,
 } from "@mantine/core";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
+import axios from "axios";
+import { useParams } from "react-router";
 
 interface Props {
-  group: GroupData;
-  item: {
-    title: string;
+  groupData?: {
+    students?: { _id: string; fullname: string }[];
+    group: { _id: string; title: string };
   };
-}
-interface Student {
-  _id: string;
-  fullname: string;
+  item?: {
+    title: string;
+    _id: string;
+  };
+  teacher?: {
+    _id: string;
+    firstname: string;
+    lastname: string;
+  } | null;
 }
 
-interface GroupData {
-  students: Student[];
-  subjects: Subject[];
-}
-
-interface Subject {
-  _id: string;
-  title: string;
-}
-const ExamResultIdPageCard = ({ item, group }: Props) => {
+const ExamResultIdPageCard = ({ item, groupData, teacher }: Props) => {
+  const { slug, id } = useParams();
+  const [loading, setLoading] = useState(false);
   const user = useSelector((state: RootState) => state.auth.user);
   const [examResult, setExamResult] = useState<
-    { studentId: string; result: string }[]
+    { student: string; grade: string }[]
   >([]);
+
+  useEffect(() => {
+    if (groupData?.students?.length) {
+      setExamResult(
+        groupData.students.map((student) => ({
+          student: student._id,
+          grade: " ",
+        }))
+      );
+    }
+  }, [groupData?.students]);
 
   const handleResultChange = (studentId: string, value: string) => {
     setExamResult((prev) => {
-      const existing = prev.find((res) => res.studentId === studentId);
+      const existing = prev.find((res) => res.student === studentId);
       if (existing) {
         return prev.map((res) =>
-          res.studentId === studentId ? { ...res, result: value } : res
+          res.student === studentId ? { ...res, grade: value.trim() } : res
         );
       }
-      return [...prev, { studentId, result: value }];
+      return [...prev, { student: studentId, grade: value.trim() }];
     });
   };
 
-  console.log(examResult, user);
+  const addExamResult = async () => {
+    setLoading(true);
+    const creatorType = user?.role == "teacher" ? "Teacher" : "Admin";
+    try {
+      const res = await axios.post("/api/exam/exam-grades", {
+        examInfo: slug,
+        groupInfo: id,
+        teacherInfo: teacher?._id || null,
+        subjectInfo: item?._id,
+        grades: examResult,
+        maxScore: "",
+        creator: user?._id,
+        creatorType,
+      });
+      console.log(res);
+      if (res.status == 201) {
+        setLoading(false);
+      }
+    } catch (error) {
+      console.log(error);
+      setLoading(false);
+    }
+  };
+
 
   return (
     <>
@@ -68,7 +102,7 @@ const ExamResultIdPageCard = ({ item, group }: Props) => {
           </Grid.Col>
         </Grid>
         <Divider my={"sm"} />
-        {group?.students?.map((student, i) => {
+        {groupData?.students?.map((student, i) => {
           return (
             <Grid key={i} align="center">
               <Grid.Col span={8}>
@@ -81,8 +115,8 @@ const ExamResultIdPageCard = ({ item, group }: Props) => {
                   variant="filled"
                   size="xs"
                   value={
-                    examResult.find((res) => res.studentId === student?._id)
-                      ?.result || ""
+                    examResult.find((res) => res.student === student?._id)
+                      ?.grade || ""
                   }
                   onChange={(e) =>
                     handleResultChange(student._id, e.target.value)
@@ -94,7 +128,9 @@ const ExamResultIdPageCard = ({ item, group }: Props) => {
         })}
         <Divider mt={"md"} mb={"sm"} />
         <Flex justify={"flex-end"}>
-          <Button size="xs">Natijalarni Saqlash</Button>
+          <Button size="xs" onClick={addExamResult} loading={loading}>
+            Natijalarni Saqlash
+          </Button>
         </Flex>
       </Paper>
     </>

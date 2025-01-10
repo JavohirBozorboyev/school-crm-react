@@ -30,7 +30,7 @@ const ExamResultIdPage = () => {
         segment={segment}
       />
       {segment === "/exam" && (
-        <ExamResultIdPageList groupId={groupId} group={group} />
+        <ExamResultIdPageList groupId={groupId} groupData={group} />
       )}
       {segment === "/grade" && <ExamResultIdGradeList />}
     </div>
