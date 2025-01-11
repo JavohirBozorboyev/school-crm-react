@@ -13,6 +13,9 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import axios from "axios";
 import { useParams } from "react-router";
+import { notifications } from "@mantine/notifications";
+import useSWR, { mutate } from "swr";
+import { getHotkeyHandler } from "@mantine/hooks";
 
 interface Props {
   groupData?: {
@@ -30,8 +33,25 @@ interface Props {
   } | null;
 }
 
+interface GradeProps {
+  student: {
+    _id: string;
+  };
+  grade: string;
+  subjectInfo: {
+    _id: string;
+    title: string;
+  };
+}
+
 const ExamResultIdPageCard = ({ item, groupData, teacher }: Props) => {
   const { slug, id } = useParams();
+  const { data, isLoading } = useSWR(
+    `/api/exam/exam-grades/${slug}?class=${id}`
+  );
+  const gredeResult = data?.find(
+    (serch: GradeProps) => serch.subjectInfo._id === item?._id
+  );
   const [loading, setLoading] = useState(false);
   const user = useSelector((state: RootState) => state.auth.user);
   const [examResult, setExamResult] = useState<
@@ -39,7 +59,19 @@ const ExamResultIdPageCard = ({ item, groupData, teacher }: Props) => {
   >([]);
 
   useEffect(() => {
-    if (groupData?.students?.length) {
+    if (gredeResult?.grades?.length) {
+      setExamResult(
+        groupData?.students?.map((student) => {
+          const existingGrade = gredeResult.grades.find(
+            (grade: GradeProps) => grade.student._id === student._id
+          );
+          return {
+            student: student._id,
+            grade: existingGrade?.grade || " ",
+          };
+        }) || []
+      );
+    } else if (groupData?.students?.length) {
       setExamResult(
         groupData.students.map((student) => ({
           student: student._id,
@@ -47,7 +79,7 @@ const ExamResultIdPageCard = ({ item, groupData, teacher }: Props) => {
         }))
       );
     }
-  }, [groupData?.students]);
+  }, [groupData?.students, gredeResult]);
 
   const handleResultChange = (studentId: string, value: string) => {
     setExamResult((prev) => {
@@ -75,17 +107,64 @@ const ExamResultIdPageCard = ({ item, groupData, teacher }: Props) => {
         creator: user?._id,
         creatorType,
       });
-      console.log(res);
       if (res.status == 201) {
+        mutate(`/api/exam/exam-grades/${slug}?class=${id}`);
         setLoading(false);
+        notifications.show({
+          title: "Imtixon ma'lumotlari qo'shildi",
+          message: "",
+          withBorder: true,
+        });
       }
     } catch (error) {
-      console.log(error);
+      setLoading(false);
+      notifications.show({
+        title: "Xatolik imtixon natijasi saqlanmadi",
+        message: "",
+        withBorder: true,
+        color: "red",
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+  const updateExamResult = async () => {
+    setLoading(true);
+    try {
+      const res = await axios.put(`/api/exam/exam-grades/${slug}?class=${id}`, {
+        subjectInfo: item?._id,
+        grades: examResult,
+      });
+      if (res.status === 200) {
+        mutate(`/api/exam/exam-grades/${slug}?class=${id}`); // SWR ma'lumotlarini yangilash
+        notifications.show({
+          title: "Imtixon natijalari yangilandi",
+          message: "",
+          withBorder: true,
+        });
+      }
+    } catch (error) {
+      console.error("Error updating exam results:", error);
+      notifications.show({
+        title: "Xatolik natijalar yangilanmadi",
+        message: "",
+        withBorder: true,
+        color: "red",
+      });
+    } finally {
       setLoading(false);
     }
   };
 
+  const SaveData = () => {
+    if (gredeResult) {
+      updateExamResult();
+    } else {
+      addExamResult();
+    }
+  };
 
+  if (isLoading) return <div>загрузка...</div>;
   return (
     <>
       <Paper p={"md"} withBorder>
@@ -121,6 +200,7 @@ const ExamResultIdPageCard = ({ item, groupData, teacher }: Props) => {
                   onChange={(e) =>
                     handleResultChange(student._id, e.target.value)
                   }
+                  onKeyDown={getHotkeyHandler([["ctrl+s", SaveData]])}
                 />
               </Grid.Col>
             </Grid>
@@ -128,7 +208,7 @@ const ExamResultIdPageCard = ({ item, groupData, teacher }: Props) => {
         })}
         <Divider mt={"md"} mb={"sm"} />
         <Flex justify={"flex-end"}>
-          <Button size="xs" onClick={addExamResult} loading={loading}>
+          <Button size="xs" onClick={SaveData} loading={loading}>
             Natijalarni Saqlash
           </Button>
         </Flex>
