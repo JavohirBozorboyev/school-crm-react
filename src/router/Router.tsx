@@ -1,4 +1,7 @@
 import { Routes, Route } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "../store";
+import axios from "axios";
 import AppLayout from "../Layout/AppLayout";
 import HomePage from "../pages/HomePage";
 import LoginPage from "../pages/LoginPage/LoginPage";
@@ -17,9 +20,6 @@ import StudentsSlugPage from "../pages/StudentsPage/StudentsSlugPage/StudentsSlu
 import PaymentPage from "../pages/FinancePage/PaymentPage/PaymentPage";
 import AddAdminPage from "../pages/SettingsPage/AdminsPage/AddAdminPage";
 import ProtectedPage from "../security/ProtectedPage";
-import { useSelector } from "react-redux";
-import { RootState } from "../store";
-import axios from "axios";
 import AddNewTeacherPage from "../pages/TeachersPage/AddNewTeacher/AddNewTeacherPage";
 import AddNewClassPage from "../pages/ClassPage/AddNewClassPage/AddNewClassPage";
 import SubjectPage from "../pages/SettingsPage/SubjectPage/SubjectPage";
@@ -28,9 +28,10 @@ import AddNewStudentPage from "../pages/StudentsPage/AddNewStudentPage/AddNewStu
 import ExamResultPage from "../pages/ExamPage/ExamResultPage/ExamResultPage";
 import ExamResultSlugPage from "../pages/ExamPage/ExamResultPage/ExamResultSlugPage/ExamResultSlugPage";
 import ExamResultIdPage from "../pages/ExamPage/ExamResultPage/ExamResultIdPage/ExamResultIdPage";
+import AddExamResultPage from "../pages/ExamPage/ExamResultPage/AddExamResultPage/AddExamResultPage";
 
-axios.defaults.baseURL = "https://schools-crm-node.onrender.com";
-// axios.defaults.baseURL = "http://localhost:3000";
+// axios.defaults.baseURL = "https://schools-crm-node.onrender.com";
+axios.defaults.baseURL = "http://localhost:3000";
 const Router = () => {
   const token = useSelector((state: RootState) => state.auth.token);
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -141,6 +142,18 @@ const Router = () => {
             }
           />
           <Route path="/exam/exam-results" element={<ExamResultPage />} />
+          <Route
+            path="/exam/exam-results/add"
+            element={
+              <ProtectedPage
+                requiredPermissions={["read"]}
+                requiredPrivileges={["view_reports"]}
+                fallbackPath="/404"
+              >
+                <AddExamResultPage />
+              </ProtectedPage>
+            }
+          />
           <Route
             path="/exam/exam-results/:slug"
             element={<ExamResultSlugPage />}

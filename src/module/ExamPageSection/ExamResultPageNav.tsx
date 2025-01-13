@@ -55,7 +55,7 @@ const ExamResultPageNav = ({
               requiredPermissions={["write"]}
               requiredPrivileges={["manage_users"]}
             >
-              <Link to="/class/add">
+              <Link to="/exam/exam-results/add">
                 <Button>Yangi Imtixon Qo'shish</Button>
               </Link>
             </AccessControl>
