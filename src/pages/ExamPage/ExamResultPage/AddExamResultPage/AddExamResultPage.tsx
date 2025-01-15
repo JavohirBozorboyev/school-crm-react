@@ -1,14 +1,7 @@
-import {
-  Box,
-  Grid,
-  MultiSelect,
-  Paper,
-  TextInput,
-  Title,
-  Text,
-} from "@mantine/core";
+import { Box, Grid, MultiSelect, TextInput, Title, Text } from "@mantine/core";
 import { useState } from "react";
 import useSWR from "swr";
+import AddExamResultCard from "../../../../module/ExamPageSection/AddExamResultCard/AddExamResultCard";
 
 const AddExamResultPage = () => {
   const { data: groups, error, isLoading } = useSWR("/api/groups/three");
@@ -16,6 +9,7 @@ const AddExamResultPage = () => {
   const { data: teachers } = useSWR("/api/teachers");
   const [groupValue, setGroupValue] = useState<string[]>([]);
 
+  const [examResult, setExamResult] = useState([]);
   if (error) return <div>ошибка загрузки</div>;
   if (isLoading) return <div>загрузка...</div>;
 
@@ -51,7 +45,8 @@ const AddExamResultPage = () => {
       };
     }
   );
-  // console.log(groups);
+
+  console.log(examResult, "natija");
 
   return (
     <div>
@@ -87,47 +82,17 @@ const AddExamResultPage = () => {
             <Text size="lg" mb={"md"} c={"teal"}>
               Tanlagan sinflar:
             </Text>
-            {groupValue.map((group) => {
-              const defaultGroupSubjectTeacher = groups
-                .find((fi: { _id: string }) => fi._id === group)
-                ?.subjectTeacher?.map((item: { _id: string }) => item?._id);
-
-              return (
-                <Paper p={"sm"} withBorder key={group} my={"sm"}>
-                  <Grid align="center">
-                    <Grid.Col span={{ base: 12, md: 6, lg: 2 }}>
-                      <Text>
-                        {
-                          groups?.find(
-                            (g: { title: string; _id: string }) =>
-                              g._id === group
-                          )?.title
-                        }
-                      </Text>
-                    </Grid.Col>
-                    <Grid.Col span={{ base: 12, md: 6, lg: 5 }}>
-                      <MultiSelect
-                        label="Imtixon Fanlari"
-                        placeholder="Fanlar"
-                        description="Belgilangan fanlardan imtixon olinadi"
-                        data={subjectSellectData}
-                        clearable
-                      />
-                    </Grid.Col>
-                    <Grid.Col span={{ base: 12, md: 6, lg: 5 }}>
-                      <MultiSelect
-                        label="Fan Ustozlari"
-                        placeholder="Ustozlar"
-                        description="Belgilangan ustozlar imtixon natijalarni kirita oladi."
-                        data={teacherSellectData}
-                        clearable
-                        defaultValue={defaultGroupSubjectTeacher}
-                      />
-                    </Grid.Col>
-                  </Grid>
-                </Paper>
-              );
-            })}
+            {groupValue.map((group) => (
+              <AddExamResultCard
+                group={group}
+                groups={groups}
+                key={group}
+                subjectSellectData={subjectSellectData}
+                teacherSellectData={teacherSellectData}
+                setExamResult={setExamResult}
+                examResult={examResult}
+              />
+            ))}
           </Box>
         )}
       </Box>
