@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 import { Paper, Grid, MultiSelect, Text } from "@mantine/core";
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 
 interface Props {
   group: string;
@@ -13,8 +13,8 @@ interface Props {
   }[];
   subjectSellectData: { value: string; label: string }[];
   teacherSellectData: { value: string; label: string }[];
-  setExamResult: any; // Funksiya turi
-  examResult: string[]; // Natijalar massiv turi
+  setExamResult: any;
+  examResult?: string[];
 }
 
 const AddExamResultCard = ({
@@ -23,7 +23,6 @@ const AddExamResultCard = ({
   subjectSellectData,
   teacherSellectData,
   setExamResult,
-  examResult,
 }: Props) => {
   const defaultSubjectTeacher = groups
     .find((fi: { _id: string }) => fi._id === group)
@@ -40,12 +39,18 @@ const AddExamResultCard = ({
   });
 
   useEffect(() => {
-    // setExamResult([
-    //   ...examResult.filter((fi) => fi?.groupInfo !== group),
-    //   result,
-    // ]);
-  }, [result, setResult]);
+    setExamResult((prevResults: any[]) => {
+      const updatedResults = prevResults.map((item) =>
+        item.groupInfo === result.groupInfo ? result : item
+      );
 
+      const isGroupExists = prevResults.some(
+        (item) => item.groupInfo === result.groupInfo
+      );
+
+      return isGroupExists ? updatedResults : [...prevResults, result];
+    });
+  }, [result, setExamResult]);
   return (
     <>
       <Paper p={"sm"} withBorder my={"sm"}>
@@ -73,6 +78,7 @@ const AddExamResultCard = ({
               }}
               clearable
               defaultValue={defaultSubjects}
+              variant="filled"
             />
           </Grid.Col>
           <Grid.Col span={{ base: 12, md: 6, lg: 5 }}>
@@ -89,6 +95,7 @@ const AddExamResultCard = ({
                   teachers: e,
                 });
               }}
+              variant="filled"
             />
           </Grid.Col>
         </Grid>
