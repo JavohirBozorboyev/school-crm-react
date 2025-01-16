@@ -164,6 +164,7 @@ const ExamResultIdPageCard = ({ item, groupData, teacher }: Props) => {
     }
   };
 
+
   if (isLoading) return <div>загрузка...</div>;
   return (
     <>
@@ -180,7 +181,8 @@ const ExamResultIdPageCard = ({ item, groupData, teacher }: Props) => {
             </Text>
           </Grid.Col>
         </Grid>
-        <Divider my={"sm"} />
+        {groupData?.students?.length != 0 && <Divider my={"sm"} />}
+
         {groupData?.students?.map((student, i) => {
           return (
             <Grid key={i} align="center">
@@ -206,12 +208,23 @@ const ExamResultIdPageCard = ({ item, groupData, teacher }: Props) => {
             </Grid>
           );
         })}
-        <Divider mt={"md"} mb={"sm"} />
-        <Flex justify={"flex-end"}>
-          <Button size="xs" onClick={SaveData} loading={loading}>
-            Natijalarni Saqlash
-          </Button>
-        </Flex>
+        {groupData?.students?.length === 0 && (
+          <Paper p={"md"} withBorder mt={"lg"}>
+            <Text py={"2px"} fz={"sm"} ta={"center"}>
+              O'quvchi Topilmadi !
+            </Text>
+          </Paper>
+        )}
+        {groupData?.students?.length != 0 && (
+          <>
+            <Divider mt={"md"} mb={"sm"} />
+            <Flex justify={"flex-end"}>
+              <Button size="xs" onClick={SaveData} loading={loading}>
+                Natijalarni Saqlash
+              </Button>
+            </Flex>
+          </>
+        )}
       </Paper>
     </>
   );

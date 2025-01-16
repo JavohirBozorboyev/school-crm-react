@@ -48,7 +48,6 @@ const ExamResultIdGradeCard = ({ item }: DataProps) => {
             </Grid>
           );
         })}
-        <Grid></Grid>
       </Paper>
     </>
   );

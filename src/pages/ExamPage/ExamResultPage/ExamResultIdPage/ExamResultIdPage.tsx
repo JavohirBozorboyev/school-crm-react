@@ -13,7 +13,7 @@ const ExamResultIdPage = () => {
     data: group,
     error: groupErr,
     isLoading: isLoadingGroup,
-  } = useSWR(`/api/groups/${id}`);
+  } = useSWR(`/api/groups/exam/${id}`);
 
   if (error || groupErr) return <div>ошибка загрузки</div>;
   if (isLoading || isLoadingGroup) return <div>загрузка...</div>;
@@ -21,6 +21,7 @@ const ExamResultIdPage = () => {
   const groupId = data?.group?.find(
     (el: { groupInfo: { _id: string } }) => el.groupInfo._id === id
   );
+
 
   return (
     <div>

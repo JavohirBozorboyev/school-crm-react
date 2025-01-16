@@ -39,14 +39,15 @@ const ExamReusltPageCard = ({
   const [opened, { open, close }] = useDisclosure(false);
   const [deactive, handlers] = useDisclosure(false);
   const user = useSelector((state: RootState) => state.auth.user);
-  const DeleteClass = async () => {
+
+  const DeleteExamResults = async () => {
     try {
-      const res = await axios.delete(`/api/groups/${item._id}`);
+      const res = await axios.delete(`/api/exam/exam-results/${item?._id}`);
       if (res.status == 200) {
-        mutate(`/api/groups?status=${item.status}`);
+        mutate(`/api/exam/exam-results?status=${item.status}&search=`);
         close();
         notifications.show({
-          title: "Sinf o'chirildi",
+          title: "Imtixon o'chirildi",
           message: "",
           withBorder: true,
         });
@@ -286,7 +287,7 @@ const ExamReusltPageCard = ({
           </Button>
           <Button
             color="red"
-            onClick={DeleteClass}
+            onClick={DeleteExamResults}
             rightSection={<IconTrash size={16} />}
           >
             O'chirish
