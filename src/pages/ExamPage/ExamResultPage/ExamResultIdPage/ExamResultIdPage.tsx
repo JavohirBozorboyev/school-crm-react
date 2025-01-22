@@ -22,6 +22,7 @@ const ExamResultIdPage = () => {
     (el: { groupInfo: { _id: string } }) => el.groupInfo._id === id
   );
 
+  console.log(data);
 
   return (
     <div>

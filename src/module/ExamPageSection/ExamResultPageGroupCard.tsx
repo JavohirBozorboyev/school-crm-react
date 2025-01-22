@@ -33,7 +33,7 @@ interface Element {
 const ExamResultPageGroupCard = ({ item }: { item: Item; search?: string }) => {
   return (
     <div>
-      <Grid >
+      <Grid>
         {item?.group?.map((element: Element, i: number) => {
           return (
             <Grid.Col key={i} span={{ base: 12, sm: 6, lg: 4, xl: 3 }}>
@@ -63,11 +63,10 @@ const ExamResultPageGroupCard = ({ item }: { item: Item; search?: string }) => {
                       return (
                         <Badge
                           key={i}
-                          color="gray"
+                          color="dark"
                           radius={"sm"}
                           size="xs"
                           variant="light"
-                          c={"dark"}
                         >
                           {sub?.title}
                         </Badge>
@@ -90,11 +89,10 @@ const ExamResultPageGroupCard = ({ item }: { item: Item; search?: string }) => {
                       return (
                         <Badge
                           key={i}
-                          color="gray"
+                          color="dark"
                           radius={"sm"}
                           size="xs"
                           variant="light"
-                          c={"dark"}
                         >
                           {sub?.firstname}
                         </Badge>

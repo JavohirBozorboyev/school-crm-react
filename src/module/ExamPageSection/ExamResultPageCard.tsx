@@ -124,7 +124,7 @@ const ExamReusltPageCard = ({
               <Text size="xs" c="dimmed">
                 Create:
               </Text>
-              <Text fw={500} size="xs" c="dark">
+              <Text fw={500} size="xs" >
                 {FormatDate(item?.createdAt)}
               </Text>
             </Group>
@@ -132,7 +132,7 @@ const ExamReusltPageCard = ({
               <Text size="xs" c="dimmed">
                 Update:
               </Text>
-              <Text fw={500} size="xs" c="dark">
+              <Text fw={500} size="xs" >
                 {FormatDate(item?.updatedAt)}
               </Text>
             </Group>
