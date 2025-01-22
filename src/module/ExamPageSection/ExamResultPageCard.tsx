@@ -29,6 +29,7 @@ import { mutate } from "swr";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import FormatDate from "../../utils/FormatDate";
+import { useNavigate } from "react-router-dom";
 const ExamReusltPageCard = ({
   item,
   search,
@@ -39,6 +40,8 @@ const ExamReusltPageCard = ({
   const [opened, { open, close }] = useDisclosure(false);
   const [deactive, handlers] = useDisclosure(false);
   const user = useSelector((state: RootState) => state.auth.user);
+
+  const navigate = useNavigate();
 
   const DeleteExamResults = async () => {
     try {
@@ -124,7 +127,7 @@ const ExamReusltPageCard = ({
               <Text size="xs" c="dimmed">
                 Create:
               </Text>
-              <Text fw={500} size="xs" >
+              <Text fw={500} size="xs">
                 {FormatDate(item?.createdAt)}
               </Text>
             </Group>
@@ -132,7 +135,7 @@ const ExamReusltPageCard = ({
               <Text size="xs" c="dimmed">
                 Update:
               </Text>
-              <Text fw={500} size="xs" >
+              <Text fw={500} size="xs">
                 {FormatDate(item?.updatedAt)}
               </Text>
             </Group>
@@ -235,6 +238,9 @@ const ExamReusltPageCard = ({
                   leftSection={
                     <IconPencil style={{ width: rem(14), height: rem(14) }} />
                   }
+                  onClick={() => {
+                    navigate(`/exam/exam-results/edit/${item._id}`);
+                  }}
                 >
                   Edit Imtixon
                 </Menu.Item>

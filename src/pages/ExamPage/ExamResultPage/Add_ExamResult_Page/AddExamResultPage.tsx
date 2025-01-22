@@ -11,7 +11,7 @@ import {
 } from "@mantine/core";
 import { useRef, useState } from "react";
 import useSWR from "swr";
-import AddExamResultCard from "../../../../module/ExamPageSection/AddExamResultCard/AddExamResultCard";
+import AddExamResultCard from "../../../../module/ExamPageSection/Add_ExamResult_Section/AddExamResultCard";
 import axios from "axios";
 import { notifications } from "@mantine/notifications";
 import { useNavigate } from "react-router-dom";

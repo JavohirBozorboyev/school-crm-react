@@ -26,12 +26,13 @@ import SubjectPage from "../pages/SettingsPage/SubjectPage/SubjectPage";
 import AddSubjectPage from "../pages/SettingsPage/SubjectPage/AddSubjectPage";
 import AddNewStudentPage from "../pages/StudentsPage/AddNewStudentPage/AddNewStudentPage";
 import ExamResultPage from "../pages/ExamPage/ExamResultPage/ExamResultPage";
-import ExamResultSlugPage from "../pages/ExamPage/ExamResultPage/ExamResultSlugPage/ExamResultSlugPage";
-import ExamResultIdPage from "../pages/ExamPage/ExamResultPage/ExamResultIdPage/ExamResultIdPage";
-import AddExamResultPage from "../pages/ExamPage/ExamResultPage/AddExamResultPage/AddExamResultPage";
+import ExamResultSlugPage from "../pages/ExamPage/ExamResultPage/ExamResult_Slug_Page/ExamResultSlugPage";
+import ExamResultIdPage from "../pages/ExamPage/ExamResultPage/ExamResult_Id_Page/ExamResultIdPage";
+import AddExamResultPage from "../pages/ExamPage/ExamResultPage/Add_ExamResult_Page/AddExamResultPage";
+import Edit_ExamResult_Page from "../pages/ExamPage/ExamResultPage/Edit_ExamResult_Page/Edit_ExamResult_Page";
 
-// axios.defaults.baseURL = "https://schools-crm-node.onrender.com";
-axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = "https://schools-crm-node.onrender.com";
+// axios.defaults.baseURL = "http://localhost:3000";
 const Router = () => {
   const token = useSelector((state: RootState) => state.auth.token);
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -146,11 +147,23 @@ const Router = () => {
             path="/exam/exam-results/add"
             element={
               <ProtectedPage
-                requiredPermissions={["read"]}
-                requiredPrivileges={["view_reports"]}
+                requiredPermissions={["read", "write"]}
+                requiredPrivileges={["view_reports", "manage_users"]}
                 fallbackPath="/404"
               >
                 <AddExamResultPage />
+              </ProtectedPage>
+            }
+          />
+          <Route
+            path="/exam/exam-results/edit/:id"
+            element={
+              <ProtectedPage
+                requiredPermissions={["read", "update"]}
+                requiredPrivileges={["view_reports", "manage_users"]}
+                fallbackPath="/404"
+              >
+                <Edit_ExamResult_Page />
               </ProtectedPage>
             }
           />
