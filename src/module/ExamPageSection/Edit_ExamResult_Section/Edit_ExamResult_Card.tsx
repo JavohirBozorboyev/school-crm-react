@@ -23,6 +23,7 @@ interface Item {
 }
 
 const Edit_ExamResult_Card = ({ group, subjects, teachers }: Props) => {
+  
   const selectedSubject = subjects?.map((item: Item) => {
     return { label: item.title || "", value: item._id || "" };
   });
@@ -34,6 +35,8 @@ const Edit_ExamResult_Card = ({ group, subjects, teachers }: Props) => {
     };
   });
   const defaultTeacherValue = group?.teachers?.map((item) => item?._id);
+
+
   return (
     <>
       <Paper p={"sm"} withBorder my={"sm"}>

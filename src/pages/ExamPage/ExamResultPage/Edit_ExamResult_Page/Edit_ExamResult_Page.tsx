@@ -9,34 +9,29 @@ import {
   Button,
   NumberInput,
 } from "@mantine/core";
-
-interface Group {
-  groupInfo: { title: string };
-  subjects: { title: string; _id: string }[];
-  teachers: {
-    _id: string;
-    firstname: string;
-    subject: { title: string; _id: string };
-  }[];
-  _id: string;
-}
-import { useRef } from "react";
+import { useEffect, useRef, useState } from "react";
 import useSWR from "swr";
-import { useParams } from "react-router-dom";
-import Edit_ExamResult_Card from "../../../../module/ExamPageSection/Edit_ExamResult_Section/Edit_ExamResult_Card";
+import AddExamResultCard from "../../../../module/ExamPageSection/Add_ExamResult_Section/AddExamResultCard";
+import axios from "axios";
+import { notifications } from "@mantine/notifications";
+import { useNavigate, useParams } from "react-router-dom";
 
 const Edit_ExamResult_Page = () => {
   const { id } = useParams();
-  const { data: groups } = useSWR("/api/groups/three");
+  const { data: groups, error, isLoading } = useSWR("/api/groups/three");
   const { data: subjects } = useSWR("/api/subjects");
   const { data: teachers } = useSWR("/api/teachers");
-  const {
-    data: examResults,
-    error,
-    isLoading,
-  } = useSWR(`/api/exam/exam-results/${id}`);
+  const { data: editExam } = useSWR(`/api/exam/exam-results/${id}`);
+  const [groupValue, setGroupValue] = useState<string[]>([]);
+  const [examResult, setExamResult] = useState([]);
   const title = useRef<HTMLInputElement>(null);
   const ball = useRef<HTMLInputElement>(null);
+  const [err, setErr] = useState({
+    title: false,
+    ball: false,
+    group: false,
+  });
+  const navigate = useNavigate();
 
   const SellectChangeGroup = groups?.map(
     (group: { title: string; _id: string }) => ({
@@ -45,25 +40,108 @@ const Edit_ExamResult_Page = () => {
     })
   );
 
-  const defaultClassValue = examResults?.group.map(
-    (item: { groupInfo: { _id: string } }) => item?.groupInfo?._id
+  const subjectSellectData = subjects?.map(
+    (item: { _id: string; title: string }) => {
+      return { value: item._id, label: item.title };
+    }
   );
+  const teacherSellectData = teachers?.map(
+    (item: {
+      _id: string;
+      firstname: string;
+      lastname: string;
+      subject: {
+        title: string;
+      };
+    }) => {
+      return {
+        value: item._id,
+        label:
+          item?.firstname +
+          " " +
+          " " +
+          item?.lastname +
+          ` ( ${item?.subject?.title} )`,
+      };
+    }
+  );
+
+  const handleGroupChange = (selectedGroups: string[]) => {
+    setGroupValue(selectedGroups);
+    setExamResult((prevResults) =>
+      prevResults.filter((result: { groupInfo: string }) =>
+        selectedGroups.includes(result?.groupInfo)
+      )
+    );
+  };
+
+  const CreateExam = async function () {
+    if (title.current?.value == null || title.current?.value == "") {
+      setErr((prev) => ({ ...prev, title: true }));
+      return;
+    }
+    if (ball.current?.value == null || ball.current?.value == "") {
+      setErr((prev) => ({ ...prev, ball: true }));
+      return;
+    }
+    if (examResult.length == 0) {
+      setErr((prev) => ({ ...prev, group: true }));
+      return;
+    }
+    setErr({ title: false, ball: false, group: false });
+    try {
+      const res = await axios.post("/api/exam/exam-results", {
+        // title: title.current.value,
+        // maxScore: ball.current.value,
+        // group: examResult,
+      });
+      if (res.status == 201) {
+        notifications.show({
+          title: "Yangi Imtixon qo'shildi",
+          message: "",
+          withBorder: true,
+        });
+        title.current.value = "";
+        ball.current.value = "";
+        setGroupValue([]);
+        setExamResult([]);
+        navigate("/exam/exam-results");
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const defaultGroupValue = editExam?.group?.map(
+    (item: {
+      groupInfo: {
+        _id: string;
+      };
+    }) => item?.groupInfo?._id
+  );
+  useEffect(() => {
+    if (defaultGroupValue && defaultGroupValue.length > 0) {
+      setGroupValue(defaultGroupValue);
+    }
+  }, []);
+
+  console.log(editExam);
 
   if (error) return <div>ошибка загрузки</div>;
   if (isLoading) return <div>загрузка...</div>;
 
   return (
     <div>
-      <Title order={3}>Imtixonni Taxrirlash</Title>
-      <Grid mt={"lg"}>
+      <Title order={3}>Yangi imtixon qo'shish</Title>
+      <Grid mt={"md"}>
         <Grid.Col span={{ base: 12, md: 6, lg: 3, xl: 3 }}>
           <TextInput
             label="Imtixon sarlavhasi"
             placeholder="Sarlavha kiriting"
             withAsterisk
             ref={title}
-            defaultValue={examResults?.title}
             variant="filled"
+            error={err.title}
           />
         </Grid.Col>
         <Grid.Col span={{ base: 12, md: 6, lg: 2, xl: 1 }}>
@@ -73,7 +151,7 @@ const Edit_ExamResult_Page = () => {
             withAsterisk
             ref={ball}
             variant="filled"
-            defaultValue={examResults?.maxScore}
+            error={err.ball}
           />
         </Grid.Col>
         <Grid.Col span={{ base: 12, md: 6, lg: 7, xl: 8 }}>
@@ -81,33 +159,37 @@ const Edit_ExamResult_Page = () => {
             label="Sinflarni tanlang"
             placeholder="Sinflar"
             data={SellectChangeGroup}
-            defaultValue={defaultClassValue}
             clearable
             withAsterisk
+            onChange={handleGroupChange}
             variant="filled"
+            error={err.group}
+            defaultValue={defaultGroupValue}
           />
         </Grid.Col>
       </Grid>
 
       <Box mt={"md"}>
-        {
+        {groupValue.length > 0 && (
           <Box>
             <Text size="lg" mb={"md"} c={"teal"}>
               Tanlagan sinflar:
             </Text>
-            {examResults?.group?.map((group: Group) => (
-              <Edit_ExamResult_Card
-                key={group?._id}
+            {groupValue.map((group) => (
+              <AddExamResultCard
                 group={group}
-                subjects={subjects}
-                teachers={teachers}
+                groups={groups}
+                key={group}
+                subjectSellectData={subjectSellectData}
+                teacherSellectData={teacherSellectData}
+                setExamResult={setExamResult}
               />
             ))}
           </Box>
-        }
+        )}
       </Box>
       <Flex justify={"flex-end"} mt={"xl"}>
-        <Button>Saqlash</Button>
+        <Button onClick={CreateExam}>Imtixonni yaratish</Button>
       </Flex>
     </div>
   );
