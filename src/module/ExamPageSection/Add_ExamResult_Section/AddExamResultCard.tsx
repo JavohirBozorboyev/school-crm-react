@@ -55,7 +55,7 @@ const AddExamResultCard = ({
     <>
       <Paper p={"sm"} withBorder my={"sm"}>
         <Grid align="center">
-          <Grid.Col span={{ base: 12, md: 6, lg: 2 }}>
+          <Grid.Col span={{ base: 12, sm: 3, lg: 2 }}>
             <Text>
               {
                 groups?.find(
@@ -64,7 +64,7 @@ const AddExamResultCard = ({
               }
             </Text>
           </Grid.Col>
-          <Grid.Col span={{ base: 12, md: 6, lg: 5 }}>
+          <Grid.Col span={{ base: 12, sm: 9, lg: 5 }}>
             <MultiSelect
               label="Imtixon Fanlari"
               placeholder="Fanlar"
@@ -81,7 +81,7 @@ const AddExamResultCard = ({
               variant="filled"
             />
           </Grid.Col>
-          <Grid.Col span={{ base: 12, md: 6, lg: 5 }}>
+          <Grid.Col span={{ base: 12, sm: 12, lg: 5 }}>
             <MultiSelect
               label="Fan Ustozlari"
               placeholder="Ustozlar"

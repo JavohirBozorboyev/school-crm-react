@@ -18,10 +18,14 @@ import { useNavigate, useParams } from "react-router-dom";
 
 const Edit_ExamResult_Page = () => {
   const { id } = useParams();
-  const { data: groups, error, isLoading } = useSWR("/api/groups/three");
+  const { data: groups } = useSWR("/api/groups/three");
   const { data: subjects } = useSWR("/api/subjects");
   const { data: teachers } = useSWR("/api/teachers");
-  const { data: editExam } = useSWR(`/api/exam/exam-results/${id}`);
+  const {
+    data: editExam,
+    error,
+    isLoading,
+  } = useSWR(`/api/exam/exam-results/${id}`);
   const [groupValue, setGroupValue] = useState<string[]>([]);
   const [examResult, setExamResult] = useState([]);
   const title = useRef<HTMLInputElement>(null);
@@ -75,7 +79,23 @@ const Edit_ExamResult_Page = () => {
     );
   };
 
-  const CreateExam = async function () {
+  const defaultGroupValue = editExam?.group?.map(
+    (item: {
+      groupInfo: {
+        _id: string;
+      };
+    }) => item?.groupInfo?._id
+  );
+  useEffect(() => {
+    if (editExam && editExam.group) {
+      const defaultGroupValue = editExam.group.map(
+        (item: { groupInfo: { _id: string } }) => item.groupInfo._id
+      );
+      setGroupValue(defaultGroupValue);
+    }
+  }, [editExam]);
+
+  const EditExamData = async function () {
     if (title.current?.value == null || title.current?.value == "") {
       setErr((prev) => ({ ...prev, title: true }));
       return;
@@ -90,14 +110,14 @@ const Edit_ExamResult_Page = () => {
     }
     setErr({ title: false, ball: false, group: false });
     try {
-      const res = await axios.post("/api/exam/exam-results", {
-        // title: title.current.value,
-        // maxScore: ball.current.value,
-        // group: examResult,
+      const res = await axios.put(`/api/exam/exam-results/${editExam?._id}`, {
+        title: title.current.value,
+        maxScore: ball.current.value,
+        group: examResult,
       });
-      if (res.status == 201) {
+      if (res.status == 200) {
         notifications.show({
-          title: "Yangi Imtixon qo'shildi",
+          title: "Imtixon yangilandi",
           message: "",
           withBorder: true,
         });
@@ -112,27 +132,12 @@ const Edit_ExamResult_Page = () => {
     }
   };
 
-  const defaultGroupValue = editExam?.group?.map(
-    (item: {
-      groupInfo: {
-        _id: string;
-      };
-    }) => item?.groupInfo?._id
-  );
-  useEffect(() => {
-    if (defaultGroupValue && defaultGroupValue.length > 0) {
-      setGroupValue(defaultGroupValue);
-    }
-  }, []);
-
-  console.log(editExam);
-
   if (error) return <div>ошибка загрузки</div>;
   if (isLoading) return <div>загрузка...</div>;
 
   return (
     <div>
-      <Title order={3}>Yangi imtixon qo'shish</Title>
+      <Title order={3}>Imtixonni Taxrirlash</Title>
       <Grid mt={"md"}>
         <Grid.Col span={{ base: 12, md: 6, lg: 3, xl: 3 }}>
           <TextInput
@@ -142,6 +147,7 @@ const Edit_ExamResult_Page = () => {
             ref={title}
             variant="filled"
             error={err.title}
+            defaultValue={editExam?.title}
           />
         </Grid.Col>
         <Grid.Col span={{ base: 12, md: 6, lg: 2, xl: 1 }}>
@@ -152,6 +158,7 @@ const Edit_ExamResult_Page = () => {
             ref={ball}
             variant="filled"
             error={err.ball}
+            defaultValue={editExam?.maxScore}
           />
         </Grid.Col>
         <Grid.Col span={{ base: 12, md: 6, lg: 7, xl: 8 }}>
@@ -189,7 +196,7 @@ const Edit_ExamResult_Page = () => {
         )}
       </Box>
       <Flex justify={"flex-end"} mt={"xl"}>
-        <Button onClick={CreateExam}>Imtixonni yaratish</Button>
+        <Button onClick={EditExamData}>O'zgarishlarni saqlash</Button>
       </Flex>
     </div>
   );
