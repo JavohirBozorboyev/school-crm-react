@@ -26,7 +26,7 @@ const AppLayout = () => {
           <AppShellHeader opened={opened} toggle={toggle} />
         </AppShell.Header>
         <AppShell.Navbar p="sm">
-          <AppShellNavbar />
+          <AppShellNavbar toggle={toggle} />
         </AppShell.Navbar>
         {/* <AppShell.Aside p="md">Aside</AppShell.Aside> */}
         <AppShell.Main>
