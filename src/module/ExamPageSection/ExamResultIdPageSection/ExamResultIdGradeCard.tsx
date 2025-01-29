@@ -12,22 +12,41 @@ interface DataProps {
         fullname: string;
       };
     }[];
+    maxScore?: number | string;
   };
 }
 const ExamResultIdGradeCard = ({ item }: DataProps) => {
   return (
     <>
       <Paper p={"md"} withBorder>
-        {" "}
+        <Paper bg={"blue"} radius={"sm"} py={"4px"} mb="md">
+          <Text
+            py={"2px"}
+            fw={"600"}
+            fz={"sm"}
+            ta={"center"}
+            c={"white"}
+            tt={"uppercase"}
+          >
+            {item?.subjectInfo?.title}
+          </Text>
+        </Paper>{" "}
         <Grid align="center">
           <Grid.Col span={8}>
-            <Text py={"2px"} fw={"600"} fz={"sm"} c={"cyan"}>
+            <Text py={"2px"} fw={"600"} fz={"sm"} c={"blue"} tt={"uppercase"}>
               Ism Familiya
             </Text>{" "}
           </Grid.Col>
           <Grid.Col span={4}>
-            <Text py={"2px"} fw={"600"} ta={"center"} fz={"sm"} c={"cyan"}>
-              {item?.subjectInfo?.title}
+            <Text
+              py={"2px"}
+              fw={"600"}
+              ta={"center"}
+              fz={"sm"}
+              c={"blue"}
+              tt={"uppercase"}
+            >
+              {item?.maxScore} - ball
             </Text>{" "}
           </Grid.Col>
         </Grid>

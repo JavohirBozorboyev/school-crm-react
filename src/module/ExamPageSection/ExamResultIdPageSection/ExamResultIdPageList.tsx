@@ -16,13 +16,13 @@ interface Props {
       | undefined
       | null;
   };
+  maxScore: number | string;
 }
 
-const ExamResultIdPageList = ({ groupId, groupData }: Props) => {
+const ExamResultIdPageList = ({ groupId, groupData, maxScore }: Props) => {
   const user = useSelector((state: RootState) => state.auth.user);
 
   const teacher = groupId?.teachers?.find((item) => item._id === user?._id);
-
 
   return (
     <div>
@@ -37,6 +37,7 @@ const ExamResultIdPageList = ({ groupId, groupData }: Props) => {
                     item={item}
                     groupData={groupData}
                     teacher={teacher === undefined ? null : teacher}
+                    maxScore={maxScore}
                   />
                 </Grid.Col>
               );
@@ -52,6 +53,7 @@ const ExamResultIdPageList = ({ groupId, groupData }: Props) => {
                   item={item}
                   groupData={groupData}
                   teacher={teacher === undefined ? null : teacher}
+                  maxScore={maxScore}
                 />
               </Grid.Col>
             );

@@ -22,8 +22,6 @@ const ExamResultIdPage = () => {
     (el: { groupInfo: { _id: string } }) => el.groupInfo._id === id
   );
 
-  console.log(data);
-
   return (
     <div>
       <ExamResultIdPageNav
@@ -32,7 +30,11 @@ const ExamResultIdPage = () => {
         segment={segment}
       />
       {segment === "/exam" && (
-        <ExamResultIdPageList groupId={groupId} groupData={group} />
+        <ExamResultIdPageList
+          groupId={groupId}
+          groupData={group}
+          maxScore={data?.maxScore}
+        />
       )}
       {segment === "/grade" && <ExamResultIdGradeList />}
     </div>

@@ -23,6 +23,7 @@ const ExamResultIdGradeList = () => {
     `/api/exam/exam-grades/${slug}?class=${id}`
   );
 
+
   if (error) return <div>failed to load merge</div>;
   if (isLoading) return <div>loading...</div>;
 

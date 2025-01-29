@@ -7,6 +7,7 @@ import {
   Paper,
   TextInput,
   Text,
+  Box,
 } from "@mantine/core";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -31,6 +32,7 @@ interface Props {
     firstname: string;
     lastname: string;
   } | null;
+  maxScore: number | string;
 }
 
 interface GradeProps {
@@ -44,7 +46,12 @@ interface GradeProps {
   };
 }
 
-const ExamResultIdPageCard = ({ item, groupData, teacher }: Props) => {
+const ExamResultIdPageCard = ({
+  item,
+  groupData,
+  teacher,
+  maxScore,
+}: Props) => {
   const { slug, id } = useParams();
   const { data, isLoading } = useSWR(
     `/api/exam/exam-grades/${slug}?class=${id}`
@@ -103,7 +110,7 @@ const ExamResultIdPageCard = ({ item, groupData, teacher }: Props) => {
         teacherInfo: teacher?._id || null,
         subjectInfo: item?._id,
         grades: examResult,
-        maxScore: "",
+        maxScore: maxScore,
         creator: user?._id,
         creatorType,
       });
@@ -164,20 +171,31 @@ const ExamResultIdPageCard = ({ item, groupData, teacher }: Props) => {
     }
   };
 
-
   if (isLoading) return <div>загрузка...</div>;
   return (
     <>
       <Paper p={"md"} withBorder>
+        <Paper bg={"blue"} radius={"sm"} py={"4px"} mb="md">
+          <Text
+            py={"2px"}
+            fw={"600"}
+            fz={"sm"}
+            ta={"center"}
+            c={"white"}
+            tt={"uppercase"}
+          >
+            {item?.title}
+          </Text>
+        </Paper>
         <Grid align="center">
           <Grid.Col span={8}>
-            <Text py={"2px"} fw={"600"} fz={"sm"} c={"cyan"}>
+            <Text py={"2px"} fw={"600"} fz={"sm"} c={"blue"} tt={"uppercase"}>
               Ism Familiya
             </Text>
           </Grid.Col>
           <Grid.Col span={4}>
-            <Text py={"2px"} fw={"600"} ta={"center"} fz={"sm"} c={"cyan"}>
-              {item?.title}
+            <Text py={"2px"} fw={"600"} ta={"center"} fz={"sm"} c={"blue"}>
+              {maxScore} - BALL
             </Text>
           </Grid.Col>
         </Grid>
@@ -219,7 +237,12 @@ const ExamResultIdPageCard = ({ item, groupData, teacher }: Props) => {
           <>
             <Divider mt={"md"} mb={"sm"} />
             <Flex justify={"flex-end"}>
-              <Button size="xs" onClick={SaveData} loading={loading}>
+              <Button
+                size="xs"
+                onClick={SaveData}
+                loading={loading}
+                tt={"uppercase"}
+              >
                 Natijalarni Saqlash
               </Button>
             </Flex>
