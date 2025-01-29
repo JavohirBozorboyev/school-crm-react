@@ -10,11 +10,11 @@ import {
   NumberInput,
 } from "@mantine/core";
 import { useEffect, useRef, useState } from "react";
-import useSWR from "swr";
-import AddExamResultCard from "../../../../module/ExamPageSection/Add_ExamResult_Section/AddExamResultCard";
+import useSWR, { mutate } from "swr";
 import axios from "axios";
 import { notifications } from "@mantine/notifications";
 import { useNavigate, useParams } from "react-router-dom";
+import Edit_ExamResult_Card from "../../../../module/ExamPageSection/Edit_ExamResult_Section/Edit_ExamResult_Card";
 
 const Edit_ExamResult_Page = () => {
   const { id } = useParams();
@@ -126,6 +126,7 @@ const Edit_ExamResult_Page = () => {
         setGroupValue([]);
         setExamResult([]);
         navigate("/exam/exam-results");
+        mutate(`/api/exam/exam-results/${editExam?._id}`);
       }
     } catch (error) {
       console.log(error);
@@ -182,16 +183,27 @@ const Edit_ExamResult_Page = () => {
             <Text size="lg" mb={"md"} c={"teal"}>
               Tanlagan sinflar:
             </Text>
-            {groupValue.map((group) => (
-              <AddExamResultCard
-                group={group}
-                groups={groups}
-                key={group}
-                subjectSellectData={subjectSellectData}
-                teacherSellectData={teacherSellectData}
-                setExamResult={setExamResult}
-              />
-            ))}
+            {groupValue.map((group) => {
+              const defaultGroupData = editExam?.group?.find(
+                (fil: {
+                  groupInfo: {
+                    _id: string;
+                  };
+                }) => fil.groupInfo._id === group
+              );
+
+              return (
+                <Edit_ExamResult_Card
+                  group={group}
+                  groups={groups}
+                  key={group}
+                  subjectSellectData={subjectSellectData}
+                  teacherSellectData={teacherSellectData}
+                  setExamResult={setExamResult}
+                  defaultGroupData={defaultGroupData}
+                />
+              );
+            })}
           </Box>
         )}
       </Box>
