@@ -1,6 +1,6 @@
 import { Button, Grid, Group, Paper } from "@mantine/core";
 import { Input, CloseButton } from "@mantine/core";
-import { IconSearch } from "@tabler/icons-react";
+import { IconPlus, IconSearch } from "@tabler/icons-react";
 import { SegmentedControl } from "@mantine/core";
 import { Link } from "react-router-dom";
 import AccessControl from "../../security/AccessControl";
@@ -56,7 +56,7 @@ const ExamResultPageNav = ({
               requiredPrivileges={["manage_users"]}
             >
               <Link to="/exam/exam-results/add">
-                <Button>Yangi Imtixon Qo'shish</Button>
+                <Button leftSection={<IconPlus size={16} />}>Imtixon Qo'shish</Button>
               </Link>
             </AccessControl>
           </Group>

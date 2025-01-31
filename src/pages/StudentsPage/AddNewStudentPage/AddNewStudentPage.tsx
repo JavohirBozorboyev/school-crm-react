@@ -44,15 +44,15 @@ const AddNewStudentPage = () => {
     mode: "uncontrolled",
     initialValues: {
       fullname: "",
-      phone: "",
+      phone: "+998",
       passport: "",
       group: [],
       subjects: [],
       address: "",
       father: "",
       mother: "",
-      fatherPhone: "",
-      motherPhone: "",
+      fatherPhone: "+998",
+      motherPhone: "+998",
     },
 
     validate: {
@@ -95,6 +95,7 @@ const AddNewStudentPage = () => {
           <Grid>
             <Grid.Col span={{ base: 12, md: 6, lg: 4, xl: 3 }}>
               <TextInput
+                variant="filled"
                 placeholder="Ism Familiya"
                 label="Ism Familiya"
                 withAsterisk
@@ -103,6 +104,7 @@ const AddNewStudentPage = () => {
             </Grid.Col>
             <Grid.Col span={{ base: 12, md: 6, lg: 4, xl: 3 }}>
               <TextInput
+                variant="filled"
                 placeholder="Passport"
                 label="Passport"
                 withAsterisk
@@ -113,6 +115,7 @@ const AddNewStudentPage = () => {
 
             <Grid.Col span={{ base: 12, md: 6, lg: 4, xl: 3 }}>
               <Select
+                variant="filled"
                 label="Sinf Tanlang"
                 placeholder="Sinf"
                 withAsterisk
@@ -123,9 +126,10 @@ const AddNewStudentPage = () => {
             <Grid.Col span={{ base: 12, md: 6, lg: 4, xl: 3 }}>
               <Input.Wrapper label="Telefon raqam">
                 <Input
+                  variant="filled"
                   component={IMaskInput}
-                  mask="+\9\9\8 90 000 00 00"
-                  placeholder="+998 90 000 00 00"
+                  mask="+998900000000"
+                  placeholder="+998901234567"
                   {...form.getInputProps("phone")}
                   {...form.getInputProps("phone")}
                 />
@@ -133,6 +137,7 @@ const AddNewStudentPage = () => {
             </Grid.Col>
             <Grid.Col span={{ base: 12, lg: 8, xl: 6 }}>
               <MultiSelect
+                variant="filled"
                 label="Iqtisoslik fanlari"
                 placeholder="Fanlar"
                 data={SubjectSellectData}
@@ -141,6 +146,7 @@ const AddNewStudentPage = () => {
             </Grid.Col>
             <Grid.Col span={{ base: 12, lg: 12, xl: 6 }}>
               <TextInput
+                variant="filled"
                 placeholder="Manzil"
                 label="To'liq manzil"
                 {...form.getInputProps("passport")}
@@ -154,6 +160,7 @@ const AddNewStudentPage = () => {
           <Grid>
             <Grid.Col span={{ base: 12, md: 6, lg: 4, xl: 3 }}>
               <TextInput
+                variant="filled"
                 placeholder="Ota Ism Familiya"
                 label="Ota Ism Familiyas"
                 withAsterisk
@@ -164,15 +171,17 @@ const AddNewStudentPage = () => {
             <Grid.Col span={{ base: 12, md: 6, lg: 4, xl: 3 }}>
               <Input.Wrapper label="Ota Telefon raqami">
                 <Input
+                  variant="filled"
                   component={IMaskInput}
-                  mask="+\9\9\8 90 000 00 00"
-                  placeholder="+998 90 000 00 00"
+                  mask="+998900000000"
+                  placeholder="+998901234567"
                   {...form.getInputProps("fatherPhone")}
                 />
               </Input.Wrapper>
             </Grid.Col>
             <Grid.Col span={{ base: 12, md: 6, lg: 4, xl: 3 }}>
               <TextInput
+                variant="filled"
                 placeholder="Ona Ism Familiya"
                 label="Ona Ism Familiyas"
                 withAsterisk
@@ -183,9 +192,10 @@ const AddNewStudentPage = () => {
             <Grid.Col span={{ base: 12, md: 6, lg: 4, xl: 3 }}>
               <Input.Wrapper label="Ona Telefon raqami">
                 <Input
+                  variant="filled"
                   component={IMaskInput}
-                  mask="+\9\9\8 90 000 00 00"
-                  placeholder="+998 90 000 00 00"
+                  mask="+998900000000"
+                  placeholder="+998901234567"
                   {...form.getInputProps("motherPhone")}
                 />
               </Input.Wrapper>

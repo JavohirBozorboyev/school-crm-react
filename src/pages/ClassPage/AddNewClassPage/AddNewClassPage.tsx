@@ -1,4 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   Title,
@@ -31,10 +30,27 @@ const AddNewClassPage = () => {
   const [loading, setLoading] = useState(false);
 
   const { data: teacher } = useSWR("/api/teachers");
+  const { data: subjects } = useSWR("/api/subjects");
 
   const teacherSellectData = teacher?.map(
-    (item: { _id: string; firstname: string; lastname: string }) => {
-      return { value: item._id, label: item.firstname + " " + item.lastname };
+    (item: {
+      _id: string;
+      firstname: string;
+      lastname: string;
+      subject: {
+        title: string;
+      };
+    }) => {
+      return {
+        value: item._id,
+        label:
+          item.firstname + " " + item.lastname + ` (${item.subject?.title})`,
+      };
+    }
+  );
+  const subjectSellectData = subjects?.map(
+    (item: { _id: string; title: string }) => {
+      return { value: item._id, label: item.title };
     }
   );
 
@@ -43,6 +59,7 @@ const AddNewClassPage = () => {
     initialValues: {
       title: "",
       teacher: null,
+      subjects: [],
       subjectTeacher: [],
     },
 
@@ -52,11 +69,10 @@ const AddNewClassPage = () => {
   });
 
   const AddNewClass = async (data: TeacherFormData) => {
-    console.log(data);
-
     setLoading(true);
     try {
       const res = await axios.post("/api/groups", data);
+
       if (res.status == 201) {
         notifications.show({
           title: "Yangi Sinf Qo'shildi",
@@ -93,16 +109,18 @@ const AddNewClassPage = () => {
         <Paper withBorder p={"md"} mt={"md"}>
           <Text mb={"sm"}>O'qtuvchi Malumotlari</Text>
           <Grid>
-            <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
+            <Grid.Col span={{ base: 12, md: 6, xl: 6 }}>
               <TextInput
+                variant="filled"
                 placeholder="Sinf nomini kiriting"
                 label="Sinf nomi"
                 withAsterisk
                 {...form.getInputProps("title")}
               />
             </Grid.Col>
-            <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
+            <Grid.Col span={{ base: 12, md: 6, xl: 6 }}>
               <Select
+                variant="filled"
                 label="Sinf rahbar"
                 placeholder="Sinf rahbar"
                 data={teacherSellectData}
@@ -110,8 +128,18 @@ const AddNewClassPage = () => {
                 searchable
               />
             </Grid.Col>
-            <Grid.Col span={{ base: 12, md: 6, lg: 6 }}>
+            <Grid.Col span={{ base: 12, md: 6, lg: 5, xl: 6 }}>
               <MultiSelect
+                variant="filled"
+                label="SPES Fanlar"
+                placeholder="Bir nechta ustozlarni tanlang"
+                data={subjectSellectData}
+                {...form.getInputProps("subjects")}
+              />
+            </Grid.Col>
+            <Grid.Col span={{ base: 12, md: 6, lg: 7, xl: 6 }}>
+              <MultiSelect
+                variant="filled"
                 label="SPES Fan ustozlari"
                 placeholder="Bir nechta ustozlarni tanlang"
                 data={teacherSellectData}

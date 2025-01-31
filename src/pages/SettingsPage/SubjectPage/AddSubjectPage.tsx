@@ -80,6 +80,7 @@ const AddSubjectPage = () => {
           <Grid align="center">
             <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
               <TextInput
+                variant="filled"
                 placeholder="Fan nomi"
                 label="Fan nomi"
                 withAsterisk
@@ -88,6 +89,7 @@ const AddSubjectPage = () => {
             </Grid.Col>
             <Grid.Col span={{ base: 12, md: 6, lg: 9 }}>
               <MultiSelect
+                variant="filled"
                 label="O'qtuvchilar tanlash"
                 placeholder="o'qtuvchilar"
                 data={SelectMap}

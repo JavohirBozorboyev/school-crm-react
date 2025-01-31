@@ -43,7 +43,7 @@ const AddNewTeacherPage = () => {
     initialValues: {
       firstname: "",
       lastname: "",
-      phone: "",
+      phone: "+998",
       passport: "",
       email: "",
       password: "",
@@ -117,6 +117,7 @@ const AddNewTeacherPage = () => {
           <Grid>
             <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
               <TextInput
+                variant="filled"
                 placeholder="Ism"
                 label="Ism"
                 withAsterisk
@@ -125,6 +126,7 @@ const AddNewTeacherPage = () => {
             </Grid.Col>
             <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
               <TextInput
+                variant="filled"
                 placeholder="Familiyas"
                 label="Familiya"
                 withAsterisk
@@ -133,6 +135,7 @@ const AddNewTeacherPage = () => {
             </Grid.Col>
             <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
               <TextInput
+                variant="filled"
                 placeholder="Passport"
                 label="Passport"
                 maxLength={9}
@@ -143,15 +146,17 @@ const AddNewTeacherPage = () => {
             <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
               <Input.Wrapper label="Telefon raqam" withAsterisk>
                 <Input
+                  variant="filled"
                   component={IMaskInput}
-                  mask="+{998} 00 000 00 00"
-                  placeholder="+99 890 123 45 67"
+                  mask="+998900000000"
+                  placeholder="+998901234567"
                   {...form.getInputProps("phone")}
                 />
               </Input.Wrapper>
             </Grid.Col>
             <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
               <Select
+                variant="filled"
                 label="Fan"
                 placeholder="Fan"
                 data={SubjectSellect}
@@ -161,6 +166,7 @@ const AddNewTeacherPage = () => {
             </Grid.Col>
             <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
               <NumberInput
+                variant="filled"
                 placeholder="Experience"
                 label="Experience"
                 withAsterisk
@@ -174,6 +180,7 @@ const AddNewTeacherPage = () => {
           <Grid>
             <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
               <TextInput
+                variant="filled"
                 placeholder="Email"
                 label="Email"
                 withAsterisk
@@ -184,6 +191,7 @@ const AddNewTeacherPage = () => {
             </Grid.Col>
             <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
               <PasswordInput
+                variant="filled"
                 placeholder="Paroli"
                 label="Parol"
                 withAsterisk

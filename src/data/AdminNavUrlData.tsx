@@ -1,10 +1,8 @@
 import {
-  IconCreditCard,
   IconHome,
   IconSchool,
   IconSettings,
   IconTextCaption,
-  IconUserCircle,
   IconUserHexagon,
   IconUsers,
 } from "@tabler/icons-react";
@@ -15,21 +13,21 @@ const AdminNavUrlData = [
     url: "/",
     icon: <IconHome size={"16px"} />,
   },
-  {
-    name: "Moliya",
-    url: "/finance",
-    icon: <IconCreditCard size={"16px"} />,
-    sub: [
-      {
-        name: "To'lov Malumotlari",
-        url: "/finance",
-      },
-      {
-        name: "To'lov Qilish",
-        url: "/finance/payment",
-      },
-    ],
-  },
+  // {
+  //   name: "Moliya",
+  //   url: "/finance",
+  //   icon: <IconCreditCard size={"16px"} />,
+  //   sub: [
+  //     {
+  //       name: "To'lov Malumotlari",
+  //       url: "/finance",
+  //     },
+  //     {
+  //       name: "To'lov Qilish",
+  //       url: "/finance/payment",
+  //     },
+  //   ],
+  // },
   {
     name: "Sinflar",
     url: "/class",
@@ -45,11 +43,11 @@ const AdminNavUrlData = [
     url: "/teachers",
     icon: <IconUserHexagon size={"16px"} />,
   },
-  {
-    name: "Xodimlar",
-    url: "/employees",
-    icon: <IconUserCircle size={"16px"} />,
-  },
+  // {
+  //   name: "Xodimlar",
+  //   url: "/employees",
+  //   icon: <IconUserCircle size={"16px"} />,
+  // },
   {
     name: "Imtixonlar",
     icon: <IconTextCaption size={"16px"} />,
@@ -67,16 +65,16 @@ const AdminNavUrlData = [
     icon: <IconSettings size={"16px"} />,
 
     sub: [
+      // {
+      //   name: "Accounts",
+      //   url: "/settings/accounts",
+      // },
       {
-        name: "Accounts",
-        url: "/settings/accounts",
-      },
-      {
-        name: "Admins",
+        name: "Adminlar",
         url: "/settings/admins",
       },
       {
-        name: "Subjects",
+        name: "Fanlar",
         url: "/settings/subjects",
       },
     ],

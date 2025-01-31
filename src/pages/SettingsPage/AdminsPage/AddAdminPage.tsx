@@ -30,7 +30,7 @@ const AddAdminPage = () => {
     initialValues: {
       firstname: "",
       lastname: "",
-      phone: "",
+      phone: "+998",
       passport: "",
       email: "",
       password: "",
@@ -91,6 +91,7 @@ const AddAdminPage = () => {
           <Grid>
             <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
               <TextInput
+                variant="filled"
                 placeholder="Admin Ismi"
                 label="Ism"
                 withAsterisk
@@ -99,6 +100,7 @@ const AddAdminPage = () => {
             </Grid.Col>
             <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
               <TextInput
+                variant="filled"
                 placeholder="Admin Familiyasi"
                 label="Familiya"
                 withAsterisk
@@ -107,6 +109,7 @@ const AddAdminPage = () => {
             </Grid.Col>
             <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
               <TextInput
+                variant="filled"
                 placeholder="Passport"
                 label="Passport"
                 withAsterisk
@@ -116,9 +119,10 @@ const AddAdminPage = () => {
             <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
               <Input.Wrapper label="Telefon raqam" withAsterisk>
                 <Input
+                  variant="filled"
                   component={IMaskInput}
-                  mask="+\9\9\8 90 000 00 00"
-                  placeholder="+998 90 000 00 00"
+                  mask="+998900000000"
+                  placeholder="+998901234567"
                   {...form.getInputProps("phone")}
                 />
               </Input.Wrapper>
@@ -129,6 +133,7 @@ const AddAdminPage = () => {
           <Grid>
             <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
               <TextInput
+                variant="filled"
                 placeholder="Admin Email"
                 label="Email"
                 withAsterisk
@@ -139,6 +144,7 @@ const AddAdminPage = () => {
             </Grid.Col>
             <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
               <PasswordInput
+                variant="filled"
                 placeholder="Admin Paroli"
                 label="Parol"
                 withAsterisk
@@ -153,6 +159,7 @@ const AddAdminPage = () => {
           <Grid>
             <Grid.Col span={{ base: 12, md: 6, lg: 3 }}>
               <Select
+                variant="filled"
                 label="Role"
                 placeholder="Admin Or SupperAdmin"
                 data={[
@@ -166,6 +173,7 @@ const AddAdminPage = () => {
             </Grid.Col>
             <Grid.Col span={{ base: 12, md: 6, lg: 4 }}>
               <MultiSelect
+                variant="filled"
                 label="Permissions"
                 data={["read", "write", "delete", "update"]}
                 defaultValue={["read"]}
@@ -175,6 +183,7 @@ const AddAdminPage = () => {
             </Grid.Col>
             <Grid.Col span={{ base: 12, md: 6, lg: 5 }}>
               <MultiSelect
+                variant="filled"
                 label="Privileges"
                 data={[
                   "view_reports",
