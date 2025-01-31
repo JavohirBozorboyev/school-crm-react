@@ -31,7 +31,7 @@ import ExamResultIdPage from "../pages/ExamPage/ExamResultPage/ExamResult_Id_Pag
 import AddExamResultPage from "../pages/ExamPage/ExamResultPage/Add_ExamResult_Page/AddExamResultPage";
 import Edit_ExamResult_Page from "../pages/ExamPage/ExamResultPage/Edit_ExamResult_Page/Edit_ExamResult_Page";
 
-axios.defaults.baseURL = "https://schools-crm-node.onrender.com";
+axios.defaults.baseURL = "https://schools-crm-node-1.onrender.com";
 // axios.defaults.baseURL = "http://localhost:3000";
 const Router = () => {
   const token = useSelector((state: RootState) => state.auth.token);
