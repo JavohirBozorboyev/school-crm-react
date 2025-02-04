@@ -17,42 +17,42 @@ interface DataProps {
 }
 const ExamResultIdGradeCard = ({ item }: DataProps) => {
   return (
-    <>
-      <Paper p={"md"} withBorder>
-        <Paper bg={"blue"} radius={"sm"} py={"4px"} mb="md">
+    <Paper p={"md"} withBorder>
+      <Paper bg={"blue"} radius={"sm"} py={"4px"} mb="md">
+        <Text
+          py={"2px"}
+          fw={"600"}
+          fz={"sm"}
+          ta={"center"}
+          c={"white"}
+          tt={"uppercase"}
+        >
+          {item?.subjectInfo?.title}
+        </Text>
+      </Paper>{" "}
+      <Grid align="center">
+        <Grid.Col span={8}>
+          <Text py={"2px"} fw={"600"} fz={"sm"} c={"blue"} tt={"uppercase"}>
+            Ism Familiya
+          </Text>{" "}
+        </Grid.Col>
+        <Grid.Col span={4}>
           <Text
             py={"2px"}
             fw={"600"}
-            fz={"sm"}
             ta={"center"}
-            c={"white"}
+            fz={"sm"}
+            c={"blue"}
             tt={"uppercase"}
           >
-            {item?.subjectInfo?.title}
-          </Text>
-        </Paper>{" "}
-        <Grid align="center">
-          <Grid.Col span={8}>
-            <Text py={"2px"} fw={"600"} fz={"sm"} c={"blue"} tt={"uppercase"}>
-              Ism Familiya
-            </Text>{" "}
-          </Grid.Col>
-          <Grid.Col span={4}>
-            <Text
-              py={"2px"}
-              fw={"600"}
-              ta={"center"}
-              fz={"sm"}
-              c={"blue"}
-              tt={"uppercase"}
-            >
-              {item?.maxScore} - ball
-            </Text>{" "}
-          </Grid.Col>
-        </Grid>
-        <Divider my={"xs"} />
-        {item?.grades?.map((grade) => {
-          return (
+            {item?.maxScore} - ball
+          </Text>{" "}
+        </Grid.Col>
+      </Grid>
+      <Divider my={"xs"} />
+      {item?.grades?.map((grade) => {
+        return (
+          <>
             <Grid key={grade._id}>
               <Grid.Col span={8}>
                 <Text py={"2px"} fz={"sm"}>
@@ -65,10 +65,11 @@ const ExamResultIdGradeCard = ({ item }: DataProps) => {
                 </Text>{" "}
               </Grid.Col>
             </Grid>
-          );
-        })}
-      </Paper>
-    </>
+            <Divider my={"xs"} />
+          </>
+        );
+      })}
+    </Paper>
   );
 };
 

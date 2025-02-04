@@ -7,7 +7,7 @@ import ExamResultIdPageList from "../../../../module/ExamPageSection/ExamResultI
 
 const ExamResultIdPage = () => {
   const { slug, id } = useParams();
-  const [segment, setSegment] = useState("/exam");
+  const [segment, setSegment] = useState("/grade");
   const { data, error, isLoading } = useSWR(`/api/exam/exam-results/${slug}`);
   const {
     data: group,

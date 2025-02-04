@@ -7,7 +7,7 @@ import { useEffect, useState } from "react";
 const StudentPageTable = ({ filter }: any) => {
   const [pagination, setPagination] = useState({
     page: 1,
-    limt: 5,
+    limt: 10,
   });
   const [debouncedFilter, setDebouncedFilter] = useState(filter);
 

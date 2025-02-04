@@ -55,7 +55,7 @@ const ExamResultIdPageCard = ({
   const { data, isLoading } = useSWR(
     `/api/exam/exam-grades/${slug}?class=${id}`
   );
-  const gredeResult = data?.find(
+  const gredeResult = data?.sb?.find(
     (serch: GradeProps) => serch.subjectInfo._id === item?._id
   );
   const [loading, setLoading] = useState(false);
