@@ -8,7 +8,6 @@ import {
   SegmentedControl,
   Title,
   Text,
-  Divider,
 } from "@mantine/core";
 import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
@@ -43,7 +42,6 @@ const ExamResultIdPageNav = ({ groupId, segment, setSegment }: Props) => {
       <Text c={"blue"}>{item.title}</Text>
     </NavLink>
   ));
-
 
   return (
     <>
@@ -85,7 +83,7 @@ const ExamResultIdPageNav = ({ groupId, segment, setSegment }: Props) => {
           </Grid.Col>
         </Grid>
       </Paper>
-      <Divider />
+      
     </>
   );
 };

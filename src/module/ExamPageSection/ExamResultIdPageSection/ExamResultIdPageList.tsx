@@ -1,4 +1,4 @@
-import { Grid } from "@mantine/core";
+import { Divider, Grid } from "@mantine/core";
 import { useSelector } from "react-redux";
 
 import { RootState } from "../../../store";
@@ -26,6 +26,7 @@ const ExamResultIdPageList = ({ groupId, groupData, maxScore }: Props) => {
 
   return (
     <div>
+      <Divider mb={"lg"} label="Natijalarni kiritish" />
       {user?.role == "teacher" && (
         <Grid mt={"md"}>
           {groupId.subjects

@@ -52,8 +52,8 @@ const ExamResultIdGradeCard = ({ item }: DataProps) => {
       <Divider my={"xs"} />
       {item?.grades?.map((grade) => {
         return (
-          <>
-            <Grid key={grade._id}>
+          <div key={grade._id}>
+            <Grid>
               <Grid.Col span={8}>
                 <Text py={"2px"} fz={"sm"}>
                   {grade?.student?.fullname}
@@ -66,7 +66,7 @@ const ExamResultIdGradeCard = ({ item }: DataProps) => {
               </Grid.Col>
             </Grid>
             <Divider my={"xs"} />
-          </>
+          </div>
         );
       })}
     </Paper>

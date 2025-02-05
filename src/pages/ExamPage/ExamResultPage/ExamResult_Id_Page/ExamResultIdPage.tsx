@@ -4,10 +4,16 @@ import ExamResultIdPageNav from "../../../../module/ExamPageSection/ExamResultId
 import { useState } from "react";
 import ExamResultIdGradeList from "../../../../module/ExamPageSection/ExamResultIdPageSection/ExamResultIdGradeList";
 import ExamResultIdPageList from "../../../../module/ExamPageSection/ExamResultIdPageSection/ExamResultIdPageList";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../../store";
 
 const ExamResultIdPage = () => {
   const { slug, id } = useParams();
-  const [segment, setSegment] = useState("/grade");
+  const user = useSelector((state: RootState) => state.auth.user);
+  const [segment, setSegment] = useState(
+    user?.role == "teacher" ? "/exam" : "/grade"
+  );
+
   const { data, error, isLoading } = useSWR(`/api/exam/exam-results/${slug}`);
   const {
     data: group,
@@ -21,6 +27,7 @@ const ExamResultIdPage = () => {
   const groupId = data?.group?.find(
     (el: { groupInfo: { _id: string } }) => el.groupInfo._id === id
   );
+
 
   return (
     <div>
@@ -36,7 +43,14 @@ const ExamResultIdPage = () => {
           maxScore={data?.maxScore}
         />
       )}
-      {segment === "/grade" && <ExamResultIdGradeList />}
+      {segment === "/grade" && (
+        <ExamResultIdGradeList
+          downloadInfo={{
+            class: groupId?.groupInfo?.title,
+            time: data?.createdAt,
+          }}
+        />
+      )}
     </div>
   );
 };
