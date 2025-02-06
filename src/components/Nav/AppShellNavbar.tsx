@@ -1,7 +1,9 @@
 import AdminNavUrlData from "../../data/AdminNavUrlData";
 import { NavLink, Box, ActionIcon } from "@mantine/core";
 import React from "react";
+import { useSelector } from "react-redux";
 import { useLocation, useNavigate } from "react-router-dom";
+import { RootState } from "../../store";
 
 interface AppShellNavbarProps {
   toggle: () => void;
@@ -10,10 +12,19 @@ interface AppShellNavbarProps {
 const AppShellNavbar = ({ toggle }: AppShellNavbarProps) => {
   const navigate = useNavigate();
   const location = useLocation();
+  const user = useSelector((state: RootState) => state.auth.user);
+
+
   return (
     <>
       <Box>
-        {AdminNavUrlData.map(
+        {AdminNavUrlData?.filter((fill) => {
+          if (user?.role === "admin" || user?.role === "supperadmin") {
+            return fill;
+          } else if (user?.role === "teacher") {
+            return fill.role == "teacher";
+          }
+        }).map(
           (
             item: {
               name: string;

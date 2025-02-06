@@ -30,6 +30,7 @@ import ExamResultSlugPage from "../pages/ExamPage/ExamResultPage/ExamResult_Slug
 import ExamResultIdPage from "../pages/ExamPage/ExamResultPage/ExamResult_Id_Page/ExamResultIdPage";
 import AddExamResultPage from "../pages/ExamPage/ExamResultPage/Add_ExamResult_Page/AddExamResultPage";
 import Edit_ExamResult_Page from "../pages/ExamPage/ExamResultPage/Edit_ExamResult_Page/Edit_ExamResult_Page";
+import SecretPage from "../pages/SecretPage";
 
 // axios.defaults.baseURL = "https://schools-crm-node-1.onrender.com";
 axios.defaults.baseURL = "http://localhost:3000";
@@ -59,7 +60,7 @@ const Router = () => {
               <ProtectedPage
                 requiredPermissions={["write"]}
                 requiredPrivileges={["manage_users"]}
-                fallbackPath="/404"
+                fallbackPath="/secret"
               >
                 <AddNewClassPage />
               </ProtectedPage>
@@ -72,7 +73,7 @@ const Router = () => {
               <ProtectedPage
                 requiredPermissions={["write", "read"]}
                 requiredPrivileges={["manage_users"]}
-                fallbackPath="/404"
+                fallbackPath="/secret"
               >
                 <AddNewStudentPage />
               </ProtectedPage>
@@ -87,7 +88,7 @@ const Router = () => {
               <ProtectedPage
                 requiredPermissions={["write"]}
                 requiredPrivileges={["manage_users"]}
-                fallbackPath="/404"
+                fallbackPath="/secret"
               >
                 <AddNewTeacherPage />
               </ProtectedPage>
@@ -95,14 +96,47 @@ const Router = () => {
           />
           <Route path="/teachers/:slug" element={<TeacherSlugPage />} />
           <Route path="/settings/accounts" element={<AccountsPage />} />
-          <Route path="/settings/admins" element={<AdminsPage />} />
+          <Route
+            path="/settings/admins"
+            element={
+              <ProtectedPage
+                requiredPermissions={["read", "write", "delete", "update"]}
+                requiredPrivileges={[
+                  "manage_users",
+                  "view_reports",
+                  "manage_roles",
+                  "manage_permissions",
+                ]}
+                fallbackPath="/secret"
+              >
+                <AdminsPage />
+              </ProtectedPage>
+            }
+          />
+          <Route
+            path="/settings/admins/add"
+            element={
+              <ProtectedPage
+                requiredPermissions={["read", "write", "delete", "update"]}
+                requiredPrivileges={[
+                  "manage_users",
+                  "view_reports",
+                  "manage_roles",
+                  "manage_permissions",
+                ]}
+                fallbackPath="/secret"
+              >
+                <AddAdminPage />
+              </ProtectedPage>
+            }
+          />
           <Route
             path="/settings/subjects"
             element={
               <ProtectedPage
                 requiredPermissions={["read"]}
                 requiredPrivileges={["view_reports"]}
-                fallbackPath="/404"
+                fallbackPath="/secret"
               >
                 <SubjectPage />
               </ProtectedPage>
@@ -119,29 +153,13 @@ const Router = () => {
                   "manage_roles",
                   "manage_permissions",
                 ]}
-                fallbackPath="/404"
+                fallbackPath="/secret"
               >
                 <AddSubjectPage />
               </ProtectedPage>
             }
           />
-          <Route
-            path="/settings/admins/add"
-            element={
-              <ProtectedPage
-                requiredPermissions={["read", "write", "delete", "update"]}
-                requiredPrivileges={[
-                  "manage_users",
-                  "view_reports",
-                  "manage_roles",
-                  "manage_permissions",
-                ]}
-                fallbackPath="/404"
-              >
-                <AddAdminPage />
-              </ProtectedPage>
-            }
-          />
+
           <Route path="/exam/exam-results" element={<ExamResultPage />} />
           <Route
             path="/exam/exam-results/add"
@@ -149,7 +167,7 @@ const Router = () => {
               <ProtectedPage
                 requiredPermissions={["read", "write"]}
                 requiredPrivileges={["view_reports", "manage_users"]}
-                fallbackPath="/404"
+                fallbackPath="/secret"
               >
                 <AddExamResultPage />
               </ProtectedPage>
@@ -161,7 +179,7 @@ const Router = () => {
               <ProtectedPage
                 requiredPermissions={["read", "update"]}
                 requiredPrivileges={["view_reports", "manage_users"]}
-                fallbackPath="/404"
+                fallbackPath="/secret"
               >
                 <Edit_ExamResult_Page />
               </ProtectedPage>
@@ -179,6 +197,7 @@ const Router = () => {
         </Route>
         <Route path="/login" element={<LoginPage />}></Route>
         <Route path="*" element={<NotFound />}></Route>
+        <Route path="/secret" element={<SecretPage />}></Route>
       </Routes>
     </>
   );

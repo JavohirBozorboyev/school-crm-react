@@ -12,6 +12,7 @@ const AdminNavUrlData = [
     name: "Asosiy Sahifa",
     url: "/",
     icon: <IconHome size={"16px"} />,
+    role: "teacher",
   },
   // {
   //   name: "Moliya",
@@ -32,16 +33,19 @@ const AdminNavUrlData = [
     name: "Sinflar",
     url: "/class",
     icon: <IconSchool size={"16px"} />,
+    role: "teacher",
   },
   {
     name: "O'quvchilar",
     url: "/students",
     icon: <IconUsers size={"16px"} />,
+    role: "admin",
   },
   {
     name: "O'qtuvchilar",
     url: "/teachers",
     icon: <IconUserHexagon size={"16px"} />,
+    role: "teacher",
   },
   // {
   //   name: "Xodimlar",
@@ -52,10 +56,12 @@ const AdminNavUrlData = [
     name: "Imtixonlar",
     icon: <IconTextCaption size={"16px"} />,
     url: "/exam",
+    role: "teacher",
     sub: [
       {
         name: "Imtixon Natijalari",
         url: "/exam/exam-results",
+        role: "teacher",
       },
     ],
   },
@@ -63,7 +69,7 @@ const AdminNavUrlData = [
     name: "Sozlamalar",
     url: "/settings",
     icon: <IconSettings size={"16px"} />,
-
+    role: "admin",
     sub: [
       // {
       //   name: "Accounts",
@@ -72,10 +78,12 @@ const AdminNavUrlData = [
       {
         name: "Adminlar",
         url: "/settings/admins",
+        role: "admin",
       },
       {
         name: "Fanlar",
         url: "/settings/subjects",
+        role: "admin",
       },
     ],
   },
