@@ -32,8 +32,8 @@ import AddExamResultPage from "../pages/ExamPage/ExamResultPage/Add_ExamResult_P
 import Edit_ExamResult_Page from "../pages/ExamPage/ExamResultPage/Edit_ExamResult_Page/Edit_ExamResult_Page";
 import SecretPage from "../pages/SecretPage";
 
-// axios.defaults.baseURL = "https://schools-crm-node-1.onrender.com";
-axios.defaults.baseURL = "http://localhost:3000";
+axios.defaults.baseURL = "https://schools-crm-node-1.onrender.com";
+//axios.defaults.baseURL = "http://localhost:3000";
 const Router = () => {
   const token = useSelector((state: RootState) => state.auth.token);
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
