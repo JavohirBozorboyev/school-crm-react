@@ -63,6 +63,11 @@ const AdminNavUrlData = [
         url: "/exam/exam-results",
         role: "teacher",
       },
+      {
+        name: "Ratings",
+        url: "/exam/ratings",
+        role: "teacher",
+      },
     ],
   },
   {
