@@ -101,6 +101,7 @@ const RatingPage = () => {
       </Grid>
       <Pagination
         total={data?.totalPages}
+        value={data?.page}
         mt={"md"}
         onChange={(e) => {
           setActivePage(e);

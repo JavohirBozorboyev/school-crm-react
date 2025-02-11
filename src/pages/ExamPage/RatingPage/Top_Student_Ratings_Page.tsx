@@ -1,4 +1,13 @@
-import { Avatar, Box, Card, Divider, Flex, Grid, Paper, Text } from "@mantine/core";
+import {
+  Avatar,
+  Box,
+  Card,
+  Divider,
+  Flex,
+  Grid,
+  Paper,
+  Text,
+} from "@mantine/core";
 import useSWR from "swr";
 import Rating_Nav from "../../../module/RatingPageSection/Rating_Nav";
 
