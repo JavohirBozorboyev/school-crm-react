@@ -196,7 +196,10 @@ const Router = () => {
             element={<ExamResultIdPage />}
           />
           <Route path="/exam/ratings" element={<RatingPage />} />
-          <Route path="/exam/ratings/top" element={<Top_Student_Ratings_Page />} />
+          <Route
+            path="/exam/ratings/top"
+            element={<Top_Student_Ratings_Page />}
+          />
           <Route path="/profil" element={<ProfilPage />} />
         </Route>
         <Route path="/login" element={<LoginPage />}></Route>
