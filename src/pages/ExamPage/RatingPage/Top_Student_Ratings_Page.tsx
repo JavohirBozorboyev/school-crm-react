@@ -1,4 +1,12 @@
-import { Avatar, Box, Card, Divider, Flex, Grid, Paper, Text } from "@mantine/core";
+import {
+  Avatar,
+  Box,
+  Card,
+  Divider,
+  Flex,
+  Grid,
+  Text,
+} from "@mantine/core";
 import useSWR from "swr";
 import Rating_Nav from "../../../module/RatingPageSection/Rating_Nav";
 
@@ -48,14 +56,14 @@ const Top_Student_Ratings_Page = () => {
                   {item?.subjects?.map((sub, i) => {
                     return (
                       <Grid.Col key={i} span={6}>
-                        <Paper>
+                        <Box>
                           <Text size="xs" fw={"500"} c={"dimmed"}>
                             {sub.subject?.title}
                           </Text>
                           <Text size="sm" fw={"600"}>
                             {sub?.totalScore} ball
                           </Text>
-                        </Paper>
+                        </Box>
                       </Grid.Col>
                     );
                   })}

@@ -14,9 +14,9 @@ const Rating_Nav = () => {
         onChange={(value) => navigate(`${value}`)}
       >
         <Tabs.List>
-          <Tabs.Tab value="/exam/ratings">Natijalar</Tabs.Tab>
-          <Tabs.Tab value="/exam/ratings/top">Eng yuqori</Tabs.Tab>
-          <Tabs.Tab value="/exam/ratings/subjects">Fanlar</Tabs.Tab>
+          <Tabs.Tab value="/ratings">Natijalar</Tabs.Tab>
+          <Tabs.Tab value="/ratings/top">Eng yuqori</Tabs.Tab>
+          <Tabs.Tab value="/ratings/subjects">Fanlar</Tabs.Tab>
         </Tabs.List>
       </Tabs>
     </>

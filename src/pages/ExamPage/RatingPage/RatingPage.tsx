@@ -8,7 +8,6 @@ import {
   Flex,
   Grid,
   Pagination,
-  Paper,
   Text,
   TextInput,
 } from "@mantine/core";
@@ -82,14 +81,14 @@ const RatingPage = () => {
                   {item?.subjects?.map((sub, i) => {
                     return (
                       <Grid.Col key={i} span={6}>
-                        <Paper>
+                        <Box>
                           <Text size="xs" fw={"500"} c={"dimmed"}>
                             {sub.subject?.title}
                           </Text>
                           <Text size="sm" fw={"600"}>
                             {sub?.totalScore} ball
                           </Text>
-                        </Paper>
+                        </Box>
                       </Grid.Col>
                     );
                   })}

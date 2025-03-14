@@ -71,6 +71,29 @@ const AdminNavUrlData = [
     ],
   },
   {
+    name: "Ratings",
+    icon: <IconTextCaption size={"16px"} />,
+    url: "/ratings",
+    role: "teacher",
+    sub: [
+      {
+        name: "Rating",
+        url: "/ratings",
+        role: "teacher",
+      },
+      {
+        name: "Top Students",
+        url: "/ratings/top",
+        role: "teacher",
+      },
+      {
+        name: "Top Subjects",
+        url: "/ratings/subjects",
+        role: "teacher",
+      },
+    ],
+  },
+  {
     name: "Sozlamalar",
     url: "/settings",
     icon: <IconSettings size={"16px"} />,

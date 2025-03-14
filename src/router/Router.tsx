@@ -34,8 +34,8 @@ import SecretPage from "../pages/SecretPage";
 import RatingPage from "../pages/ExamPage/RatingPage/RatingPage";
 import Top_Student_Ratings_Page from "../pages/ExamPage/RatingPage/Top_Student_Ratings_Page";
 
-axios.defaults.baseURL = "https://schools-crm-node-1.onrender.com";
-// axios.defaults.baseURL = "http://localhost:3000";
+// axios.defaults.baseURL = "https://schools-crm-node-1.onrender.com";
+axios.defaults.baseURL = "http://localhost:3000";
 const Router = () => {
   const token = useSelector((state: RootState) => state.auth.token);
   axios.defaults.headers.common["Authorization"] = `Bearer ${token}`;
@@ -195,8 +195,8 @@ const Router = () => {
             path="/exam/exam-results/:slug/:id"
             element={<ExamResultIdPage />}
           />
-          <Route path="/exam/ratings" element={<RatingPage />} />
-          <Route path="/exam/ratings/top" element={<Top_Student_Ratings_Page />} />
+          <Route path="/ratings" element={<RatingPage />} />
+          <Route path="/ratings/top" element={<Top_Student_Ratings_Page />} />
           <Route path="/profil" element={<ProfilPage />} />
         </Route>
         <Route path="/login" element={<LoginPage />}></Route>
